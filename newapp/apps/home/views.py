@@ -28,7 +28,6 @@ def registerUser(request):
     else:
         return render(request,'home/register.html')
 
-<<<<<<< HEAD
 
 
 def about(request):
@@ -71,8 +70,6 @@ def loginUser(request):
 
         currUser = User.objects.filter(username=username)
         UserEmail = User.objects.filter(email=username)
-=======
->>>>>>> 6faf4269b76f52c98fb68b414e1c18f94e1a289b
 
         temp1 = len(currUser)
         temp2 = len(UserEmail)
