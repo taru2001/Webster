@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
+from .models import User
 
 
 def index(request):
@@ -7,14 +8,27 @@ def index(request):
 
 def registerUser(request):
     if request.method=='POST':
-        fname = request.POST.post['name']
-        femail = request.POST.post['email']
-        phone = request.POST.post['mobileno']
-        passw = request.POST.post['password']
-        confpass = request.POST.post['confirmpassword']
+        fname = request.POST.get('name')
+        fusername = request.POST.get('username')
+        femail = request.POST.get('email')
+        phone = request.POST.get('mobileno')
+        passw = request.POST.get('password')
+        confpass = request.POST.get('confirmpassword')
 
+        
         if passw!=confpass:
-            return return HttpResponse("passwords did not matched...!!");
+            return  HttpResponse("passwords did not matched...!!")
+
+        else:
+            newUser = User(name=fname,username=fusername,mobile=phone,email=femail,password=passw)
+            User.save(newUser)
+            redirect('/home/login/')
+
+
+    else:
+        return render(request,'home/register.html')
+
+        
 
         
 

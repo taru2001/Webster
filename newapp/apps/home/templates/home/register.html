@@ -6,34 +6,36 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     </head>
     <body>
-        <div style="background-color:#41aaa2; height:400px; width:400px; border-radius:30px; text-align:center;" class="col-md-offset-4">
+        <div style="background-color:#41aaa2; height:450px; width:400px; border-radius:30px; text-align:center;" class="col-md-offset-4">
             <h1 style="text-align:center; padding-top:30px; color:white; margin-top: 12rem;">Sign Up</h1>
             
             <form action="/home/register/" method="post">{% csrf_token %}
 
-                <div class="col-sm-12" style="padding-top:10px;">
-                <input type="text" class="form-control" id="name" placeholder="Name" name="name" style="border-radius:15px;">
-                </div>
-                
-                <div class="col-sm-12" style="padding-top:10px;">
-                <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" style="border-radius:15px;">
-                </div>
-
-                <div class="col-sm-12" style="padding-top:10px;">
-                <input type="text" class="form-control" id="mobileno" placeholder="Enter Mobile No." name="mobileno" style="border-radius:15px;">
-                </div>
-
-                <div class="col-sm-12" style="padding-top:10px;">
-                <input type="text" class="form-control" id="password" placeholder="Type your Password" name="password" style="border-radius:15px;">
-                </div>
-
-                <div class="col-sm-12" style="padding-top:10px;">
-                    <input type="text" class="form-control" id="confirmpassword" placeholder="Confirm Password" name="confirmpassword" style="border-radius:15px;">
-                </div>
-            </form>
-            
-            <button class="col-md-4 col-md-offset-4 btn" style="background-color:#ffffff; color:#626a69; font-size:20px; margin-top:10px;" type="button"> Submit
-            </button>
+            <div class="col-sm-12" style="padding-top:10px;">
+            <input type="text" class="form-control" id="name" placeholder="Name" name="name" style="border-radius:15px;">
             </div>
+            <div class="col-sm-12" style="padding-top:10px;">
+            <input type="text" class="form-control" id="username" placeholder="User Name" name="username" style="border-radius:15px;">
+            </div>
+            <div class="col-sm-12" style="padding-top:10px;">
+            <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" style="border-radius:15px;">
+            </div>
+            <div class="col-sm-12" style="padding-top:10px;">
+            <input type="text" class="form-control" id="mobileno" placeholder="Enter Mobile No." name="mobileno" style="border-radius:15px;">
+            </div>
+            <div class="col-sm-12" style="padding-top:10px;">
+            <input type="text" class="form-control" id="password" placeholder="Type your Password" name="password" style="border-radius:15px;">
+            </div>
+            <div class="col-sm-12" style="padding-top:10px;">
+                <input type="text" class="form-control" id="confirmpassword" placeholder="Confirm Password" name="confirmpassword" style="border-radius:15px;">
+            </div>
+            
+            
+            <button class="col-md-4 col-md-offset-4 btn" style="background-color:#ffffff; color:#626a69; font-size:20px; margin-top:10px;" type="submit"> Submit
+            </button>
+        </form>
+
+            </div>
+
     </body>
 </head>
