@@ -31,7 +31,10 @@
   <div class="padded-m">
   <body class="text-center">
     <a href="/home/index/"><button class="btn btn-primary">Home</button></a><br><br>
-    <form class="form-signin" action="#" method="POST">
+
+
+    <form class="form-signin" action="/home/login/" method="POST">
+      {% csrf_token %}
       <!--img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"-->
       <h1 class="h3 mb-3 font-weight-normal new mycolor" >User Login</h1>
 
@@ -49,6 +52,8 @@
       <button class="btn btn-lg btn-primary btn-block bgnew" type="submit">Sign in</button>
       <p class="mt-5 mb-3 text-muted"><span class="new">&copy; My Site 2020-2021</span></p>
     </form>
+
+
   </body>
 </div>
 </html>
