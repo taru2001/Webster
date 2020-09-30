@@ -12,4 +12,4 @@ def about(request):
     return HttpResponse("About page")
 
 def loginUser(request):
-    return HttpResponse("Login page")
+    return render(request,'home/login.html')
