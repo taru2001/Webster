@@ -28,12 +28,6 @@ def registerUser(request):
     else:
         return render(request,'home/register.html')
 
-        
-
-        
-
-
-    return render(request,'home/register.html')
 
 def about(request):
     return HttpResponse("About page")
