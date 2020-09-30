@@ -22,7 +22,7 @@ def registerUser(request):
         else:
             newUser = User(name=fname,username=fusername,mobile=phone,email=femail,password=passw)
             User.save(newUser)
-            redirect('/home/login/')
+            return redirect('/home/login/')
 
 
     else:
