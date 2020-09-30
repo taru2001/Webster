@@ -1,6 +1,11 @@
 .img{
     background-image: url('https://www.teahub.io/photos/full/97-977563_abstract-gaming-background.jpg');
     background-repeat: no-repeat;
-    /* background-attachment:; */
-    background-size: contain;
+    background-size: cover;
+}
+
+.pos{
+    position: absolute;
+    top: 20rem;
+    left: 45rem;
 }
