@@ -93,7 +93,7 @@ def loginUser(request):
             
             params = {'name':currUser.name , 'username':currUser.username , 'mobile':currUser.mobile ,
                         'email':currUser.email}
-            return render(request,'home/userhome.html')
+            return render(request,'home/userhome.html',params)
 
     return render(request,'home/login.html')
 
@@ -101,16 +101,17 @@ def loginUser(request):
 
 def upload(request):
 
-    if "username" in request.session:
+    if "username" in request.session: 
         if request.method=='POST':
             user = User.objects.get(username = request.session["username"])
             tagline = request.POST.get('tagline')
             video = request.FILES['videofile']
+            posttype = request.POST.get('filetype')
 
-            newPost = Post(user=user,tagline=tagline,video=video)
+            newPost = Post(user=user,tagline=tagline,video=video,posttype=posttype)
             Post.save(newPost)
-            #print(tagline,video,user)
-            print(video)
+            print(posttype)
+            
             return redirect('login')
 
 
@@ -119,3 +120,48 @@ def upload(request):
 
     else:
         return HttpResponse("login first")
+
+
+
+def mypost(request):
+
+    if "username" in request.session:
+        posts = Post.objects.all()
+        #print(posts)
+
+        mylist=[]
+        for post in posts:
+            if post.user.username==request.session["username"]:
+                mylist.append(post)
+
+        #print(mylist)
+        #for i in mylist:
+            #print(i.user.mobile)
+
+        params = {'mylist':mylist}
+
+        return render(request,'home/mypost.html',params)
+
+    else:
+        return HttpResponse("login first")
+
+
+def deletePost(request,postId):
+    if "username" in request.session:
+        thisPost = Post.objects.filter(id=postId)
+        if request.session["username"]==thisPost[0].user.username:
+            #print(thisPost)
+            thisPost.delete()
+            return redirect('login')
+        else:
+            return HttpResponse("Katai Tez hor rhe ho haiiiii....chala jaa beta kuch ni hona")
+    else:
+        return redirect('login')
+
+
+def playvideo(request,postId):
+    posts = Post.objects.filter(id=postId)
+    posts=posts[0]
+    params = {'posts':posts}
+    return render(request,'home/playvideo.html',params)
+

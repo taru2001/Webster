@@ -7,5 +7,8 @@ urlpatterns = [
     path('about/',views.about,name="about"),
     path('login/',views.loginUser,name="login"),
     path('logout/',views.logout,name="logout"),
-    path('login/upload/',views.upload,name="upload")
+    path('login/upload/',views.upload,name="upload"),
+    path('login/mypost/',views.mypost,name="mypost"),
+    path('login/mypost/delete/<int:postId>/',views.deletePost,name="delete"),
+    path('playvideo/<int:postId>/',views.playvideo,name="playvideo")
 ]
