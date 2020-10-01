@@ -18,7 +18,7 @@ class Post(models.Model):
     user = models.ForeignKey(User,on_delete = models.CASCADE)
     tagline = models.CharField(max_length=40)
     date = models.DateTimeField(auto_now_add=True)
-    video = models.FileField(upload_to = "userVideos",blank=True)
+    video = models.ImageField(upload_to = "home/images",default="")
 
     def __str__(self):
         return self.user.username
