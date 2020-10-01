@@ -105,11 +105,12 @@ def upload(request):
         if request.method=='POST':
             user = User.objects.get(username = request.session["username"])
             tagline = request.POST.get('tagline')
-            video = request.POST.get('videofile')
+            video = request.FILES['videofile']
 
             newPost = Post(user=user,tagline=tagline,video=video)
             Post.save(newPost)
             #print(tagline,video,user)
+            print(video)
             return redirect('login')
 
 
