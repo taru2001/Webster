@@ -167,8 +167,7 @@ def playvideo(request,postId):
 
 def profile(request):
     if "username" in request.session:
-        # username = request.session["username"]
-        # user = User.objects.filter(username=username)
+        
         user = User.objects.get(username = request.session["username"])
         params = {'name':user.name , 'username':user.username , 'mobile':user.mobile ,
                         'email':user.email}
@@ -179,3 +178,20 @@ def profile(request):
 
 def edit(request):
     return render(request,'home/edit.html')
+
+
+
+def searchuser(request):
+    whichUser = request.GET.get('searchuser')
+    users = User.objects.filter(username=whichUser)
+    names = User.objects.filter(name=whichUser)
+
+    if len(users)==0 and len(names)==0:
+        return HttpResponse("No users found...!!")
+
+    else:
+        if len(users):
+            users=users[0]
+        else:
+            users = names[0]
+        return render(request,'home/searchuser.html',{'user':users})
