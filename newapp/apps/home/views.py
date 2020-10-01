@@ -165,3 +165,17 @@ def playvideo(request,postId):
     params = {'posts':posts}
     return render(request,'home/playvideo.html',params)
 
+def profile(request):
+    if "username" in request.session:
+        # username = request.session["username"]
+        # user = User.objects.filter(username=username)
+        user = User.objects.get(username = request.session["username"])
+        params = {'name':user.name , 'username':user.username , 'mobile':user.mobile ,
+                        'email':user.email}
+        return render(request,'home/dashboard.html',params)
+
+    else:
+        return redirect('login')
+
+def edit(request):
+    return render(request,'home/edit.html')
