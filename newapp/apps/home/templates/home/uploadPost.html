@@ -1,0 +1,47 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="{% static 'home/upload.css' %}">
+</head>
+<body>
+    
+    <div class="col-md-4 col-md-offset-4" id="login">
+        <section id="inner-wrapper" class="login">
+            <article>
+
+
+                <form action="/home/login/upload/" method="post">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"> </i></span>
+                            <input type="text" class="form-control" placeholder="Tagline" name="tagline">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope"> </i></span>
+                            <input type="file" class="form-control" name="videofile" >
+                        </div>
+                    </div>
+                   
+                      <button type="submit" class="btn btn-success btn-block">Submit</button>
+                </form>
+
+
+            </article>
+        </section></div>
+
+</body>
+</html>

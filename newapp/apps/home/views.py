@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from .models import User
+from .models import User,Post
 
 
 def index(request):
@@ -60,7 +60,7 @@ def loginUser(request):
 
         params = {'name':currUser.name , 'username':currUser.username , 'mobile':currUser.mobile ,
                         'email':currUser.email}
-        return render(request,'home/dashboard.html',params)
+        return render(request,'home/userhome.html',params) 
         
 
     # Method==POST
@@ -93,7 +93,28 @@ def loginUser(request):
             
             params = {'name':currUser.name , 'username':currUser.username , 'mobile':currUser.mobile ,
                         'email':currUser.email}
-            return render(request,'home/dashboard.html',params)
+            return render(request,'home/userhome.html')
 
-    
     return render(request,'home/login.html')
+
+
+
+def upload(request):
+
+    if "username" in request.session:
+        if request.method=='POST':
+            user = User.objects.get(username = request.session["username"])
+            tagline = request.POST.get('tagline')
+            video = request.POST.get('videofile')
+
+            newPost = Post(user=user,tagline=tagline,video=video)
+            Post.save(newPost)
+            #print(tagline,video,user)
+            return redirect('login')
+
+
+        else:
+            return render(request,'home/uploadPost.html')
+
+    else:
+        return HttpResponse("login first")

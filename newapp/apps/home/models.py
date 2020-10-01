@@ -12,3 +12,13 @@ class User(models.Model):
 
     def __str__(self):
        return self.name 
+
+
+class Post(models.Model):
+    user = models.ForeignKey(User,on_delete = models.CASCADE)
+    tagline = models.CharField(max_length=40)
+    date = models.DateTimeField(auto_now_add=True)
+    video = models.FileField(upload_to = "userVideos",blank=True)
+
+    def __str__(self):
+        return self.user.username
