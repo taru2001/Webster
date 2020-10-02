@@ -1,7 +1,7 @@
 {% load static %}
 <html>
     <head>
-        <title>Profile</title>
+        <title>{{user.username}}</title>
         <link rel="stylesheet" type="text/css" href="{% static 'home/profile.css' %}">
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -9,8 +9,7 @@
     </head>
     <body>
         <div class="container emp-profile">
-            <!-- <form method="post" action="/home/profile/edit"> -->
-                <!-- {% csrf_token %} -->
+            
                 <div class="row">
                     
                     <div class="col-md-4">
@@ -22,13 +21,6 @@
                             <img src="https://afribary.com/authors/anonymous-user/photo" alt="Not found">
                             {% endif %}
 
-                            <div class="file btn btn-lg btn-primary">
-                            <form action="/home/changephoto/" method="post" id="form1" enctype="multipart/form-data">
-                                    {% csrf_token %}
-                                    <input type="file" name="profilePic" onchange="form.submit()">                 
-                                    Change Photo
-                            </form>
-                            </div>
                         </div>
                     </div>
 
@@ -48,9 +40,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <a href="{% url 'edit' %}"><button class="btn">Edit Profile</button></a>
-                    </div>
+                   
                 </div>
                 <div class="row">
                     <div class="col-md-4">
@@ -87,22 +77,8 @@
                                                 <p>{{name}}</p>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Email</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>{{email}}</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Phone</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>{{mobile}}</p>
-                                            </div>
-                                        </div>
+                                        
+                                        
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label>Stats</label>
@@ -183,7 +159,6 @@
                 </div>
             </form>           
         </div>
-        <span><a href="/home/logout/"><button>Logout</button></a></span>
 
     </body>
 </html>

@@ -14,5 +14,7 @@ urlpatterns = [
     path('profile/',views.profile,name="profile"),
     path('profile/edit',views.edit,name="edit"),
     path('profile/manage_edit',views.manage_edit,name="manage_edit"),
-    path('search/',views.searchuser,name="searchuser")
+    path('search/',views.searchuser,name="searchuser"),
+    path('changephoto/',views.changephoto,name="profilePic"),
+    path('search/<str:user>/',views.search_profile,name="searchProfile")
 ]

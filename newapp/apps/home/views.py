@@ -170,19 +170,22 @@ def profile(request):
         user = User.objects.get(username = request.session["username"])
         params = {'name':user.name , 'username':user.username , 'mobile':user.mobile ,
                         'email':user.email, 'games':user.games, 'country':user.country,
-                        'state':user.state, 'description':user.description, 'stats':user.stats}
+                        'state':user.state, 'description':user.description, 'stats':user.stats , 'profileImage':user.profileImage}
+
         return render(request,'home/dashboard.html',params)
 
     else:
         return redirect('login')
+
 
 def edit(request):
     if "username" in request.session:
         user = User.objects.get(username = request.session["username"])
         params = {'name':user.name , 'username':user.username , 'mobile':user.mobile ,
                         'email':user.email, 'games':user.games, 'country':user.country,
-                        'state':user.state, 'description':user.description, 'stats':user.stats}
+                        'state':user.state, 'description':user.description, 'stats':user.stats ,  'profileImage':user.profileImage}
         return render(request,'home/edit.html',params)
+
 
 def manage_edit(request):
     if request.method=="POST":
@@ -193,22 +196,20 @@ def manage_edit(request):
         country = request.POST.get('country')
         phone = request.POST.get('phone')
         game = request.POST.get('game')
-        if "username" in request.session:
-            user = User.objects.get(username = request.session["username"])
-            # del request.session["username"]
-            user.name=name
-            user.stats=stats
-            user.description = description
-            user.state = state
-            user.country = country
-            user.phone= phone
-            user.games = game
-            # user.username="hacker"
-            # newdata = User(name=user.name,username=user.username,mobile=user.mobile,email=user.email,password=user.password)
-            # newUser = User(name=name)
-            user.save()
-            # request.session["username"] = user.username
-            return redirect('profile')
+        
+        user = User.objects.get(username = request.session["username"])
+        
+        user.name=name
+        user.stats=stats
+        user.description = description
+        user.state = state
+        user.country = country
+        user.phone= phone
+        user.games = game
+            
+        user.save()
+            
+        return redirect('profile')
 
 
 
@@ -226,3 +227,21 @@ def searchuser(request):
         else:
             users = names[0]
         return render(request,'home/searchuser.html',{'user':users})
+
+
+def changephoto(request):
+    if "username" in request.session and request.method=='POST':
+        profilePic = request.FILES['profilePic']
+
+        user = User.objects.get(username=request.session["username"])
+        user.profileImage = profilePic
+        user.save()
+        return redirect('profile')
+
+
+def search_profile(request,user):
+    user = User.objects.get(username=user)
+    params = {'name':user.name , 'username':user.username ,
+                'games':user.games, 'country':user.country,
+                'state':user.state, 'description':user.description, 'stats':user.stats , 'profileImage':user.profileImage}
+    return render(request,'home/searchedProfile.html',params)

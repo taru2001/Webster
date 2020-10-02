@@ -14,6 +14,7 @@ class User(models.Model):
     country = models.CharField(max_length=25,default="")
     state = models.CharField(max_length=25,default="")
     games = models.CharField(max_length=100,default="")
+    profileImage = models.ImageField(upload_to = "home/userProfiles",blank=True)
 
     def __str__(self):
        return self.name 
