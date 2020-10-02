@@ -14,6 +14,7 @@ class User(models.Model):
        return self.name 
 
 
+
 class Post(models.Model):
     user = models.ForeignKey(User,on_delete = models.CASCADE)
     tagline = models.CharField(max_length=40)

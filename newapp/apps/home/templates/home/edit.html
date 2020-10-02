@@ -1,47 +1,49 @@
 {% load static %}
 <html>
     <head>
-        <title>Edit Profile</title>
+        <title>Edit</title>
+        <link rel="stylesheet" href='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css'>
+        <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js'></script>
+        <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+        <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
         <link rel="stylesheet" type="text/css" href="{% static 'home/edit.css' %}">
     </head>
     <body>
-        <div class="container rounded bg-white mt-5 mb-5">
+        <div class="container rounded bg-white mt-5">
             <div class="row">
-                <div class="col-md-3 border-right">
-                    <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQF2psCzfbB611rnUhxgMi-lc2oB78ykqDGYb4v83xQ1pAbhPiB&usqp=CAU"><span class="font-weight-bold">Amelly</span><span class="text-black-50">amelly12@bbb.com</span><span> </span></div>
+                <div class="col-md-4 border-right">
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" src="https://i.imgur.com/0eg0aG0.jpg" width="90"><span class="font-weight-bold">John Doe</span><span class="text-black-50">john_doe12@bbb.com</span><span>United States</span></div>
                 </div>
-                <div class="col-md-5 border-right">
+                <div class="col-md-8">
                     <div class="p-3 py-5">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4 class="text-right">Profile Settings</h4>
+                            <div class="d-flex flex-row align-items-center back"><i class="fa fa-long-arrow-left mr-1 mb-1"></i>
+                                <a href="/home/login/"><h6>Back to home</h6></a>
+                            </div>
+                            <h6 class="text-right">Edit Profile</h6>
                         </div>
+                        <form method="post" action="/home/profile/manage_edit">{% csrf_token %}
                         <div class="row mt-2">
-                            <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" placeholder="first name" value=""></div>
-                            <div class="col-md-6"><label class="labels">Surname</label><input type="text" class="form-control" value="" placeholder="surname"></div>
+                            <div class="col-md-6"><input type="text" class="form-control" placeholder="Name" name="name" id="name" ></div>
+                            <div class="col-md-6"><input type="text" class="form-control"  placeholder="Phone no." name="phone" id="phone"></div>
                         </div>
                         <div class="row mt-3">
-                            <div class="col-md-12"><label class="labels">PhoneNumber</label><input type="text" class="form-control" placeholder="enter phone number" value=""></div>
-                            <div class="col-md-12"><label class="labels">Address</label><input type="text" class="form-control" placeholder="enter address" value=""></div>
-                            <div class="col-md-12"><label class="labels">Email ID</label><input type="text" class="form-control" placeholder="enter email id" value=""></div>
-                            <div class="col-md-12"><label class="labels">Education</label><input type="text" class="form-control" placeholder="education" value=""></div>
+                            <div class="col-md-6"><input type="text" class="form-control" placeholder="Country" name="country" id="country" ></div>
+                            <div class="col-md-6"><input type="text" class="form-control"  placeholder="State" name="state" id="state"></div>
                         </div>
                         <div class="row mt-3">
-                            <div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control" placeholder="country" value=""></div>
-                            <div class="col-md-6"><label class="labels">State/Region</label><input type="text" class="form-control" value="" placeholder="state"></div>
+                            <div class="col-md-6"><input type="text" class="form-control" placeholder="Stats" name="stats" id="stats"></div>
+                            <div class="col-md-6"><input type="text" class="form-control" placeholder="Description" name="description" id="description"></div>
                         </div>
-                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Save Profile</button></div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="p-3 py-5">
-                        <div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
-                        <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text" class="form-control" placeholder="experience" value=""></div> <br>
-                        <div class="col-md-12"><label class="labels">Additional Details</label><input type="text" class="form-control" placeholder="additional details" value=""></div>
+                        <div class="row mt-3">
+                            <div class="col-md-12"><textarea class="form-control" placeholder="Games" name="game" id="game"></textarea></div>
+                        </div>
+                        <div class="mt-5 text-right"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
+                    </form>
                     </div>
                 </div>
             </div>
-        </div>
-        </div>
         </div>
     </body>
 </html>

@@ -134,3 +134,18 @@ def profile(request):
 
 def edit(request):
     return render(request,'home/edit.html')
+
+def manage_edit(request):
+    if request.method=="POST":
+        name = request.POST.get('name')
+        if "username" in request.session:
+            user = User.objects.get(username = request.session["username"])
+            del request.session["username"]
+            user.name=name
+            user.username="hacker"
+            # newdata = User(name=user.name,username=user.username,mobile=user.mobile,email=user.email,password=user.password)
+            # newUser = User(name=name)
+            user.save()
+            request.session["username"] = user.username
+            return redirect('profile')
+
