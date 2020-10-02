@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% for post in mylist %}
+
+        By:- {{post.user.username}} <br>
+        Tagline :- {{post.tagline}} <br>
+
+        {% ifequal post.posttype "image" %}
+            <img src="{{post.video.url}}" width="320px" height ="200px" alt="Not Found">
+            <br>
+        
+        {% else %}
+            Video By :- {{post.user.name}}  <br>
+            
+            <a href="{% url 'playvideo' post.id %}"><button>Play Video</button></a>
+
+        {% endifequal %}
+        <a href="{% url 'delete' post.id %}" ><button>Delete</button></a>
+        <br>
+        <br>
+        <br>
+
+    {% endfor %}
+
+</body>
+</html>

@@ -20,6 +20,7 @@ class Post(models.Model):
     tagline = models.CharField(max_length=40)
     date = models.DateTimeField(auto_now_add=True)
     video = models.FileField(upload_to = "home/images",blank=True)
+    posttype = models.CharField(max_length=10,default="video")
 
     def __str__(self):
         return self.user.username
