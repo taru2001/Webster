@@ -13,6 +13,6 @@ urlpatterns = [
     path('playvideo/<int:postId>/',views.playvideo,name="playvideo"),
     path('profile/',views.profile,name="profile"),
     path('profile/edit',views.edit,name="edit"),
-    path('profile/manage_edit',views.manage_edit,name="manage_edit")
+    path('profile/manage_edit',views.manage_edit,name="manage_edit"),
     path('search/',views.searchuser,name="searchuser")
 ]

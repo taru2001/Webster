@@ -186,7 +186,7 @@ def manage_edit(request):
             user = User.objects.get(username = request.session["username"])
             del request.session["username"]
             user.name=name
-            user.username="hacker"
+            # user.username="hacker"
             # newdata = User(name=user.name,username=user.username,mobile=user.mobile,email=user.email,password=user.password)
             # newUser = User(name=name)
             user.save()
