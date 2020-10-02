@@ -9,6 +9,11 @@ class User(models.Model):
     mobile=models.IntegerField()
     email=models.EmailField(max_length=100)
     password=models.CharField(max_length=25)
+    description = models.CharField(max_length=25,default="")
+    stats = models.CharField(max_length=25,default="")
+    country = models.CharField(max_length=25,default="")
+    state = models.CharField(max_length=25,default="")
+    games = models.CharField(max_length=100,default="")
 
     def __str__(self):
        return self.name 

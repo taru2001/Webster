@@ -166,31 +166,48 @@ def playvideo(request,postId):
     return render(request,'home/playvideo.html',params)
 
 def profile(request):
-    if "username" in request.session:
-        
+    if "username" in request.session:  
         user = User.objects.get(username = request.session["username"])
         params = {'name':user.name , 'username':user.username , 'mobile':user.mobile ,
-                        'email':user.email}
+                        'email':user.email, 'games':user.games, 'country':user.country,
+                        'state':user.state, 'description':user.description, 'stats':user.stats}
         return render(request,'home/dashboard.html',params)
 
     else:
         return redirect('login')
 
 def edit(request):
-    return render(request,'home/edit.html')
+    if "username" in request.session:
+        user = User.objects.get(username = request.session["username"])
+        params = {'name':user.name , 'username':user.username , 'mobile':user.mobile ,
+                        'email':user.email, 'games':user.games, 'country':user.country,
+                        'state':user.state, 'description':user.description, 'stats':user.stats}
+        return render(request,'home/edit.html',params)
 
 def manage_edit(request):
     if request.method=="POST":
         name = request.POST.get('name')
+        stats = request.POST.get('stats')
+        description = request.POST.get('description')
+        state = request.POST.get('state')
+        country = request.POST.get('country')
+        phone = request.POST.get('phone')
+        game = request.POST.get('game')
         if "username" in request.session:
             user = User.objects.get(username = request.session["username"])
-            del request.session["username"]
+            # del request.session["username"]
             user.name=name
+            user.stats=stats
+            user.description = description
+            user.state = state
+            user.country = country
+            user.phone= phone
+            user.games = game
             # user.username="hacker"
             # newdata = User(name=user.name,username=user.username,mobile=user.mobile,email=user.email,password=user.password)
             # newUser = User(name=name)
             user.save()
-            request.session["username"] = user.username
+            # request.session["username"] = user.username
             return redirect('profile')
 
 
