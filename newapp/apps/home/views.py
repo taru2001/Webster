@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from .models import User,Post
+from .models import User,Post,Following,Followers
+import json 
 
 
 def index(request):
@@ -165,12 +166,31 @@ def playvideo(request,postId):
     params = {'posts':posts}
     return render(request,'home/playvideo.html',params)
 
+
 def profile(request):
     if "username" in request.session:  
         user = User.objects.get(username = request.session["username"])
+        
+        # count of following
+        following_obj = Following.objects.filter(user=user)
+
+        if following_obj:
+            followedUsers = following_obj[0].followed.count()
+        else:
+            followedUsers=0
+
+        # count of followers 
+        followers_obj = Followers.objects.filter(user=user)
+
+        if followers_obj:
+            followers = followers_obj[0].follower.count()
+        else:
+            followers=0
+
         params = {'name':user.name , 'username':user.username , 'mobile':user.mobile ,
                         'email':user.email, 'games':user.games, 'country':user.country,
-                        'state':user.state, 'description':user.description, 'stats':user.stats , 'profileImage':user.profileImage}
+                        'state':user.state, 'description':user.description, 'stats':user.stats , 'profileImage':user.profileImage,
+                         'followedUsers' : followedUsers , 'followers':followers}
 
         return render(request,'home/dashboard.html',params)
 
@@ -240,8 +260,64 @@ def changephoto(request):
 
 
 def search_profile(request,user):
+    currUser = User.objects.get(username=request.session["username"])
     user = User.objects.get(username=user)
+    
+    is_following = Following.objects.filter(user=currUser , followed=user)
+
+    same=0
+    if currUser==user:
+        same=1
+    
+    # count of following
+    following_obj = Following.objects.filter(user=user)
+
+    if following_obj:
+        followedUsers = following_obj[0].followed.count()
+    else:
+        followedUsers=0
+
+    # count of followers 
+        followers_obj = Followers.objects.filter(user=user)
+
+        if followers_obj:
+            followers = followers_obj[0].follower.count()
+        else:
+            followers=0
+        print(followers)
     params = {'name':user.name , 'username':user.username ,
                 'games':user.games, 'country':user.country,
-                'state':user.state, 'description':user.description, 'stats':user.stats , 'profileImage':user.profileImage}
+                'state':user.state, 'description':user.description, 'stats':user.stats , 'profileImage':user.profileImage,
+                  'is_following':is_following , 'same':same , 'followedUsers': followedUsers , 'followers':followers}
     return render(request,'home/searchedProfile.html',params)
+
+
+
+def follow(request,usern):
+    if request.session["username"]==usern:
+        return redirect('profile')
+
+    if "username" in request.session:
+        currUser = User.objects.get(username=request.session["username"])
+        to_follow = User.objects.get(username=usern)
+
+        is_following = Following.objects.filter(user=currUser , followed=to_follow)
+        
+        if is_following:
+            Following.unfollow(currUser , to_follow)
+            Followers.unfollow(currUser , to_follow)
+            is_following = 0
+
+        else:
+            Following.follow(currUser , to_follow)
+            Followers.follow(currUser , to_follow)
+            is_following = 1
+        
+        resp={
+            "following":is_following,
+        }
+        response=json.dumps(resp)
+        return HttpResponse(response,content_type="application/json")
+
+    else:
+        return HttpResponse("login first")

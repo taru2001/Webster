@@ -16,5 +16,6 @@ urlpatterns = [
     path('profile/manage_edit',views.manage_edit,name="manage_edit"),
     path('search/',views.searchuser,name="searchuser"),
     path('changephoto/',views.changephoto,name="profilePic"),
-    path('search/<str:user>/',views.search_profile,name="searchProfile")
+    path('search/<str:user>/',views.search_profile,name="searchProfile"),
+    path('handlefollow/<str:usern>/',views.follow,name="follow")
 ]

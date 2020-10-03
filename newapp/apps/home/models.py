@@ -15,6 +15,7 @@ class User(models.Model):
     state = models.CharField(max_length=25,default="")
     games = models.CharField(max_length=100,default="")
     profileImage = models.ImageField(upload_to = "home/userProfiles",blank=True)
+    
 
     def __str__(self):
        return self.name 
@@ -30,3 +31,44 @@ class Post(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class Following(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    followed = models.ManyToManyField(User,related_name="followed")
+
+    @classmethod
+    def follow(cls,currUser,to_follow):
+        obj, create = cls.objects.get_or_create(user=currUser)
+        obj.followed.add(to_follow)
+        
+
+    @classmethod
+    def unfollow(cls,currUser,to_follow):
+        obj, create = cls.objects.get_or_create(user=currUser)
+        obj.followed.remove(to_follow)
+
+    def __str__(self):
+        return self.user.username
+
+
+class Followers(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    follower = models.ManyToManyField(User,related_name="follower")
+
+    @classmethod
+    def follow(cls,currUser,to_follow):
+        obj, create = cls.objects.get_or_create(user=to_follow)
+        obj.follower.add(currUser)
+        
+
+    @classmethod
+    def unfollow(cls,currUser,to_follow):
+        obj, create = cls.objects.get_or_create(user=to_follow)
+        obj.follower.remove(currUser)
+
+    def __str__(self):
+        return self.user.username
+
+
+
