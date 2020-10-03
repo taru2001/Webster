@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from .models import User,Post,Following,Followers
+from .models import User,Post,Following,Followers,Notification
 import json 
 
 
@@ -36,8 +36,10 @@ def about(request):
 
 
 def logout(request):
-    del request.session["username"]
-    return redirect('index')
+    if "username" in request.session:
+        del request.session["username"]
+        return redirect('indexx')
+    return redirect('indexx')
 
 
 
@@ -208,7 +210,7 @@ def edit(request):
 
 
 def manage_edit(request):
-    if request.method=="POST":
+    if request.method=="POST" and "username" in request.session :
         name = request.POST.get('name')
         stats = request.POST.get('stats')
         description = request.POST.get('description')
@@ -278,13 +280,13 @@ def search_profile(request,user):
         followedUsers=0
 
     # count of followers 
-        followers_obj = Followers.objects.filter(user=user)
+    followers_obj = Followers.objects.filter(user=user)
 
-        if followers_obj:
-            followers = followers_obj[0].follower.count()
-        else:
-            followers=0
-        print(followers)
+    if followers_obj:
+        followers = followers_obj[0].follower.count()
+    else:
+        followers=0
+        
     params = {'name':user.name , 'username':user.username ,
                 'games':user.games, 'country':user.country,
                 'state':user.state, 'description':user.description, 'stats':user.stats , 'profileImage':user.profileImage,
@@ -308,10 +310,24 @@ def follow(request,usern):
             Followers.unfollow(currUser , to_follow)
             is_following = 0
 
+            # Handle unfollowing notifications
+            message = str(currUser.username) + " just Unfollowed you"
+            to_whom = to_follow
+            #print(message)
+            addMsg = Notification(user=to_follow , message=message)
+            Notification.save(addMsg)
+
         else:
             Following.follow(currUser , to_follow)
             Followers.follow(currUser , to_follow)
             is_following = 1
+
+            # Handle following notifications
+            message = str(currUser.username) + " just Followed you"
+            to_whom = to_follow
+            #print(message)
+            addMsg = Notification(user=to_follow , message=message)
+            Notification.save(addMsg)
         
         resp={
             "following":is_following,
@@ -321,3 +337,26 @@ def follow(request,usern):
 
     else:
         return HttpResponse("login first")
+
+
+
+def notify(request):
+    if "username" in request.session:
+        currUser = User.objects.get(username=request.session["username"])
+        my_message = Notification.objects.filter(user = currUser)
+
+        return render(request,'home/notifications.html',{'messages' : my_message})
+
+
+def delete_notify(request,msgId):
+    if "username" in request.session:
+        thisMsg = Notification.objects.filter(id=msgId)
+        if request.session["username"]==thisMsg[0].user.username:
+            #print(thisPost)
+            thisMsg.delete()
+            return redirect('notifications')
+        else:
+            return HttpResponse("Katai Tez hor rhe ho haiiiii....chala jaa beta kuch ni hona")
+    else:
+        return redirect('login')    
+

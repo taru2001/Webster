@@ -71,4 +71,9 @@ class Followers(models.Model):
         return self.user.username
 
 
+class Notification(models.Model):
+    user =  models.ForeignKey(User , on_delete=models.CASCADE)
+    message = models.CharField(max_length=30,default="")
+
+
 
