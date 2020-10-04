@@ -278,13 +278,13 @@ def search_profile(request,user):
         followedUsers=0
 
     # count of followers 
-        followers_obj = Followers.objects.filter(user=user)
+    followers_obj = Followers.objects.filter(user=user)
 
-        if followers_obj:
-            followers = followers_obj[0].follower.count()
-        else:
-            followers=0
-        print(followers)
+    if followers_obj:
+        followers = followers_obj[0].follower.count()
+    else:
+        followers=0
+    print(followers)
     params = {'name':user.name , 'username':user.username ,
                 'games':user.games, 'country':user.country,
                 'state':user.state, 'description':user.description, 'stats':user.stats , 'profileImage':user.profileImage,
