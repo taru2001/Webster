@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <title>Document</title>
 </head>
 <body>
@@ -38,8 +40,8 @@
         {% endifequal %}
 
         <br>
-        
-        {%if user in post.likes %}
+
+        {% if post in liked_posts %}
         
     <button id ="{{post.id}}" class="lol"><a href="{%url 'like_post' %}" id="hlike{{post.id}}">Dislike</a></button>
         {%else%}
@@ -75,6 +77,7 @@
                })
                }
                );</script>
+       
        
 </body>
 </html>
