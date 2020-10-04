@@ -35,6 +35,28 @@ def about(request):
     return HttpResponse("About page")
 
 
+
+def get_followingPost(user):
+
+    followed_obj = Following.objects.filter(user=user)
+    if followed_obj:
+        followed_users = followed_obj[0].followed.all()
+
+        all_posts = Post.objects.all()
+        followed_user_posts = []
+
+        name = user.username
+        for post in all_posts:
+            if post.user in followed_users or post.user.username==name:
+                followed_user_posts.append(post)
+
+        return followed_user_posts
+
+    return None
+
+
+
+
 def logout(request):
     if "username" in request.session:
         del request.session["username"]
@@ -50,7 +72,7 @@ def likes(request, *args):  # individually handles posts for likes by ajax but r
 
     userr = get_object_or_404(User, username=request.session['username'])
     print("id:"+str(id))
-    p1 = Post.objects.get_or_404(pk=id)
+    p1 = Post.objects.get(pk=id)
     like = p1.likes.filter(username=userr.username)
     liked = False
     if like:
@@ -77,6 +99,7 @@ def loginUser(request):
         username = request.session["username"]
         currUser = User.objects.filter(username=username)
         UserEmail = User.objects.filter(email=username)
+        print(currUser)
 
         temp1 = len(currUser)
         temp2 = len(UserEmail)
@@ -88,8 +111,11 @@ def loginUser(request):
             UserEmail = UserEmail[0]
             currUser = UserEmail
 
-        params = {'name':currUser.name , 'username':currUser.username , 'mobile':currUser.mobile ,
-                        'email':currUser.email}
+        # Fetching following users posts
+        followedUser_posts = get_followingPost(currUser)
+
+        #print(followedUser_posts)
+        params = {'username':username , 'posts': followedUser_posts,'user':currUser}
         return render(request,'home/userhome.html',params) 
 
        
@@ -122,8 +148,11 @@ def loginUser(request):
             # Created Session
             request.session["username"] = currUser.username
             
-            params = {'name':currUser.name , 'username':currUser.username , 'mobile':currUser.mobile ,
-                        'email':currUser.email}
+            # Fetching following users posts
+            followedUser_posts = get_followingPost(currUser)
+
+            #print(followedUser_posts)
+            params = {'username':username , 'posts': followedUser_posts,'user':currUser}
             return render(request,'home/userhome.html',params)
 
     return render(request,'home/login.html')
@@ -144,15 +173,15 @@ def upload(request):
 
             # Handle post notifications to followers
             #currUser = User.objects.get(username=request.sessiom("username"))
-            follower_obj = Followers.objects.get(user=user)
+            follower_obj = Followers.objects.filter(user=user)
 
             if follower_obj:
-                followers = follower_obj.follower.all()
+                followers = follower_obj[0].follower.all()
 
-            for users in followers:
-                message = str(user.username) + " uploaded a new post. Go check it out"
-                addMsg = Notification(user=users,message=message)
-                Notification.save(addMsg)
+                for users in followers:
+                    message = str(user.username) + " uploaded a new post. Go check it out"
+                    addMsg = Notification(user=users,message=message)
+                    Notification.save(addMsg)
             
             return redirect('login')
 
