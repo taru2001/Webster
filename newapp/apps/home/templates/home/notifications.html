@@ -7,6 +7,7 @@
     <title>Document</title>
 </head>
 <body>
+    <a href="/home/login/"><button>Home</button></a>
     {% for msg in messages %}
         {{msg.message}} <br>
         <a href="{% url 'deleteMsg' msg.id %}"><button>Close</button></a>
