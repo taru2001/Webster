@@ -149,10 +149,10 @@ def upload(request):
             if follower_obj:
                 followers = follower_obj.follower.all()
 
-            for users in followers:
-                message = str(user.username) + " uploaded a new post. Go check it out"
-                addMsg = Notification(user=users,message=message)
-                Notification.save(addMsg)
+                for users in followers:
+                    message = str(user.username) + " uploaded a new post. Go check it out"
+                    addMsg = Notification(user=users,message=message)
+                    Notification.save(addMsg)
             
             return redirect('login')
 
