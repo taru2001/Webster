@@ -3,6 +3,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
@@ -22,12 +24,45 @@
             <a href="{% url 'playvideo' post.id %}"><button>Play Video</button></a>
 
         {% endifequal %}
-        <a href="{% url 'delete' post.id %}" ><button>Delete</button></a>
-        <br>
-        <br>
-        <br>
 
+
+        <a href="{% url 'delete' post.id %}" ><button>Delete</button></a>
+        {%if post in liked_post%}
+    <button id ="{{post.id}}" class="lol"><a href="{%url 'like_post' %}" id="hlike{{post.id}}">Dislike</a></button>
+        {%else%}
+    <button id ="{{post.id}}" class="lol"><a href="{%url 'like_post' %}" id="hlike{{post.id}}">Like</a></button>
+        {%endif%}
+           <a class="count" id="count{{post.id}}">{{post.likes.count}}</a>
+    <div class="rating" id="rating.{{post.id}}"><button id="{{post.id}}" class="rate">click here to Rate</button></div>
+
+        <br>
+        <br>
+        <br>
     {% endfor %}
+<script>
+ $(".lol").click(
+        function(e){
+        var id =this.id;
+
+        var href=$('.lol').find('a').attr('href')
+        console.log(href,id)
+        e.preventDefault();
+ $.ajax({
+            url:href,
+            data : {'likeid':id},
+            success:function(response){
+              $('#count'+id).html(response.count)
+                if(response.liked){
+                $('#hlike'+id).html("Like")   //  find('a')finds button with id=post id and since href has our html so we have to find anker tag a and then use html,try doing this oppositely:by parag
+
+                //'#' is used for refering 'id' while '.' is used for finding key words in 'class' (can be any keyword or keywrds present in class but try to make it unique)
+                }else{
+                     $('#hlike'+id).html("Dislike")
+                }
+            }
+        })
+        }
+        );</script>
 
 </body>
 </html>

@@ -19,5 +19,6 @@ urlpatterns = [
     path('search/<str:user>/',views.search_profile,name="searchProfile"),
     path('handlefollow/<str:usern>/',views.follow,name="follow"),
     path('notify/',views.notify,name="notifications"),
-    path('delNotify/<int:msgId>/',views.delete_notify,name="deleteMsg")
+    path('delNotify/<int:msgId>/',views.delete_notify,name="deleteMsg"),
+    path('login/mypost/follow',views.likes,name="like_post"),
 ]

@@ -28,7 +28,18 @@ class Post(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     video = models.FileField(upload_to = "home/images",blank=True)
     posttype = models.CharField(max_length=10,default="video")
+    likes = models.ManyToManyField(User, related_name="likes_post")
 
+    @classmethod
+    def liked_p(cls, user, id):
+        post = cls.objects.get(pk=id)
+        print("here")
+        post.likes.add(user)
+
+    @classmethod
+    def disliked_p(cls, user, id):
+        post = cls.objects.get(pk=id)
+        post.likes.remove(user)
     def __str__(self):
         return self.user.username
 

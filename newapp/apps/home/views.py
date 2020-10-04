@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import User,Post,Following,Followers,Notification
 import json 
@@ -41,6 +41,32 @@ def logout(request):
         return redirect('indexx')
     return redirect('indexx')
 
+def likes(request, *args):  # individually handles posts for likes by ajax but resets on refresh , so making a
+
+
+# list in which a user like some posts and then sending them separetely
+    id = request.GET.get("likeid","13")
+
+    userr = get_object_or_404(User, username=request.session['username'])
+    print("id:"+str(id))
+    p1 = Post.objects.get(pk=id)
+    like = p1.likes.filter(username=userr.username)
+    liked = False
+    if like:
+        liked = True
+        print("disliked_p")
+        Post.disliked_p(userr, id)
+    else:
+        liked = False
+        print("like_p")
+        Post.liked_p(userr, id)
+    count = p1.likes.all().count()
+    resp = {
+    'liked': liked,
+    'count': count
+}
+    response = json.dumps(resp)
+    return HttpResponse(response, content_type="application/json")
 
 
 def loginUser(request):
@@ -136,12 +162,17 @@ def mypost(request):
         for post in posts:
             if post.user.username==request.session["username"]:
                 mylist.append(post)
+        liked_by_user = []  # list of posts liked by logined user
+        for i in mylist:
 
+            is_liked = i.likes.filter(username=request.session["username"])
+            if is_liked:
+                liked_by_user.append(i)
         #print(mylist)
         #for i in mylist:
             #print(i.user.mobile)
 
-        params = {'mylist':mylist}
+        params = {'mylist':mylist,'liked_post':liked_by_user}
 
         return render(request,'home/mypost.html',params)
 
