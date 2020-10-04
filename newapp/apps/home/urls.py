@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('index/',views.index,name="index"),
+    path('index/',views.index,name="indexx"),
     path('register/',views.registerUser,name="register"),
     path('about/',views.about,name="about"),
     path('login/',views.loginUser,name="login"),
@@ -17,5 +17,7 @@ urlpatterns = [
     path('search/',views.searchuser,name="searchuser"),
     path('changephoto/',views.changephoto,name="profilePic"),
     path('search/<str:user>/',views.search_profile,name="searchProfile"),
-    path('handlefollow/<str:usern>/',views.follow,name="follow")
+    path('handlefollow/<str:usern>/',views.follow,name="follow"),
+    path('notify/',views.notify,name="notifications"),
+    path('delNotify/<int:msgId>/',views.delete_notify,name="deleteMsg")
 ]
