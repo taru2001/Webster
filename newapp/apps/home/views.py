@@ -159,16 +159,20 @@ def loginUser(request):
             
             # Fetching following users posts
             followedUser_posts = get_followingPost(currUser)
+      
+            liked_posts = []
+            rated_posts = []
+            for i in followedUser_posts:
+                is_liked = i.likes.filter(username=request.session["username"])
+                is_rated = i.raters.filter(username=request.session["username"])
+                if is_liked:
+                    liked_posts.append(i)
 
-            liked_posts = [] 
-            if followedUser_posts:
-                 for i in followedUser_posts:
-                    is_liked = i.likes.filter(username=request.session["username"])
-                    if is_liked:
-                        liked_posts.append(i)
+                if is_rated:
+                    rated_posts.append(i)
 
             #print(followedUser_posts)
-            params = {'username':username , 'posts': followedUser_posts,'liked_posts':liked_posts}
+            params = {'username':username , 'posts': followedUser_posts,'liked_posts':liked_posts , 'rated_posts':rated_posts}
             return render(request,'home/userhome.html',params)
 
     return render(request,'home/login.html')
