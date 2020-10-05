@@ -13,6 +13,7 @@
                 <!-- {% csrf_token %} -->
                 <div class="row">
                     
+                    
                     <div class="col-md-4">
                         <div class="profile-img" style="height: 200px;">
                             {% if profileImage.url is not None %}
@@ -59,7 +60,10 @@
                             <!-- <a href="">Mein noob hu</a><br/>
                             <a href="">Bootsnipp Profile</a><br/>
                             <a href="">Bootply Profile</a> -->
-                            {{games}}
+                            {% for a in gamessplit %}
+                                {{a}}
+                                <br>
+                            {% endfor %}
                             <!-- <p>SKILLS</p>
                             <a href="">Web Designer</a><br/>
                             <a href="">Web Developer</a><br/>

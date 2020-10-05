@@ -39,20 +39,21 @@ def about(request):
 def get_followingPost(user):
 
     followed_obj = Following.objects.filter(user=user)
+    followed_user_posts = []
     if followed_obj:
         followed_users = followed_obj[0].followed.all()
 
-        all_posts = Post.objects.all()
-        followed_user_posts = []
+    all_posts = Post.objects.all()
 
-        name = user.username
-        for post in all_posts:
-            if post.user in followed_users or post.user.username==name:
-                followed_user_posts.append(post)
+    for post in all_posts:
+        if followed_obj and post.user in followed_users:
+            followed_user_posts.append(post)
+        if post.user==user:
+            followed_user_posts.append(post)
 
-        return followed_user_posts
+    return followed_user_posts
+    
 
-    return None
 
 
 
@@ -157,11 +158,12 @@ def loginUser(request):
             # Fetching following users posts
             followedUser_posts = get_followingPost(currUser)
 
-            liked_posts = []
-            for i in followedUser_posts:
-                is_liked = i.likes.filter(username=request.session["username"])
-                if is_liked:
-                    liked_posts.append(i)
+            liked_posts = [] 
+            if followedUser_posts:
+                 for i in followedUser_posts:
+                    is_liked = i.likes.filter(username=request.session["username"])
+                    if is_liked:
+                        liked_posts.append(i)
 
             #print(followedUser_posts)
             params = {'username':username , 'posts': followedUser_posts,'liked_posts':liked_posts}
@@ -232,6 +234,7 @@ def mypost(request):
         return HttpResponse("login first")
 
 
+
 def deletePost(request,postId):
     if "username" in request.session:
         thisPost = Post.objects.filter(id=postId)
@@ -272,10 +275,12 @@ def profile(request):
         else:
             followers=0
 
+        games=user.games.split(',')
+        # print(games)
         params = {'name':user.name , 'username':user.username , 'mobile':user.mobile ,
                         'email':user.email, 'games':user.games, 'country':user.country,
                         'state':user.state, 'description':user.description, 'stats':user.stats , 'profileImage':user.profileImage,
-                         'followedUsers' : followedUsers , 'followers':followers}
+                         'followedUsers' : followedUsers , 'followers':followers, 'gamessplit':games}
 
         return render(request,'home/dashboard.html',params)
 
@@ -344,15 +349,22 @@ def changephoto(request):
         return redirect('profile')
 
 
-def search_profile(request,user):
-    currUser = User.objects.get(username=request.session["username"])
-    user = User.objects.get(username=user)
-    
-    is_following = Following.objects.filter(user=currUser , followed=user)
 
+def search_profile(request,user):
+
+    user = User.objects.get(username=user)
+    loggedIn=0
+    is_following=0
     same=0
-    if currUser==user:
-        same=1
+    if "username" in request.session:
+        currUser = User.objects.get(username=request.session["username"])
+        
+        is_following = Following.objects.filter(user=currUser , followed=user)
+
+        same=0
+        if currUser==user:
+            same=1
+        loggedIn = 1
     
     # count of following
     following_obj = Following.objects.filter(user=user)
@@ -369,12 +381,12 @@ def search_profile(request,user):
         followers = followers_obj[0].follower.count()
     else:
         followers=0
-    print(followers)
+    #print(followers)
         
     params = {'name':user.name , 'username':user.username ,
                 'games':user.games, 'country':user.country,
                 'state':user.state, 'description':user.description, 'stats':user.stats , 'profileImage':user.profileImage,
-                  'is_following':is_following , 'same':same , 'followedUsers': followedUsers , 'followers':followers}
+                  'is_following':is_following , 'same':same , 'followedUsers': followedUsers , 'followers':followers , 'loggedIn':loggedIn}
     return render(request,'home/searchedProfile.html',params)
 
 
