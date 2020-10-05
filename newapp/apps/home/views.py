@@ -20,6 +20,9 @@ def registerUser(request):
         if passw!=confpass:
             return  HttpResponse("passwords did not matched...!!")
 
+        if len(passw)==0 or len(phone)==0 or len(femail)==0 or len(fname)==0 or len(fusername)==0:
+             return  HttpResponse("Empty Credentials!")
+
         else:
             newUser = User(name=fname,username=fusername,mobile=phone,email=femail,password=passw)
             User.save(newUser)
@@ -350,14 +353,19 @@ def changephoto(request):
 
 
 def search_profile(request,user):
-    currUser = User.objects.get(username=request.session["username"])
     user = User.objects.get(username=user)
-    
-    is_following = Following.objects.filter(user=currUser , followed=user)
-
+    loggedIn=0
+    is_following=0
     same=0
-    if currUser==user:
-        same=1
+    if "username" in request.session:
+        currUser = User.objects.get(username=request.session["username"])
+        
+        is_following = Following.objects.filter(user=currUser , followed=user)
+
+        same=0
+        if currUser==user:
+            same=1
+        loggedIn = 1
     
     # count of following
     following_obj = Following.objects.filter(user=user)
@@ -374,13 +382,15 @@ def search_profile(request,user):
         followers = followers_obj[0].follower.count()
     else:
         followers=0
-    print(followers)
+    #print(followers)
         
     params = {'name':user.name , 'username':user.username ,
                 'games':user.games, 'country':user.country,
                 'state':user.state, 'description':user.description, 'stats':user.stats , 'profileImage':user.profileImage,
-                  'is_following':is_following , 'same':same , 'followedUsers': followedUsers , 'followers':followers}
+                  'is_following':is_following , 'same':same , 'followedUsers': followedUsers , 'followers':followers , 'loggedIn':loggedIn}
     return render(request,'home/searchedProfile.html',params)
+
+
 
 
 
