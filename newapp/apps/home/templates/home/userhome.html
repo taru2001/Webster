@@ -62,12 +62,44 @@
             {% else %}
                 <button>Rated</button>
             {% endif %}
-            <span id="avg{{post.id}}">{{post.avgRating}}</span>
+            <span id="avg{{post.id}}">{{post.avgRating}}</span><br>
+
+    {%for comment in comments%}
+    {%if post.id == comment.post.id%}
+    <pre>{{comment.user.username}} at {{comment.time}} :{{comment.comment}}</pre><hr>
+    {%endif%}
+    {%endfor%}
+    <span id="end{{post.id}}"></span> <br>
+
+    <textarea id="cmnt{{post.id}}"  name="comment{{post.id}}" style="resize:none;width:400px;"></textarea>
+    <button id="{{post.id}}" class="Commentbtn">Comment</button>
            <br><br><br>
     {% endfor %}
 
 
     <script>
+     $(".Commentbtn").click(
+    function(e){
+    href="{% url 'comment_post'%}"
+    var id=this.id;
+    var msg=$("#cmnt"+id).val();
+    $("#cmnt"+id).val("");
+
+    e.preventDefault();
+    console.log(id,msg)
+    $.ajax({
+    url: href,
+    data:{'comment':msg,
+           'postid':id},
+    success:function(response){
+        $("#end"+id).append(response.username+"at"+response.time+" :"+response.comment+"<hr>")
+
+    }
+    })
+
+
+    }
+    );
         $(".lol").click(
                function(e){
                var id =this.id;

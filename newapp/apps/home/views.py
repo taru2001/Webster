@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import User,Post,Following,Followers,Notification
+from .models import User, Post, Following, Followers, Notification, Comments
 import json 
 
 
@@ -122,9 +122,9 @@ def loginUser(request):
 
             if is_rated:
                 rated_posts.append(i)
-
+        comments = Comments.objects.all()
         #print(followedUser_posts)
-        params = {'username':username , 'posts': followedUser_posts,'liked_posts':liked_posts , 'rated_posts':rated_posts}
+        params = {'username':username , 'posts': followedUser_posts,'liked_posts':liked_posts , 'rated_posts':rated_posts,'comments':comments}
         return render(request,'home/userhome.html',params) 
 
        
@@ -485,4 +485,19 @@ def rating(request,*args):
             response = json.dumps(resp)
             return HttpResponse(response, content_type="application/json")
         
-
+def comments(request):
+    msg=request.GET.get("comment")
+    post=Post.objects.get(pk=request.GET.get("postid"))
+    user=User.objects.get(username=request.session['username'])
+    comment=Comments(user=user,post=post,comment=msg)
+    comment.save()
+    time=comment.time
+    time=str(time.strftime("%b, %d-%m-%y %I:%M %p"))
+    print(time)
+    rep={
+        "username":user.username,
+        "comment":msg,
+        "time":time,
+    }
+    response=json.dumps(rep)
+    return HttpResponse(response,content_type='application/json')
