@@ -29,6 +29,10 @@ class Post(models.Model):
     video = models.FileField(upload_to = "home/images",blank=True)
     posttype = models.CharField(max_length=10,default="video")
     likes = models.ManyToManyField(User, related_name="likes_post")
+    raters = models.ManyToManyField(User,related_name="who_rated")
+    rating = models.IntegerField(default=0)
+    avgRating = models.FloatField(default=0.0)
+
 
     @classmethod
     def liked_p(cls, user, id):
@@ -40,8 +44,20 @@ class Post(models.Model):
     def disliked_p(cls, user, id):
         post = cls.objects.get(pk=id)
         post.likes.remove(user)
+
+    @classmethod
+    def rateNow(cls,id,user,val):
+        post = cls.objects.get(id=id)
+        post.raters.add(user)
+        post.rating = int(post.rating) + int(val)
+        post.save()
+        post.avgRating = int(post.rating)/float(post.raters.count())
+        post.save()
+
     def __str__(self):
         return self.user.username
+
+
 
 
 class Following(models.Model):
