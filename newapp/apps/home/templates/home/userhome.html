@@ -1,8 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <title>Document</title>
 </head>
 <body>
@@ -19,5 +22,62 @@
         <input type="text" name="searchuser" placeholder="Search User">  <br>
         <button type="submit">Submit</button>
     </form>
+    <br>
+    <br>
+    <br>
+    <h1>feed</h1>
+    {% for post in posts %}
+        By:- {{post.user.username}} <br>
+        Tagline:- {{post.tagline}} <br><br>
+
+        {% ifequal post.posttype "image" %}
+            <img src="{{post.video.url}}" width="320px" height ="200px" alt="Not Found">
+            <br>
+        
+        {% else %}
+            <a href="{% url 'playvideo' post.id %}"><button>Play Video</button></a>
+
+        {% endifequal %}
+
+        <br>
+
+        {% if post in liked_posts %}
+        
+    <button id ="{{post.id}}" class="lol"><a href="{%url 'like_post' %}" id="hlike{{post.id}}">Dislike</a></button>
+        {%else%}
+    <button id ="{{post.id}}" class="lol"><a href="{%url 'like_post' %}" id="hlike{{post.id}}">Like</a></button>
+        {%endif%}
+           <a class="count" id="count{{post.id}}">{{post.likes.count}}</a>
+
+           <br><br><br>
+    {% endfor %}
+
+
+    <script>
+        $(".lol").click(
+               function(e){
+               var id =this.id;
+       
+               var href=$('.lol').find('a').attr('href')
+               console.log(href,id)
+               e.preventDefault();
+        $.ajax({
+                   url:href,
+                   data : {'likeid':id},
+                   success:function(response){
+                     $('#count'+id).html(response.count)
+                       if(response.liked){
+                       $('#hlike'+id).html("Like")   //  find('a')finds button with id=post id and since href has our html so we have to find anker tag a and then use html,try doing this oppositely:by parag
+       
+                       //'#' is used for refering 'id' while '.' is used for finding key words in 'class' (can be any keyword or keywrds present in class but try to make it unique)
+                       }else{
+                            $('#hlike'+id).html("Dislike")
+                       }
+                   }
+               })
+               }
+               );</script>
+       
+       
 </body>
 </html>

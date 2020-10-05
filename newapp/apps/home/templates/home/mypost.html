@@ -11,6 +11,9 @@
     <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <title>Document</title>
+<style>body{
+    background-color: aqua;</style>
+    
 </head>
 <body>
     {% for post in mylist %}
@@ -44,6 +47,18 @@
     <button id ="{{post.id}}" class="lol"><a href="{%url 'like_post' %}" id="hlike{{post.id}}">Like</a></button>
         {%endif%}
            <a class="count" id="count{{post.id}}">{{post.likes.count}}</a>
+           <br><br>
+    
+
+           <!--this is a comment pls move ahead-->
+
+           <div >
+            <input type="radio" name="rating{{post.id}}" value="5" id="5"><label for="5" style="background-color: rgb(252, 255, 50);">☆</label> 
+            <input type="radio" name="rating{{post.id}}" value="4" id="4"><label for="4" style="background-color: rgb(177, 185, 65);">☆</label> 
+            <input type="radio" name="rating{{post.id}}" value="3" id="3"><label for="3" style="background-color: rgb(165, 172, 94);">☆</label> 
+            <input type="radio" name="rating{{post.id}}" value="2" id="2"><label style="background-color: rgb(102, 107, 54);" for="2">☆</label> 
+            <input type="radio" name="rating{{post.id}}" value="1" id="1"><label for="1" style="background-color: rgb(108, 151, 97);">☆</label>
+           </div>
 
         <br>
         <br>
