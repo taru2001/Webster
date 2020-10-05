@@ -6,6 +6,10 @@
      <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/myhome.css' %}">
+    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <title>Document</title>
 </head>
 <body>
@@ -16,16 +20,23 @@
 
         {% ifequal post.posttype "image" %}
             <img src="{{post.video.url}}" width="320px" height ="200px" alt="Not Found">
+            <div class="rating" > <input type="radio" name="ratings" value="5" id="5"><label for="5">☆</label> <input type="radio" name="ratings" value="4" id="4"><label for="4">☆</label> <input type="radio" name="ratings" value="3" id="3"><label for="3">☆</label> <input type="radio" name="ratings" value="2" id="2"><label for="2">☆</label> <input type="radio" name="ratings" value="1" id="1"><label for="1">☆</label>
+            </div>
             <br>
         
         {% else %}
             Video By :- {{post.user.name}}  <br>
+        
             
             <a href="{% url 'playvideo' post.id %}"><button>Play Video</button></a>
+            
+            <div class="rating"> <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label> <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label> <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label> <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label> <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
+            </div>
 
         {% endifequal %}
 
 
+        <div class="rating" id="rating.{{post.id}}"><button id="{{post.id}}" class="rate">click here to Rate</button></div><br>
         <a href="{% url 'delete' post.id %}" ><button>Delete</button></a>
         {%if post in liked_post%}
     <button id ="{{post.id}}" class="lol"><a href="{%url 'like_post' %}" id="hlike{{post.id}}">Dislike</a></button>
@@ -33,7 +44,6 @@
     <button id ="{{post.id}}" class="lol"><a href="{%url 'like_post' %}" id="hlike{{post.id}}">Like</a></button>
         {%endif%}
            <a class="count" id="count{{post.id}}">{{post.likes.count}}</a>
-    <div class="rating" id="rating.{{post.id}}"><button id="{{post.id}}" class="rate">click here to Rate</button></div>
 
         <br>
         <br>

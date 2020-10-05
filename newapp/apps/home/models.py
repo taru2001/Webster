@@ -29,6 +29,11 @@ class Post(models.Model):
     video = models.FileField(upload_to = "home/images",blank=True)
     posttype = models.CharField(max_length=10,default="video")
     likes = models.ManyToManyField(User, related_name="likes_post")
+    # id1 = models.AutoField
+    # id2 = models.AutoField
+    # id3 = models.AutoField
+    # id4 = models.AutoField
+    # id5 = models.AutoField
 
     @classmethod
     def liked_p(cls, user, id):

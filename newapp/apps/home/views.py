@@ -41,11 +41,12 @@ def logout(request):
         return redirect('indexx')
     return redirect('indexx')
 
+
+
 def likes(request, *args):  # individually handles posts for likes by ajax but resets on refresh , so making a
 
-
 # list in which a user like some posts and then sending them separetely
-    id = request.GET.get("likeid","13")
+    id = request.GET.get("likeid","")
 
     userr = get_object_or_404(User, username=request.session['username'])
     print("id:"+str(id))
@@ -90,10 +91,11 @@ def loginUser(request):
         params = {'name':currUser.name , 'username':currUser.username , 'mobile':currUser.mobile ,
                         'email':currUser.email}
         return render(request,'home/userhome.html',params) 
-        
+
+       
 
     # Method==POST
-    if request.method=='POST':
+    elif request.method=='POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
 
@@ -139,7 +141,18 @@ def upload(request):
 
             newPost = Post(user=user,tagline=tagline,video=video,posttype=posttype)
             Post.save(newPost)
-            print(posttype)
+
+            # Handle post notifications to followers
+            #currUser = User.objects.get(username=request.sessiom("username"))
+            follower_obj = Followers.objects.get(user=user)
+
+            if follower_obj:
+                followers = follower_obj.follower.all()
+
+                for users in followers:
+                    message = str(user.username) + " uploaded a new post. Go check it out"
+                    addMsg = Notification(user=users,message=message)
+                    Notification.save(addMsg)
             
             return redirect('login')
 
@@ -168,11 +181,11 @@ def mypost(request):
             is_liked = i.likes.filter(username=request.session["username"])
             if is_liked:
                 liked_by_user.append(i)
-        #print(mylist)
-        #for i in mylist:
-            #print(i.user.mobile)
+        
 
         params = {'mylist':mylist,'liked_post':liked_by_user}
+        # , 'id1':post.tagline+"1", 'id2':post.tagline+"2", 'id3':post.tagline+"3",
+                    # 'id4':post.tagline+"4", 'id5':post.tagline+"5"
 
         return render(request,'home/mypost.html',params)
 
@@ -220,10 +233,13 @@ def profile(request):
         else:
             followers=0
 
+        
+        games=user.games.split(',')
+        # print(games)
         params = {'name':user.name , 'username':user.username , 'mobile':user.mobile ,
                         'email':user.email, 'games':user.games, 'country':user.country,
                         'state':user.state, 'description':user.description, 'stats':user.stats , 'profileImage':user.profileImage,
-                         'followedUsers' : followedUsers , 'followers':followers}
+                         'followedUsers' : followedUsers , 'followers':followers, 'gamessplit':games}
 
         return render(request,'home/dashboard.html',params)
 
@@ -378,6 +394,7 @@ def notify(request):
         my_message = Notification.objects.filter(user = currUser)
 
         return render(request,'home/notifications.html',{'messages' : my_message})
+    return redirect('indexx')
 
 
 def delete_notify(request,msgId):
