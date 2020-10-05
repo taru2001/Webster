@@ -102,5 +102,13 @@ class Notification(models.Model):
     user =  models.ForeignKey(User , on_delete=models.CASCADE)
     message = models.CharField(max_length=30,default="")
 
-
+class Comments(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="User_commented")
+    post=models.ForeignKey(Post,on_delete=models.CASCADE,related_name="Curr_post")
+    comment=models.CharField(max_length=300)
+    time=models.DateTimeField(auto_now_add=True)
+    class Meta:
+        ordering=['time']
+    def __str__(self):
+        return self.user.username+"  : "+self.comment
 
