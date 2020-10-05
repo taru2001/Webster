@@ -42,20 +42,21 @@ def about(request):
 def get_followingPost(user):
 
     followed_obj = Following.objects.filter(user=user)
+    followed_user_posts = []
     if followed_obj:
         followed_users = followed_obj[0].followed.all()
 
-        all_posts = Post.objects.all()
-        followed_user_posts = []
+    all_posts = Post.objects.all()
 
-        name = user.username
-        for post in all_posts:
-            if post.user in followed_users or post.user.username==name:
-                followed_user_posts.append(post)
+    for post in all_posts:
+        if followed_obj and post.user in followed_users:
+            followed_user_posts.append(post)
+        if post.user==user:
+            followed_user_posts.append(post)
 
-        return followed_user_posts
+    return followed_user_posts
+    
 
-    return None
 
 
 
@@ -160,11 +161,12 @@ def loginUser(request):
             # Fetching following users posts
             followedUser_posts = get_followingPost(currUser)
 
-            liked_posts = []
-            for i in followedUser_posts:
-                is_liked = i.likes.filter(username=request.session["username"])
-                if is_liked:
-                    liked_posts.append(i)
+            liked_posts = [] 
+            if followedUser_posts:
+                 for i in followedUser_posts:
+                    is_liked = i.likes.filter(username=request.session["username"])
+                    if is_liked:
+                        liked_posts.append(i)
 
             #print(followedUser_posts)
             params = {'username':username , 'posts': followedUser_posts,'liked_posts':liked_posts}
@@ -237,6 +239,7 @@ def mypost(request):
         return HttpResponse("login first")
 
 
+
 def deletePost(request,postId):
     if "username" in request.session:
         thisPost = Post.objects.filter(id=postId)
@@ -277,7 +280,10 @@ def profile(request):
         else:
             followers=0
 
+<<<<<<< HEAD
         
+=======
+>>>>>>> 60b3e762ef7cb45d5714d6df75f1f1e1830cbe8b
         games=user.games.split(',')
         # print(games)
         params = {'name':user.name , 'username':user.username , 'mobile':user.mobile ,
@@ -352,7 +358,12 @@ def changephoto(request):
         return redirect('profile')
 
 
+
 def search_profile(request,user):
+<<<<<<< HEAD
+=======
+
+>>>>>>> 60b3e762ef7cb45d5714d6df75f1f1e1830cbe8b
     user = User.objects.get(username=user)
     loggedIn=0
     is_following=0
