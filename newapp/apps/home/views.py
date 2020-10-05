@@ -171,8 +171,9 @@ def loginUser(request):
                 if is_rated:
                     rated_posts.append(i)
 
+            comments = Comments.objects.all()
             #print(followedUser_posts)
-            params = {'username':username , 'posts': followedUser_posts,'liked_posts':liked_posts , 'rated_posts':rated_posts}
+            params = {'username':username , 'posts': followedUser_posts,'liked_posts':liked_posts , 'rated_posts':rated_posts,'comments':comments}
             return render(request,'home/userhome.html',params)
 
     return render(request,'home/login.html')
