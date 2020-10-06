@@ -54,6 +54,9 @@ class Post(models.Model):
         post.avgRating = int(post.rating)/float(post.raters.count())
         post.save()
 
+    class Meta:
+        ordering=['-date']
+
     def __str__(self):
         return self.user.username
 
@@ -108,7 +111,8 @@ class Comments(models.Model):
     comment=models.CharField(max_length=300)
     time=models.DateTimeField(auto_now_add=True)
     class Meta:
-        ordering=['time']
+        ordering=['-time']
+
     def __str__(self):
         return self.user.username+"  : "+self.comment
 
