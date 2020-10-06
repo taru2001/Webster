@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import User, Post, Following, Followers, Notification, Comments
 import json 
+from django.conf import settings
+from django.core.mail import send_mail
 
 
 def index(request):
@@ -26,7 +28,15 @@ def registerUser(request):
         else:
             newUser = User(name=fname,username=fusername,mobile=phone,email=femail,password=passw)
             User.save(newUser)
-            return redirect('/home/login/')
+            
+            # Send Mail
+            subject = 'Thank u for registering'
+            message = f'Welcome to the hard core gaming world'
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [femail]
+            send_mail(subject,message,email_from,recipient_list)
+
+            return redirect('indexx')
 
 
     else:
@@ -117,17 +127,27 @@ def loginUser(request):
 
         liked_posts = []
         rated_posts = []
+        reported_posts = []
+        name = request.session["username"]
         for i in followedUser_posts:
-            is_liked = i.likes.filter(username=request.session["username"])
-            is_rated = i.raters.filter(username=request.session["username"])
+            is_liked = i.likes.filter(username=name)
+            is_rated = i.raters.filter(username=name)
+            is_reported = i.report.filter(username=name)
             if is_liked:
                 liked_posts.append(i)
 
             if is_rated:
                 rated_posts.append(i)
+
+            if is_reported:
+                reported_posts.append(i)
+
+
         comments = Comments.objects.all()
         #print(followedUser_posts)
-        params = {'username':username , 'posts': followedUser_posts,'liked_posts':liked_posts , 'rated_posts':rated_posts,'comments':comments}
+        params = {'username':username , 'posts': followedUser_posts,'liked_posts':liked_posts , 'rated_posts':rated_posts,
+        'comments':comments , 'reported_posts':reported_posts}
+
         return render(request,'home/userhome.html',params) 
 
        
@@ -165,18 +185,26 @@ def loginUser(request):
       
             liked_posts = []
             rated_posts = []
+            reported_posts = []
+            name=request.session["username"]
             for i in followedUser_posts:
-                is_liked = i.likes.filter(username=request.session["username"])
-                is_rated = i.raters.filter(username=request.session["username"])
+                is_liked = i.likes.filter(username=name)
+                is_rated = i.raters.filter(username=name)
+                is_reported = i.report.filter(username=name)
                 if is_liked:
                     liked_posts.append(i)
 
                 if is_rated:
                     rated_posts.append(i)
 
+                if is_reported:
+                    reported_posts.append(i)
+
+
             comments = Comments.objects.all()
             #print(followedUser_posts)
-            params = {'username':username , 'posts': followedUser_posts,'liked_posts':liked_posts , 'rated_posts':rated_posts,'comments':comments}
+            params = {'username':username , 'posts': followedUser_posts,'liked_posts':liked_posts , 'rated_posts':rated_posts,
+            'comments':comments , 'reported_posts':reported_posts}
             return render(request,'home/userhome.html',params)
 
     return render(request,'home/login.html')
@@ -511,13 +539,16 @@ def comments(request):
     response=json.dumps(rep)
     return HttpResponse(response,content_type='application/json')
 
+
+
 def report(request, *args):
     id = request.GET.get('postid')
-    # r = Post.objects.get(pk=id)
-    # user = request.user
-    # count = r.report.all().count()
-    # resp = {
-    #     'report':report,
-    # }
+    currPost = Post.objects.get(pk=id)
+    currUser = User.objects.get(username=request.session["username"])
+
+    currPost.reported(currUser,id)
+    resp={
+
+    }
     response = json.dumps(resp)
     return HttpResponse(response, content_type="appllication/json")

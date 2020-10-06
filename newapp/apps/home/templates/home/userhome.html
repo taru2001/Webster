@@ -64,7 +64,19 @@
             {% endif %}
             <span id="avg{{post.id}}">{{post.avgRating}}</span><br>
 
-            <button class="report" id="r{{post.id}}"><a href="{% url 'report' %}" class="{{post.id}}" id="report{{post.id}}"><span id="s.{{post.id}}">Report</span></a></button>
+            {% ifequal post.user.username username %}
+
+            {% else %}
+                {% if post in reported_posts %}
+                <button>Reported</button>
+
+                {% else %}
+                <button class="report" id="r{{post.id}}"><a href="{% url 'report' %}" class="{{post.id}}" id="report{{post.id}}">
+                    <span id="s{{post.id}}">Report</span></a></button>
+                {% endif %}
+
+            {% endifequal %}
+
 
     {%for comment in comments%}
     {%if post.id == comment.post.id%}
@@ -135,11 +147,13 @@
                 
                 $.ajax({
                     url:href,
-                    data : {'postid':id, 'count':response.count},
+                    data : {'postid':id},
                     success:function(response){
-                       $('#s'+id).html("Reported")
-                    }
+                       
+                       $('#r'+id).find('a').remove();
+                       $('#r'+id).html("Reported");
 
+                    }
                     
                 })
                    }
