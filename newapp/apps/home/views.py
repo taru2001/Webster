@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import User, Post, Following, Followers, Notification, Comments
 import json 
+from django.conf import settings
+from django.core.mail import send_mail
 
 
 def index(request):
@@ -26,7 +28,15 @@ def registerUser(request):
         else:
             newUser = User(name=fname,username=fusername,mobile=phone,email=femail,password=passw)
             User.save(newUser)
-            return redirect('/home/login/')
+            
+            # Send Mail
+            subject = 'Thank u for registering'
+            message = f'Welcome to the hard core gaming world'
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [femail]
+            send_mail(subject,message,email_from,recipient_list)
+
+            return redirect('indexx')
 
 
     else:
