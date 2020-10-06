@@ -186,7 +186,7 @@ def loginUser(request):
             liked_posts = []
             rated_posts = []
             reported_posts = []
-            name=request.session["username"]
+            name = request.session["username"]
             for i in followedUser_posts:
                 is_liked = i.likes.filter(username=name)
                 is_rated = i.raters.filter(username=name)
