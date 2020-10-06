@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import User,Post,Following,Followers,Notification
+from .models import User, Post, Following, Followers, Notification, Comments
 import json 
 
 
@@ -56,9 +56,6 @@ def get_followingPost(user):
 
     return followed_user_posts
     
-
-
-
 
 
 def logout(request):
@@ -119,13 +116,18 @@ def loginUser(request):
         followedUser_posts = get_followingPost(currUser)
 
         liked_posts = []
+        rated_posts = []
         for i in followedUser_posts:
             is_liked = i.likes.filter(username=request.session["username"])
+            is_rated = i.raters.filter(username=request.session["username"])
             if is_liked:
                 liked_posts.append(i)
 
+            if is_rated:
+                rated_posts.append(i)
+        comments = Comments.objects.all()
         #print(followedUser_posts)
-        params = {'username':username , 'posts': followedUser_posts,'liked_posts':liked_posts}
+        params = {'username':username , 'posts': followedUser_posts,'liked_posts':liked_posts , 'rated_posts':rated_posts,'comments':comments}
         return render(request,'home/userhome.html',params) 
 
        
@@ -160,16 +162,21 @@ def loginUser(request):
             
             # Fetching following users posts
             followedUser_posts = get_followingPost(currUser)
+      
+            liked_posts = []
+            rated_posts = []
+            for i in followedUser_posts:
+                is_liked = i.likes.filter(username=request.session["username"])
+                is_rated = i.raters.filter(username=request.session["username"])
+                if is_liked:
+                    liked_posts.append(i)
 
-            liked_posts = [] 
-            if followedUser_posts:
-                 for i in followedUser_posts:
-                    is_liked = i.likes.filter(username=request.session["username"])
-                    if is_liked:
-                        liked_posts.append(i)
+                if is_rated:
+                    rated_posts.append(i)
 
+            comments = Comments.objects.all()
             #print(followedUser_posts)
-            params = {'username':username , 'posts': followedUser_posts,'liked_posts':liked_posts}
+            params = {'username':username , 'posts': followedUser_posts,'liked_posts':liked_posts , 'rated_posts':rated_posts,'comments':comments}
             return render(request,'home/userhome.html',params)
 
     return render(request,'home/login.html')
@@ -464,5 +471,42 @@ def delete_notify(request,msgId):
             return HttpResponse("Katai Tez hor rhe ho haiiiii....chala jaa beta kuch ni hona")
     else:
         return redirect('login')    
-        
 
+
+
+
+def rating(request,*args):
+    if "username" in request.session:
+        id = request.GET.get('rateid')
+        ratingValue = request.GET.get('value')
+        print(id,ratingValue)
+
+        if ratingValue:
+            currUser = User.objects.get(username=request.session["username"])
+            Post.rateNow(id,currUser,ratingValue)
+
+            currPost = Post.objects.get(id=id)
+            avg = currPost.avgRating
+            
+            resp = {
+            'avg':avg
+            }
+            response = json.dumps(resp)
+            return HttpResponse(response, content_type="application/json")
+        
+def comments(request):
+    msg=request.GET.get("comment")
+    post=Post.objects.get(pk=request.GET.get("postid"))
+    user=User.objects.get(username=request.session['username'])
+    comment=Comments(user=user,post=post,comment=msg)
+    comment.save()
+    time=comment.time
+    time=str(time.strftime("%b, %d-%m-%y %I:%M %p"))
+    print(time)
+    rep={
+        "username":user.username,
+        "comment":msg,
+        "time":time,
+    }
+    response=json.dumps(rep)
+    return HttpResponse(response,content_type='application/json')

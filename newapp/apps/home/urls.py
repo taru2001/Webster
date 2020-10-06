@@ -21,4 +21,6 @@ urlpatterns = [
     path('notify/',views.notify,name="notifications"),
     path('delNotify/<int:msgId>/',views.delete_notify,name="deleteMsg"),
     path('login/mypost/follow',views.likes,name="like_post"),
+    path('rating/',views.rating,name="rating"),
+    path('comments',views.comments,name="comment_post"),
 ]

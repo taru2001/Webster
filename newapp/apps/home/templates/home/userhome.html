@@ -45,15 +45,61 @@
         
     <button id ="{{post.id}}" class="lol"><a href="{%url 'like_post' %}" id="hlike{{post.id}}">Dislike</a></button>
         {%else%}
-    <button id ="{{post.id}}" class="lol"><a href="{%url 'like_post' %}" id="hlike{{post.id}}">Like</a></button>
+    <button id ="{{post.id}}" class="lol"><a href="{%url 'like_post' %}" id="hlike{{post.id}}">Like</a></button> 
         {%endif%}
-           <a class="count" id="count{{post.id}}">{{post.likes.count}}</a>
+           <a class="count" id="count{{post.id}}">{{post.likes.count}}</a><br><br>
 
+           {% if post not in rated_posts %}
+           <div id="rate{{post.id}}">
+            <input type="radio" name="rate{{post.id}}" value="1" id="1"  > 
+            <input type="radio" name="rate{{post.id}}" value="2" id="2"  >
+            <input type="radio" name="rate{{post.id}}" value="3" id="3"  >
+            <input type="radio" name="rate{{post.id}}" value="4" id="4"  >
+            <input type="radio" name="rate{{post.id}}" value="5" id="5"  >
+
+        </div>
+            <button class="rating" id="x{{post.id}}" ><a href="{% url 'rating' %}" class="{{post.id}}"><span id="text{{post.id}}"> Rate </span></a></button>
+            {% else %}
+                <button>Rated</button>
+            {% endif %}
+            <span id="avg{{post.id}}">{{post.avgRating}}</span><br>
+
+    {%for comment in comments%}
+    {%if post.id == comment.post.id%}
+    <pre>{{comment.user.username}} at {{comment.time}} :{{comment.comment}}</pre><hr>
+    {%endif%}
+    {%endfor%}
+    <span id="end{{post.id}}"></span> <br>
+
+    <textarea id="cmnt{{post.id}}"  name="comment{{post.id}}" style="resize:none;width:400px;"></textarea>
+    <button id="{{post.id}}" class="Commentbtn">Comment</button>
            <br><br><br>
     {% endfor %}
 
 
     <script>
+     $(".Commentbtn").click(
+    function(e){
+    href="{% url 'comment_post'%}"
+    var id=this.id;
+    var msg=$("#cmnt"+id).val();
+    $("#cmnt"+id).val("");
+
+    e.preventDefault();
+    console.log(id,msg)
+    $.ajax({
+    url: href,
+    data:{'comment':msg,
+           'postid':id},
+    success:function(response){
+        $("#end"+id).append(response.username+"at"+response.time+" :"+response.comment+"<hr>")
+
+    }
+    })
+
+
+    }
+    );
         $(".lol").click(
                function(e){
                var id =this.id;
@@ -67,7 +113,7 @@
                    success:function(response){
                      $('#count'+id).html(response.count)
                        if(response.liked){
-                       $('#hlike'+id).html("Like")   //  find('a')finds button with id=post id and since href has our html so we have to find anker tag a and then use html,try doing this oppositely:by parag
+                       $('#hlike'+id).html("Like")   //  find('a')finds button with id=post id and since href has our html so we have to find anchor tag a and then use html,try doing this oppositely:by parag
        
                        //'#' is used for refering 'id' while '.' is used for finding key words in 'class' (can be any keyword or keywrds present in class but try to make it unique)
                        }else{
@@ -76,7 +122,45 @@
                    }
                })
                }
-               );</script>
+               );
+
+
+               $(".rating").click(
+               function(e){
+                   var id = $(this).find('a').attr('class');
+                   var href = $(this).find('a').attr('href');
+                   
+                   var x = $('#rate'+id).find('input');
+
+                   var i,gotValue;
+                   for(i=0;i<5;i++)
+                    {
+                        if(x[i].checked)
+                        {
+                            gotValue=x[i].value;
+                            break;
+                        }
+                    }
+                    e.preventDefault();
+
+                    console.log(gotValue)
+
+                    $.ajax({
+                   url:href,
+                   data : {'rateid':id , 'value':gotValue},
+                   success:function(response){
+                     // will write ajax here...pls wait
+                     $('#avg'+id).html(response.avg)
+                     $('#rate'+id).remove();
+                     $('#x'+id).find('a').remove();
+                     $('#x'+id).html("Rated");
+                   }
+               })
+               
+               }
+               );
+               
+               </script>
        
        
 </body>
