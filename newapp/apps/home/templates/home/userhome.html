@@ -64,6 +64,8 @@
             {% endif %}
             <span id="avg{{post.id}}">{{post.avgRating}}</span><br>
 
+            <button class="report" id="r{{post.id}}"><a href="{% url 'report' %}" class="{{post.id}}" id="report{{post.id}}"><span id="s.{{post.id}}">Report</span></a></button>
+
     {%for comment in comments%}
     {%if post.id == comment.post.id%}
     <pre>{{comment.user.username}} at {{comment.time}} :{{comment.comment}}</pre><hr>
@@ -122,6 +124,25 @@
                    }
                })
                }
+               );
+
+               $(".report").click(
+                   function(e){
+                        var id = $(this).find('a').attr('class');
+                        var href = $('.report').find('a').attr('href');
+                        console.log(href,id)
+                        e.preventDefault();
+                
+                $.ajax({
+                    url:href,
+                    data : {'postid':id, 'count':response.count},
+                    success:function(response){
+                       $('#s'+id).html("Reported")
+                    }
+
+                    
+                })
+                   }
                );
 
 

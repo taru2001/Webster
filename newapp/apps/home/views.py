@@ -510,3 +510,14 @@ def comments(request):
     }
     response=json.dumps(rep)
     return HttpResponse(response,content_type='application/json')
+
+def report(request, *args):
+    id = request.GET.get('postid')
+    # r = Post.objects.get(pk=id)
+    # user = request.user
+    # count = r.report.all().count()
+    # resp = {
+    #     'report':report,
+    # }
+    response = json.dumps(resp)
+    return HttpResponse(response, content_type="appllication/json")

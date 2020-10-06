@@ -29,18 +29,11 @@ class Post(models.Model):
     video = models.FileField(upload_to = "home/images",blank=True)
     posttype = models.CharField(max_length=10,default="video")
     likes = models.ManyToManyField(User, related_name="likes_post")
-<<<<<<< HEAD
-    # id1 = models.AutoField
-    # id2 = models.AutoField
-    # id3 = models.AutoField
-    # id4 = models.AutoField
-    # id5 = models.AutoField
-=======
     raters = models.ManyToManyField(User,related_name="who_rated")
     rating = models.IntegerField(default=0)
     avgRating = models.FloatField(default=0.0)
+    report = models.ManyToManyField(User,related_name='who_reported')
 
->>>>>>> 166fe3f6cff1b7bc4dd4f8844c9c4de3f87d1fb0
 
     @classmethod
     def liked_p(cls, user, id):
@@ -52,6 +45,11 @@ class Post(models.Model):
     def disliked_p(cls, user, id):
         post = cls.objects.get(pk=id)
         post.likes.remove(user)
+
+    @classmethod
+    def reported(cls, user, id):
+        post = cls.objects.get(pk=id)
+        post.report.add(user)
 
     @classmethod
     def rateNow(cls,id,user,val):

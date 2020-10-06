@@ -23,4 +23,5 @@ urlpatterns = [
     path('login/mypost/follow',views.likes,name="like_post"),
     path('rating/',views.rating,name="rating"),
     path('comments',views.comments,name="comment_post"),
+    path('report/',views.report,name="report")
 ]
