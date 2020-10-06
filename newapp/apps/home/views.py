@@ -127,17 +127,27 @@ def loginUser(request):
 
         liked_posts = []
         rated_posts = []
+        reported_posts = []
+        name = request.session["username"]
         for i in followedUser_posts:
-            is_liked = i.likes.filter(username=request.session["username"])
-            is_rated = i.raters.filter(username=request.session["username"])
+            is_liked = i.likes.filter(username=name)
+            is_rated = i.raters.filter(username=name)
+            is_reported = i.report.filter(username=name)
             if is_liked:
                 liked_posts.append(i)
 
             if is_rated:
                 rated_posts.append(i)
+
+            if is_reported:
+                reported_posts.append(i)
+
+
         comments = Comments.objects.all()
         #print(followedUser_posts)
-        params = {'username':username , 'posts': followedUser_posts,'liked_posts':liked_posts , 'rated_posts':rated_posts,'comments':comments}
+        params = {'username':username , 'posts': followedUser_posts,'liked_posts':liked_posts , 'rated_posts':rated_posts,
+        'comments':comments , 'reported_posts':reported_posts}
+
         return render(request,'home/userhome.html',params) 
 
        
@@ -521,13 +531,16 @@ def comments(request):
     response=json.dumps(rep)
     return HttpResponse(response,content_type='application/json')
 
+
+
 def report(request, *args):
     id = request.GET.get('postid')
-    # r = Post.objects.get(pk=id)
-    # user = request.user
-    # count = r.report.all().count()
-    # resp = {
-    #     'report':report,
-    # }
+    currPost = Post.objects.get(pk=id)
+    currUser = User.objects.get(username=request.session["username"])
+
+    currPost.reported(currUser,id)
+    resp={
+
+    }
     response = json.dumps(resp)
     return HttpResponse(response, content_type="appllication/json")
