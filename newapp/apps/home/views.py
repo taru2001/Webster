@@ -280,10 +280,7 @@ def profile(request):
         else:
             followers=0
 
-<<<<<<< HEAD
         
-=======
->>>>>>> 60b3e762ef7cb45d5714d6df75f1f1e1830cbe8b
         games=user.games.split(',')
         # print(games)
         params = {'name':user.name , 'username':user.username , 'mobile':user.mobile ,
@@ -360,10 +357,7 @@ def changephoto(request):
 
 
 def search_profile(request,user):
-<<<<<<< HEAD
-=======
 
->>>>>>> 60b3e762ef7cb45d5714d6df75f1f1e1830cbe8b
     user = User.objects.get(username=user)
     loggedIn=0
     is_following=0
