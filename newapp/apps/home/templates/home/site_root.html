@@ -6,10 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="{% static 'home/home.css' %}">
+    <style>
+        #myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%; 
+  min-height: 100%;
+}
+    </style>
 </head>
-<body class="img">
-    <span class="pos">
-        <a href="/home/index/"><button>Start Here</button></a>
-    </span>
+<body >
+    <video autoplay muted loop id="myVideo">
+        <source src="" type="video/mp4">
+        Your browser does not support HTML5 video.
+      </video>
+    <a href="/home/index/"><button class="glow-on-hover" type="button">GET TO THE UNREAL WORLD!</button></a>
 </body>
 </html>

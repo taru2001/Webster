@@ -101,48 +101,54 @@ def likes(request, *args):  # individually handles posts for likes by ajax but r
 }
     response = json.dumps(resp)
     return HttpResponse(response, content_type="application/json")
+
+
+
 def userpage(request):
-    username = request.session["username"]
-    currUser = User.objects.filter(username=username)
-    UserEmail = User.objects.filter(email=username)
-    print(currUser)
+    if "username" in request.session:
+        username = request.session["username"]
+        currUser = User.objects.filter(username=username)
+        UserEmail = User.objects.filter(email=username)
+        print(currUser)
 
-    temp1 = len(currUser)
-    temp2 = len(UserEmail)
+        temp1 = len(currUser)
+        temp2 = len(UserEmail)
 
-    if temp1 == 1:
-        currUser = currUser[0]
+        if temp1 == 1:
+            currUser = currUser[0]
 
-    if temp2 == 1:
-        UserEmail = UserEmail[0]
-        currUser = UserEmail
+        if temp2 == 1:
+            UserEmail = UserEmail[0]
+            currUser = UserEmail
 
-    # Fetching following users posts
-    followedUser_posts = get_followingPost(currUser)
+        # Fetching following users posts
+        followedUser_posts = get_followingPost(currUser)
 
-    liked_posts = []
-    rated_posts = []
-    reported_posts = []
-    name = request.session["username"]
-    for i in followedUser_posts:
-        is_liked = i.likes.filter(username=name)
-        is_rated = i.raters.filter(username=name)
-        is_reported = i.report.filter(username=name)
-        if is_liked:
-            liked_posts.append(i)
+        liked_posts = []
+        rated_posts = []
+        reported_posts = []
+        name = request.session["username"]
+        for i in followedUser_posts:
+            is_liked = i.likes.filter(username=name)
+            is_rated = i.raters.filter(username=name)
+            is_reported = i.report.filter(username=name)
+            if is_liked:
+                liked_posts.append(i)
 
-        if is_rated:
-            rated_posts.append(i)
+            if is_rated:
+                rated_posts.append(i)
 
-        if is_reported:
-            reported_posts.append(i)
+            if is_reported:
+                reported_posts.append(i)
 
-    comments = Comments.objects.all()
-    # print(followedUser_posts)
-    params = {'username': username, 'posts': followedUser_posts, 'liked_posts': liked_posts, 'rated_posts': rated_posts,
-              'comments': comments, 'reported_posts': reported_posts}
+        comments = Comments.objects.all()
+        # print(followedUser_posts)
+        params = {'username': username, 'posts': followedUser_posts, 'liked_posts': liked_posts, 'rated_posts': rated_posts,
+                'comments': comments, 'reported_posts': reported_posts}
 
-    return render(request, 'home/userhome.html', params)
+        return render(request, 'home/userhome.html', params)
+
+    return redirect('indexx')
 
 
 def loginUser(request):
