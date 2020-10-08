@@ -7,8 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="{% static 'home/index.css' %}">
+
+    <style>
+      body{
+        background-color: black;
+      }
+    </style>
+    
 </head>
-<body class="" style="background-color: black;">
+<body >
     <div class="nav" style="padding: 0cm;">
         <!-- <span style="margin-right: 55rem;"></span> -->
         <span class="link">
@@ -26,10 +33,10 @@
         <div class="link">
           <a href="#">Contact us</a>
         </div>
-        <span style="margin-right: 29rem; "></span>
-        <span style="padding-top: 15px;"><form action="/home/search/"  method="get">
-         <input style="height: 1.3rem; border-radius: 6px; " type="text" name="searchuser" placeholder="Search User">
-            <button style="border-radius: 6px; color:bisque; height: 26px; margin-left: 10px; background-color: rgb(148, 42, 82);" type="submit">Search</button>
+        <span style="margin-right: 22rem; "></span>
+        <span style="padding-top: 10px;"><form action="/home/search/"  method="get">
+         <input style="height: 1.7rem; width:14rem; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
+            <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 30px; margin-left: 10px; background-color: #FFA500;" type="submit">Search</button>
         </form>
     </span>
     <span style="margin-right: 3rem;"></span>
@@ -44,4 +51,4 @@
 
       </div>
 </body>
-</html>    
+</html>

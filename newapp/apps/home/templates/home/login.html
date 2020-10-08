@@ -8,9 +8,10 @@
     <meta name="author" content="">
     <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
 
-    <title>Signin Template for Bootstrap</title>
+    <title>Login</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/index.css' %}">
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -19,24 +20,55 @@
     <link rel="stylesheet" type="text/css" href="{% static 'home/login.css' %}">
     <style>
       body{
-        background-color: rgb(26, 21, 51);
+        background-image: url('/static/home/signin.png');
+        
       }      
-      .mycolor{
-        color: aqua;
-      }
+      
     </style>
 
   </head>
 
-  <div class="padded-m">
-  <body class="text-center">
-    <a href="/home/index/"><button class="btn btn-primary">Home</button></a><br><br>
+  <body>
+    <div class="nav" style="padding: 0cm;">
+      <!-- <span style="margin-right: 55rem;"></span> -->
+      <span class="link">
+        <a href="/home/index/">Home</a>
+      </span>
+      <div class="link">
+        <a href="#">Dashboard</a>
+      </div>
+      <div class="link">
+        <a href="#">Services</a>
+      </div>
+      <div class="link">
+        <a href="/home/about/">About</a>
+      </div>
+      <div class="link">
+        <a href="#">Contact us</a>
+      </div>
+      <span style="margin-right: 22rem; "></span>
+      <span style="padding-top: 5px;"><form action="/home/search/"  method="get">
+       <input style="height: 2rem; width:14rem; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
+          <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 30px; margin-left: 10px; margin-top: 00.5rem; background-color: #FFA500;" type="submit">Search</button>
+      </form>
+  </span>
+  <span style="margin-right: 3rem;"></span>
 
+      <div class="link">
+          <a href="/home/register/">Register</a>
+      </div>
+
+      <div class="link">
+          <a href="/home/login/">Login</a>
+      </div>
+
+    </div>
+    <div class="padded-m" style="margin-top: 8rem; margin-left: -5rem;">
 
     <form class="form-signin" action="/home/login/" method="POST" autocomplete="off">
       {% csrf_token %}
       <!--img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"-->
-      <h1 class="h3 mb-3 font-weight-normal new mycolor" >User Login</h1>
+      <h1 class="h3 mb-3 font-weight-normal new mycolor" style="margin-left: 5rem; color: aliceblue;" >User Login</h1>
 
       <label for="inputEmail" class="sr-only">User Name</label>
       <input type="text" id="inputEmail" name="username" class="form-control" placeholder="Username or Email" required autofocus style="width: 300px;"><br>
@@ -45,12 +77,12 @@
       <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
       <div class="checkbox mb-3">
 
-        <label class="new mycolor">
+        <label style="color: aliceblue; margin-left: 4.5rem;" class="new mycolor">
           <input type="checkbox" value="remember-me"> Remember me
         </label>
       </div>
-      <button class="btn btn-lg btn-primary btn-block bgnew" type="submit">Sign in</button>
-      <p class="mt-5 mb-3 text-muted"><span class="new">&copy; My Site 2020-2021</span></p>
+      <button class="btn btn-lg btn-primary btn-block bgnew" style="background-color: #FFA500; color: black;" type="submit">Sign in</button>
+      <p class="mt-5 mb-3 text-muted"><span style="margin-left: 3.5rem;" class="new">&copy; Flex Gamers 2020-2021</span></p>
     </form>
 
 
