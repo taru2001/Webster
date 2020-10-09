@@ -4,14 +4,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/index.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <title>Document</title>
+
+    <style>
+        body{
+          /* background-image: url('https://images4.alphacoders.com/103/thumb-1920-1039553.jpg'); */
+          /* background-image: url('https://wallpapercave.com/wp/EgwVn4s.jpg'); */
+          background-image: url('/static/home/nfs.png');
+          background-repeat: no-repeat;
+            background-size: cover;
+          
+        }      
+        
+      </style>
+
 </head>
 <body>
-    <a href="/home/login/"><button>Home</button></a>
+    <div class="nav" style="padding: 0cm;">
+        <span class="link">
+          <a href="/home/index/">Home</a>
+        </span>
+        <div class="link">
+          <a href="/home/profile/">Profile</a>
+        </div>
+        <div class="link">
+          <a href="/home/login/mypost/">My Posts</a>
+        </div>
+        <div class="link">
+          <a href="/home/about/">About</a>
+        </div>
+        <div class="link">
+          <a href="#">Contact us</a>
+        </div>
+        <span style="margin-right: 22rem; "></span>
+        <span style="padding-top: 10px;"><form action="/home/search/"  method="get">
+         <input style="height: 1.7rem; width:14rem; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
+            <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 30px; margin-left: 10px; background-color: #FFA500;" type="submit">Search</button>
+        </form>
+    </span>
+    <span style="margin-right: 3rem;"></span>
+
+        <div class="link">
+            <a href="/home/notify/">Notifications</a>
+        </div>
+
+        <div class="link">
+            <a href="/home/logout/">Logout</a>
+        </div>
+
+      </div>
+      <br>
     {% for msg in messages %}
-        {{msg.message}} <br>
-        <a href="{% url 'deleteMsg' msg.id %}"><button>Close</button></a>
-        <br><br>
+        <div style="align-content: center;"><list style="max-width: 28rem;"  class="list-group-item list-group-item-success">{{msg.message}}  <button type="button" class="btn btn-danger"> 
+            <a href="{% url 'deleteMsg' msg.id %}" style="color: aliceblue; text-decoration: none;">Close</a></button></list></div>
+        <br>
     {% endfor %}
 </body>
 </html>

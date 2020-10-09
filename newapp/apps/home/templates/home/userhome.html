@@ -4,93 +4,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css'>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'home/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/userhome.css' %}">
     <title>Document</title>
+    <!-- <style>
+        body{
+            background-image: url('https://i.pinimg.com/originals/19/1b/6d/191b6d669f008bfaf3950dd3e71ec2ca.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+    </style> -->
 </head>
 <body>
+    <video autoplay muted loop id="myVideo" style="position: absolute;">
+        <source src="{% static 'home/video.mp4' %}" type="video/mp4">
+      </video>
+    <div class="nav" style="padding: 0cm;">
+        <span class="link">
+          <a href="/home/index/">Home</a>
+        </span>
+        <div class="link">
+          <a href="/home/profile/">Profile</a>
+        </div>
+        <div class="link">
+          <a href="/home/login/mypost/">My Posts</a>
+        </div>
+        <div class="link">
+          <a href="/home/about/">About</a>
+        </div>
+        <div class="link">
+          <a href="#">Contact us</a>
+        </div>
+        <span style="margin-right: 22rem; "></span>
+        <span style="padding-top: 10px;"><form action="/home/search/"  method="get">
+         <input style="height: 1.7rem; width:14rem; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
+            <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 30px; margin-left: 10px; background-color: #FFA500;" type="submit">Search</button>
+        </form>
+    </span>
+    <span style="margin-right: 3rem;"></span>
+
+        <div class="link">
+            <a href="/home/notify/">Notifications</a>
+        </div>
+
+        <div class="link">
+            <a href="/home/logout/">Logout</a>
+        </div>
+
+      </div>
+
+
     welcome {{ username }} <br>
     <a href="/home/login/upload/"><button>Upload Post</button></a>
-    <a href="/home/logout/"><button>Logout</button></a>
-    <a href="/home/login/mypost/"><button>My Posts</button></a>
-    <a href="/home/profile/"><button>Profile</button></a>
-    <a href="/home/notify/"><button>Notifications</button></a>
 
     <br><br>
+    <br>
+    <br>
+    <br>
 
-    <form action="/home/search/"  method="get">
-        <input type="text" name="searchuser" placeholder="Search User">  <br>
-        <button type="submit">Submit</button>
-    </form>
-    <br>
-    <br>
-    <br>
+
     <h1>feed</h1>
     {% for post in posts %}
-        By:- {{post.user.username}} <br>
-        Tagline:- {{post.tagline}} <br><br>
+    <div class="page-content page-container" id="page-content">
+        <div class="padding">
+            <div class="row container d-flex justify-content-center">
+                <div class="col-md-6">
+                    <div class="box box-widget">
+                        <div class="box-header with-border">
+                            <div class="user-block"> <img class="img-circle" src="https://img.icons8.com/color/36/000000/guest-male.png" alt="User Image"> <span class="username"><a href="#" data-abc="true">{{post.user.username}}</a></span> <span class="description">Public - 7:30 PM Today</span> </div>
+                            <div class="box-tools"> <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="" data-original-title="Mark as read"> <i class="fa fa-circle-o"></i></button> <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i> </button> <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> </div>
+                        </div>
+                        {% ifequal post.posttype "image" %}
+                        <div class="box-body"> <img class="img-responsive pad" src="{{post.video.url}}" alt="Photo">
+                        
+                        {% else %}
+                            <a href="{% url 'playvideo' post.id %}"><button>Play Video</button></a>
+                        
+                        {% endifequal %}
 
-        {% ifequal post.posttype "image" %}
-            <img src="{{post.video.url}}" width="320px" height ="200px" alt="Not Found">
-            <br>
+                            {% if post in liked_posts %}
         
-        {% else %}
-            <a href="{% url 'playvideo' post.id %}"><button>Play Video</button></a>
+                            <button id ="{{post.id}}" class="lol"><a href="{%url 'like_post' %}" id="hlike{{post.id}}">Dislike</a></button>
+                                {%else%}
+                            <button id ="{{post.id}}" class="lol"><a href="{%url 'like_post' %}" id="hlike{{post.id}}">Like</a></button> 
+                                {%endif%}
+                                   <a class="count" id="count{{post.id}}">{{post.likes.count}}</a><br><br>                      </div>
+                                   {% if post not in rated_posts %}
+                                   <div id="rate{{post.id}}">
+                                    <input type="radio" name="rate{{post.id}}" value="1" id="1"  > 
+                                    <input type="radio" name="rate{{post.id}}" value="2" id="2"  >
+                                    <input type="radio" name="rate{{post.id}}" value="3" id="3"  >
+                                    <input type="radio" name="rate{{post.id}}" value="4" id="4"  >
+                                    <input type="radio" name="rate{{post.id}}" value="5" id="5"  >
+                        
+                                </div>
+                                    <button class="rating" id="x{{post.id}}" ><a href="{% url 'rating' %}" class="{{post.id}}"><span id="text{{post.id}}"> Rate </span></a></button>
+                                    {% else %}
+                                        <button>Rated</button>
+                                    {% endif %}
+                                    <span id="avg{{post.id}}">{{post.avgRating}}</span><br>
 
-        {% endifequal %}
+                                    {% ifequal post.user.username username %}
 
-        <br>
+                                    {% else %}
+                                        {% if post in reported_posts %}
+                                        <button>Reported</button>
+                        
+                                        {% else %}
+                                        <button class="report" id="r{{post.id}}"><a href="{% url 'report' %}" class="{{post.id}}" id="report{{post.id}}">
+                                            <span id="s{{post.id}}">Report</span></a></button>
+                                        {% endif %}
+                        
+                                    {% endifequal %}
 
-        {% if post in liked_posts %}
-        
-    <button id ="{{post.id}}" class="lol"><a href="{%url 'like_post' %}" id="hlike{{post.id}}">Dislike</a></button>
-        {%else%}
-    <button id ="{{post.id}}" class="lol"><a href="{%url 'like_post' %}" id="hlike{{post.id}}">Like</a></button> 
-        {%endif%}
-           <a class="count" id="count{{post.id}}">{{post.likes.count}}</a><br><br>
-
-           {% if post not in rated_posts %}
-           <div id="rate{{post.id}}">
-            <input type="radio" name="rate{{post.id}}" value="1" id="1"  > 
-            <input type="radio" name="rate{{post.id}}" value="2" id="2"  >
-            <input type="radio" name="rate{{post.id}}" value="3" id="3"  >
-            <input type="radio" name="rate{{post.id}}" value="4" id="4"  >
-            <input type="radio" name="rate{{post.id}}" value="5" id="5"  >
-
+                                    {%for comment in comments%}
+                                    {%if post.id == comment.post.id%}
+                                    <pre>{{comment.user.username}} at {{comment.time}} :{{comment.comment}}</pre><hr>
+                                    {%endif%}
+                                    {%endfor%}
+                                    <span id="end{{post.id}}"></span> <br>
+                                
+                                    <textarea id="cmnt{{post.id}}"  name="comment{{post.id}}" style="resize:none;width:400px;"></textarea>
+                                    <button id="{{post.id}}" class="Commentbtn">Comment</button>
+                    </div>
+                </div>
+            </div>
         </div>
-            <button class="rating" id="x{{post.id}}" ><a href="{% url 'rating' %}" class="{{post.id}}"><span id="text{{post.id}}"> Rate </span></a></button>
-            {% else %}
-                <button>Rated</button>
-            {% endif %}
-            <span id="avg{{post.id}}">{{post.avgRating}}</span><br>
-
-            {% ifequal post.user.username username %}
-
-            {% else %}
-                {% if post in reported_posts %}
-                <button>Reported</button>
-
-                {% else %}
-                <button class="report" id="r{{post.id}}"><a href="{% url 'report' %}" class="{{post.id}}" id="report{{post.id}}">
-                    <span id="s{{post.id}}">Report</span></a></button>
-                {% endif %}
-
-            {% endifequal %}
-
-
-    {%for comment in comments%}
-    {%if post.id == comment.post.id%}
-    <pre>{{comment.user.username}} at {{comment.time}} :{{comment.comment}}</pre><hr>
-    {%endif%}
-    {%endfor%}
-    <span id="end{{post.id}}"></span> <br>
-
-    <textarea id="cmnt{{post.id}}"  name="comment{{post.id}}" style="resize:none;width:400px;"></textarea>
-    <button id="{{post.id}}" class="Commentbtn">Comment</button>
-           <br><br><br>
+    </div>
     {% endfor %}
-
-
+    
     <script>
      $(".Commentbtn").click(
     function(e){
