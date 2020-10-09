@@ -20,7 +20,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'home/login.css' %}">
     <style>
       body{
-        background-image: url('/static/home/venom.png');
+        background-image: url('/static/home/signin.png');
         
       }      
       
@@ -47,9 +47,9 @@
         <a href="#">Contact us</a>
       </div>
       <span style="margin-right: 22rem; "></span>
-      <span style="padding-top: 10px;"><form action="/home/search/"  method="get">
+      <span style="padding-top: 5px;"><form action="/home/search/"  method="get">
        <input style="height: 2rem; width:14rem; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
-          <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 26px; margin-left: 10px; margin-top: 00.5rem; background-color: #FFA500;" type="submit">Search</button>
+          <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 30px; margin-left: 10px; margin-top: 00.5rem; background-color: #FFA500;" type="submit">Search</button>
       </form>
   </span>
   <span style="margin-right: 3rem;"></span>
@@ -68,7 +68,7 @@
     <form class="form-signin" action="/home/login/" method="POST" autocomplete="off">
       {% csrf_token %}
       <!--img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"-->
-      <h1 class="h3 mb-3 font-weight-normal new mycolor" style="margin-left: 4rem; color: aliceblue;" >User Login</h1>
+      <h1 class="h3 mb-3 font-weight-normal new mycolor" style="margin-left: 5rem; color: aliceblue;" >User Login</h1>
 
       <label for="inputEmail" class="sr-only">User Name</label>
       <input type="text" id="inputEmail" name="username" class="form-control" placeholder="Username or Email" required autofocus style="width: 300px;"><br>

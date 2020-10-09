@@ -9,6 +9,7 @@
 
         <style>
         body{
+            /* background-image: url('https://images.wallpapersden.com/image/download/playerunknowns-battlegrounds-pc_72805_3840x2160.jpg'); */
             background-image: url('/static/home/pop.png');
             background-repeat: no-repeat;
             background-size: cover;
@@ -20,6 +21,7 @@
     </head>
     <body>
         <div class="nav" style="padding: 0cm;">
+            <!-- <span style="margin-right: 55rem;"></span> -->
             <span class="link">
               <a href="/home/index/">Home</a>
             </span>
@@ -38,7 +40,7 @@
             <span style="margin-right: 22rem; "></span>
             <span style="padding-top: 10px;"><form action="/home/search/"  method="get">
              <input style="height: 3.5rem; width:20 rem; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
-                <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 26px; margin-left: 10px; background-color: #FFA500;" type="submit">Search</button>
+                <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 30px; margin-left: 10px; background-color: #FFA500;" type="submit">Search</button>
             </form>
         </span>
         <span style="margin-right: 3rem;"></span>
@@ -53,7 +55,7 @@
     
           </div>
         <div style="background-color:initial; height:655px; width:370px; border-radius:30px; text-align:center; margin-left: 670px;" class="col-md-offset-4">
-            <h1 style="text-align:center; padding-top:30px; color:#8375c3; margin-top: 0rem; font-weight: bold;">Sign Up</h1>
+            <h1 style="text-align:center; padding-top:30px; color:#8375c3; margin-top: 0rem;">Sign Up</h1>
             
             <form action="/home/register/" method="post">{% csrf_token %}
 
@@ -77,7 +79,7 @@
             </div>
             
             
-            <button class="col-md-4 col-md-offset-4 btn" style="background-color: #4e3f91; color:white; font-size:20px; margin-top:35px;" type="submit"> Submit
+            <button class="col-md-4 col-md-offset-4 btn" style="background-color:#4e3f91; color:#f5eaea; font-size:20px; margin-top:35px;" type="submit"> Submit
             </button>
         </form>
 
