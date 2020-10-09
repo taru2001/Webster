@@ -6,14 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="{% static 'home/home.css' %}">
+    
     <style>
-        body{
-            background-image: url('https://i.pinimg.com/originals/7a/a4/47/7aa447a13d841e3c3f51d5643b183ee9.jpg');     
-          }
+        #container{
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+        }
+        #myVideo{
+            height: 100%;
+            width: 100%;
+        }
     </style>
 </head>
 <body >
     
+    <div id="container">
+    
+        <video autoplay muted loop id="myVideo">
+            <source src="https://avishkar.mnnit.ac.in/img/5.webm" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+      
     <a href="/home/index/">GET TO THE UNREAL WORLD!</a>
+</div>
 </body>
 </html>

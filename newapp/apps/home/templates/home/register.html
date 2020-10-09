@@ -1,41 +1,87 @@
-<head>
+{% load static %}
+<html>
     <head>
         <title>Register</title>
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <link rel="stylesheet" type="text/css" href="{% static 'home/index.css' %}">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <style>
+        body{
+            background-image: url('/static/home/pop.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+    </style>
+
+
     </head>
     <body>
-        <div style="background-color:#41aaa2; height:450px; width:400px; border-radius:30px; text-align:center;" class="col-md-offset-4">
-            <h1 style="text-align:center; padding-top:30px; color:white; margin-top: 12rem;">Sign Up</h1>
+        <div class="nav" style="padding: 0cm;">
+            <span class="link">
+              <a href="/home/index/">Home</a>
+            </span>
+            <div class="link">
+              <a href="#">Dashboard</a>
+            </div>
+            <div class="link">
+              <a href="#">Services</a>
+            </div>
+            <div class="link">
+              <a href="/home/about/">About</a>
+            </div>
+            <div class="link">
+              <a href="#">Contact us</a>
+            </div>
+            <span style="margin-right: 22rem; "></span>
+            <span style="padding-top: 10px;"><form action="/home/search/"  method="get">
+             <input style="height: 3.5rem; width:20 rem; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
+                <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 26px; margin-left: 10px; background-color: #FFA500;" type="submit">Search</button>
+            </form>
+        </span>
+        <span style="margin-right: 3rem;"></span>
+    
+            <div class="link">
+                <a href="/home/register/">Register</a>
+            </div>
+    
+            <div class="link">
+                <a href="/home/login/">Login</a>
+            </div>
+    
+          </div>
+        <div style="background-color:initial; height:655px; width:370px; border-radius:30px; text-align:center; margin-left: 670px;" class="col-md-offset-4">
+            <h1 style="text-align:center; padding-top:30px; color:#8375c3; margin-top: 0rem; font-weight: bold;">Sign Up</h1>
             
             <form action="/home/register/" method="post">{% csrf_token %}
 
-            <div class="col-sm-12" style="padding-top:10px;">
+            <div class="col-sm-12" style="padding-top:35px;">
             <input type="text" class="form-control" id="name" placeholder="Name" name="name" style="border-radius:15px;">
             </div>
-            <div class="col-sm-12" style="padding-top:10px;">
+            <div class="col-sm-12" style="padding-top:35px;">
             <input type="text" class="form-control" id="username" placeholder="User Name" name="username" style="border-radius:15px;">
             </div>
-            <div class="col-sm-12" style="padding-top:10px;">
+            <div class="col-sm-12" style="padding-top:35px;">
             <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" style="border-radius:15px;">
             </div>
-            <div class="col-sm-12" style="padding-top:10px;">
+            <div class="col-sm-12" style="padding-top:35px;">
             <input type="text" class="form-control" id="mobileno" placeholder="Enter Mobile No." name="mobileno" style="border-radius:15px;">
             </div>
-            <div class="col-sm-12" style="padding-top:10px;">
+            <div class="col-sm-12" style="padding-top:35px;">
             <input type="text" class="form-control" id="password" placeholder="Type your Password" name="password" style="border-radius:15px;">
             </div>
-            <div class="col-sm-12" style="padding-top:10px;">
+            <div class="col-sm-12" style="padding-top:35px;">
                 <input type="text" class="form-control" id="confirmpassword" placeholder="Confirm Password" name="confirmpassword" style="border-radius:15px;">
             </div>
             
             
-            <button class="col-md-4 col-md-offset-4 btn" style="background-color:#ffffff; color:#626a69; font-size:20px; margin-top:10px;" type="submit"> Submit
+            <button class="col-md-4 col-md-offset-4 btn" style="background-color: #4e3f91; color:white; font-size:20px; margin-top:35px;" type="submit"> Submit
             </button>
         </form>
 
             </div>
 
     </body>
-</head>
+</html>
