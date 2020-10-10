@@ -21,6 +21,7 @@
     <style>
       body{
         background-image: url('/static/home/signin.png');
+        background-size: cover;
         
       }      
       
@@ -68,13 +69,15 @@
     <form class="form-signin" action="/home/login/" method="POST" autocomplete="off">
       {% csrf_token %}
       <!--img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"-->
-      <h1 class="h3 mb-3 font-weight-normal new mycolor" style="margin-left: 5rem; color: aliceblue;" >User Login</h1>
+      <h1 class="h3 mb-3 font-weight-normal new mycolor" style="margin-left: 5rem; color: #FFA500;" >User Login</h1>
 
       <label for="inputEmail" class="sr-only">User Name</label>
-      <input type="text" id="inputEmail" name="username" class="form-control" placeholder="Username or Email" required autofocus style="width: 300px;"><br>
+      <input type="text" id="inputEmail" name="username" class="form-control" placeholder="Username or Email" 
+      required autofocus style="width: 300px; margin-top: 25px;"><br>
 
       <label for="inputPassword" class="sr-only">Password</label>
       <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+
       <div class="checkbox mb-3">
 
         <label style="color: aliceblue; margin-left: 4.5rem;" class="new mycolor">

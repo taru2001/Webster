@@ -13,20 +13,14 @@
     <link rel="stylesheet" type="text/css" href="{% static 'home/index.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'home/userhome.css' %}">
     <title>Document</title>
-    <!-- <style>
-        body{
-            background-image: url('https://i.pinimg.com/originals/19/1b/6d/191b6d669f008bfaf3950dd3e71ec2ca.jpg');
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-
-    </style> -->
+    
+    
 </head>
 <body>
-    <video autoplay muted loop id="myVideo" style="position: absolute;">
-        <source src="{% static 'home/video.mp4' %}" type="video/mp4">
-      </video>
-    <div class="nav" style="padding: 0cm;">
+    
+
+
+    <div class="nav" style="padding: 0cm; margin: -6px;" >
         <span class="link">
           <a href="/home/index/">Home</a>
         </span>
@@ -34,17 +28,18 @@
           <a href="/home/profile/">Profile</a>
         </div>
         <div class="link">
-          <a href="/home/login/mypost/">My Posts</a>
+            <a href="/home/about/">About</a>
         </div>
         <div class="link">
-          <a href="/home/about/">About</a>
+            <a href="#">Contact us</a>
         </div>
         <div class="link">
-          <a href="#">Contact us</a>
+            <a href="/home/login/mypost/">My Posts</a>
         </div>
+
         <span style="margin-right: 22rem; "></span>
         <span style="padding-top: 10px;"><form action="/home/search/"  method="get">
-         <input style="height: 1.7rem; width:14rem; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
+         <input style="height: 1.7rem; width:14rem; outline: none; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
             <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 30px; margin-left: 10px; background-color: #FFA500;" type="submit">Search</button>
         </form>
     </span>
@@ -60,17 +55,21 @@
 
       </div>
 
+      <br>
+      <br>
+      <br>
 
-    welcome {{ username }} <br>
-    <a href="/home/login/upload/"><button>Upload Post</button></a>
 
-    <br><br>
+    <span style="margin-left: 460px; font-weight: bold; font-size: 70px; color: #7badd8;">
+        Welcome {{username}}
+    </span>  
+
     <br>
     <br>
-    <br>
+    
 
 
-    <h1>feed</h1>
+    
     {% for post in posts %}
     <div class="page-content page-container" id="page-content">
         <div class="padding">
@@ -78,51 +77,91 @@
                 <div class="col-md-6">
                     <div class="box box-widget">
                         <div class="box-header with-border">
-                            <div class="user-block"> <img class="img-circle" src="https://img.icons8.com/color/36/000000/guest-male.png" alt="User Image"> <span class="username"><a href="#" data-abc="true">{{post.user.username}}</a></span> <span class="description">Public - 7:30 PM Today</span> </div>
+                            <div class="user-block"> 
+
+                                {% if post.user.profileImage.url is not none %}
+                                <img class="img-circle" src="{{post.user.profileImage.url}}" alt="No Pic"> 
+                                {% else %}
+                                <img class="img-circle" src="https://afribary.com/authors/anonymous-user/photo" alt="No pic">
+                                {% endif %}
+                                
+                                <span class="username"><a href="#" data-abc="true" style="font-size: larger;">{{post.user.username}}</a></span> <span class="description">Public - 7:30 PM Today</span> </div>
                             <div class="box-tools"> <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="" data-original-title="Mark as read"> <i class="fa fa-circle-o"></i></button> <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i> </button> <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> </div>
                         </div>
+
+
+
                         {% ifequal post.posttype "image" %}
-                        <div class="box-body"> <img class="img-responsive pad" src="{{post.video.url}}" alt="Photo">
+                        <div class="box-body"> <img class="img-responsive pad" style="width: 54rem; height: 500px;" src="{{post.video.url}}" alt="Photo">
                         
-                        {% else %}
-                            <a href="{% url 'playvideo' post.id %}"><button>Play Video</button></a>
+                            {% else %}
+                            <div class="box-body myvideo" style="margin-left: 25px;">
+                                <video  controls class="img-responsive pad myvideo">
+                                    <source src="{{post.video.url}}" type="video/mp4">
+                            
+                                    Your browser does not support the video tag.
+                                </video>
                         
                         {% endifequal %}
+                    </div>
+                            
+
 
                             {% if post in liked_posts %}
-        
-                            <button id ="{{post.id}}" class="lol"><a href="{%url 'like_post' %}" id="hlike{{post.id}}">Dislike</a></button>
+                            <span>
+                            <button id ="{{post.id}}" class="lol"><a href="{%url 'like_post' %}" id="hlike{{post.id}}" class="like">Dislike</a></button>
                                 {%else%}
-                            <button id ="{{post.id}}" class="lol"><a href="{%url 'like_post' %}" id="hlike{{post.id}}">Like</a></button> 
+                            <button id ="{{post.id}}" class="lol"><a href="{%url 'like_post' %}" id="hlike{{post.id}}" class="like">Like</a></button> 
                                 {%endif%}
-                                   <a class="count" id="count{{post.id}}">{{post.likes.count}}</a><br><br>                      </div>
+                                   <a class="count" id="count{{post.id}}">{{post.likes.count}}</a>
+
+                                </span>               
+
+                                
+                                
                                    {% if post not in rated_posts %}
-                                   <div id="rate{{post.id}}">
+                                   <span id="rate{{post.id}}" style="margin-left: 3rem;">           
+                                    <span ><img  src="https://www.clipartmax.com/png/middle/1-15144_onlinelabels-clip-art-football-player-clipart-png.png" width="50px" height="30px" alt=""></span>    
                                     <input type="radio" name="rate{{post.id}}" value="1" id="1"  > 
                                     <input type="radio" name="rate{{post.id}}" value="2" id="2"  >
                                     <input type="radio" name="rate{{post.id}}" value="3" id="3"  >
                                     <input type="radio" name="rate{{post.id}}" value="4" id="4"  >
                                     <input type="radio" name="rate{{post.id}}" value="5" id="5"  >
                         
-                                </div>
-                                    <button class="rating" id="x{{post.id}}" ><a href="{% url 'rating' %}" class="{{post.id}}"><span id="text{{post.id}}"> Rate </span></a></button>
+                                   </span>
+
+                                    <button class="rating lol" id="x{{post.id}}" style="margin-left: 0px;" >
+                                        <a href="{% url 'rating' %}" class="{{post.id}} like"><span id="text{{post.id}}"> Rate </span></a></button>
+
                                     {% else %}
-                                        <button>Rated</button>
+                                        <button class="lol like">Rated</button>
                                     {% endif %}
                                     <span id="avg{{post.id}}">{{post.avgRating}}</span><br>
 
+
+
+
+                                    
                                     {% ifequal post.user.username username %}
 
                                     {% else %}
+                                
                                         {% if post in reported_posts %}
                                         <button>Reported</button>
                         
                                         {% else %}
+                                        <span>
                                         <button class="report" id="r{{post.id}}"><a href="{% url 'report' %}" class="{{post.id}}" id="report{{post.id}}">
                                             <span id="s{{post.id}}">Report</span></a></button>
+
+                                        </span>
                                         {% endif %}
                         
                                     {% endifequal %}
+
+
+
+
 
                                     {%for comment in comments%}
                                     {%if post.id == comment.post.id%}

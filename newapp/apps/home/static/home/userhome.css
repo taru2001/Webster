@@ -8,7 +8,7 @@
 }
 
 body {
-    background-color: #f9f9fa
+    background-color: currentColor;
 }
 
 .flex {
@@ -41,7 +41,7 @@ body {
 .box {
     position: relative;
     border-radius: 3px;
-    background: wheat;
+    background:rgb(196, 209, 221);
     border-top: 3px solid #d2d6de;
     margin-bottom: 20px;
     width: 60%;
@@ -140,8 +140,8 @@ body {
 
 .box-body {
     /* max-width: 122rem; */
-    width: 50rem;
-    margin-left: 0rem;
+    width: 54rem;
+    margin-left: 1rem;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     border-bottom-right-radius: 3px;
@@ -150,15 +150,15 @@ body {
 }
 
 .pad {
-    padding: 10px
+    padding: 10px;
 }
 
 .img-responsive,
 .thumbnail a>img,
 .thumbnail>img {
     display: block;
-    max-width: 100%;
-    height: auto
+    max-width: 90%;
+    height: 500px
 }
 
 p {
@@ -300,3 +300,40 @@ p {
 .img-sm+.img-push {
     margin-left: 40px
 }
+
+.myvideo{
+    border-radius: 30px;
+    outline: none;
+}
+
+
+.lol{
+    padding: 5px 5px;
+    width: 5rem;
+    margin-left: 2rem;
+  font-size: 20px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.lol:hover {background-color: #3e8e41}
+
+.lol:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.like{
+    text-decoration: none;
+    color: black;
+    outline: none;
+    border: none;
+}
+
