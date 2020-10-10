@@ -7,6 +7,8 @@ from django.core.mail import send_mail
 
 
 def index(request):
+    if "username" in request.session:
+       return redirect('login')
     return render(request,'home/index.html')
 
 def registerUser(request):
@@ -239,17 +241,26 @@ def mypost(request):
         for post in posts:
             if post.user.username==request.session["username"]:
                 mylist.append(post)
-        liked_by_user = []  # list of posts liked by logined user
-        for i in mylist:
 
-            is_liked = i.likes.filter(username=request.session["username"])
-            if is_liked:
-                liked_by_user.append(i)
+
+        liked_posts = []
+        rated_posts = []
         
+        name = request.session["username"]
+        for i in mylist:
+            is_liked = i.likes.filter(username=name)
+            is_rated = i.raters.filter(username=name)
+            
+            if is_liked:
+                liked_posts.append(i)
 
-        params = {'mylist':mylist,'liked_post':liked_by_user}
-        # , 'id1':post.tagline+"1", 'id2':post.tagline+"2", 'id3':post.tagline+"3",
-                    # 'id4':post.tagline+"4", 'id5':post.tagline+"5"
+            if is_rated:
+                rated_posts.append(i)
+
+        comments = Comments.objects.all()
+        
+        params = {'username': name, 'posts': mylist, 'liked_posts': liked_posts, 'rated_posts': rated_posts,
+                'comments': comments}
 
         return render(request,'home/mypost.html',params)
 
@@ -321,6 +332,8 @@ def edit(request):
         return render(request,'home/edit.html',params)
 
 
+
+
 def manage_edit(request):
     if request.method=="POST" and "username" in request.session :
         name = request.POST.get('name')
@@ -347,6 +360,7 @@ def manage_edit(request):
 
 
 
+
 def searchuser(request):
     whichUser = request.GET.get('searchuser')
     users = User.objects.filter(username=whichUser)
@@ -363,6 +377,8 @@ def searchuser(request):
         return render(request,'home/searchuser.html',{'user':users})
 
 
+
+
 def changephoto(request):
     if "username" in request.session and request.method=='POST':
         profilePic = request.FILES['profilePic']
@@ -371,6 +387,7 @@ def changephoto(request):
         user.profileImage = profilePic
         user.save()
         return redirect('profile')
+
 
 
 
@@ -471,13 +488,14 @@ def notify(request):
     return redirect('indexx')
 
 
+
 def delete_notify(request,msgId):
     if "username" in request.session:
         thisMsg = Notification.objects.filter(id=msgId)
         if request.session["username"]==thisMsg[0].user.username:
             #print(thisPost)
             thisMsg.delete()
-            return redirect('login')
+            return redirect('notifications')
         else:
             return HttpResponse("Katai Tez hor rhe ho haiiiii....chala jaa beta kuch ni hona")
     else:

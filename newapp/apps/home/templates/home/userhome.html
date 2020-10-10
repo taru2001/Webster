@@ -62,9 +62,11 @@
 
     <span style="margin-left: 460px; font-weight: bold; font-size: 70px; color: #7badd8;">
         Welcome {{username}}
+        <br>
     </span>  
 
     <br>
+    <button class="re" style="width: 8rem; height: 4rem; margin-left: 680px;"><a class="like" href="/home/login/upload/">Upload post</a></button>
     <br>
     
 
@@ -120,8 +122,8 @@
                                 
                                 
                                    {% if post not in rated_posts %}
-                                   <span id="rate{{post.id}}" style="margin-left: 3rem;">           
-                                    <span ><img  src="https://www.clipartmax.com/png/middle/1-15144_onlinelabels-clip-art-football-player-clipart-png.png" width="50px" height="30px" alt=""></span>    
+                                   <span  style=" margin-left: 3rem;"><img style="margin-top: -2rem;" src="https://webstockreview.net/images/clipart-gun-long-gun-11.png" width="50px" height="30px" alt=""></span>    
+                                   <span id="rate{{post.id}}" >           
                                     <input type="radio" name="rate{{post.id}}" value="1" id="1"  > 
                                     <input type="radio" name="rate{{post.id}}" value="2" id="2"  >
                                     <input type="radio" name="rate{{post.id}}" value="3" id="3"  >
@@ -130,37 +132,33 @@
                         
                                    </span>
 
-                                    <button class="rating lol" id="x{{post.id}}" style="margin-left: 0px;" >
-                                        <a href="{% url 'rating' %}" class="{{post.id}} like"><span id="text{{post.id}}"> Rate </span></a></button>
+
+
+                                   <button class="rating re" id="x{{post.id}}"  >
+                                    <a style="text-decoration: none; color: beige;" href="{% url 'rating' %}" class="{{post.id}}"><span id="text{{post.id}}"> Rate </span></a></button>
 
                                     {% else %}
-                                        <button class="lol like">Rated</button>
+                                        <button class="re like">Rated</button>
                                     {% endif %}
                                     <span id="avg{{post.id}}">{{post.avgRating}}</span><br>
 
-
-
-
-                                    
                                     {% ifequal post.user.username username %}
 
                                     {% else %}
-                                
-                                        {% if post in reported_posts %}
-                                        <button>Reported</button>
-                        
-                                        {% else %}
-                                        <span>
-                                        <button class="report" id="r{{post.id}}"><a href="{% url 'report' %}" class="{{post.id}}" id="report{{post.id}}">
-                                            <span id="s{{post.id}}">Report</span></a></button>
-
-                                        </span>
-                                        {% endif %}
-                        
-                                    {% endifequal %}
 
 
-
+                                    <br><br>
+                                    {% if post in reported_posts %}
+                                    <button class="re like">Reported</button>
+                    
+                                    {% else %}
+                                    <button class="report re" id="r{{post.id}}"><a style="text-decoration: none; color: rgb(229, 226, 226);" href="{% url 'report' %}" class="{{post.id}}" id="report{{post.id}}">
+                                        <span id="s{{post.id}}">Report</span></a></button>
+                                    {% endif %}
+                    
+                                {% endifequal %}
+                            
+<br><br>
 
 
                                     {%for comment in comments%}
@@ -171,7 +169,8 @@
                                     <span id="end{{post.id}}"></span> <br>
                                 
                                     <textarea id="cmnt{{post.id}}"  name="comment{{post.id}}" style="resize:none;width:400px;"></textarea>
-                                    <button id="{{post.id}}" class="Commentbtn">Comment</button>
+                                    <button id="{{post.id}}" class="Commentbtn re">Comment</button>
+                                    <br><br>
                     </div>
                 </div>
             </div>
