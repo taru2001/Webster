@@ -332,6 +332,8 @@ def edit(request):
         return render(request,'home/edit.html',params)
 
 
+
+
 def manage_edit(request):
     if request.method=="POST" and "username" in request.session :
         name = request.POST.get('name')
@@ -360,6 +362,7 @@ def manage_edit(request):
 
 
 
+
 def searchuser(request):
     whichUser = request.GET.get('searchuser')
     users = User.objects.filter(username=whichUser)
@@ -376,6 +379,8 @@ def searchuser(request):
         return render(request,'home/searchuser.html',{'user':users})
 
 
+
+
 def changephoto(request):
     if "username" in request.session and request.method=='POST':
         profilePic = request.FILES['profilePic']
@@ -384,6 +389,7 @@ def changephoto(request):
         user.profileImage = profilePic
         user.save()
         return redirect('profile')
+
 
 
 
@@ -484,13 +490,14 @@ def notify(request):
     return redirect('indexx')
 
 
+
 def delete_notify(request,msgId):
     if "username" in request.session:
         thisMsg = Notification.objects.filter(id=msgId)
         if request.session["username"]==thisMsg[0].user.username:
             #print(thisPost)
             thisMsg.delete()
-            return redirect('login')
+            return redirect('notifications')
         else:
             return HttpResponse("Katai Tez hor rhe ho haiiiii....chala jaa beta kuch ni hona")
     else:
