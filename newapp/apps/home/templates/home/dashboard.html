@@ -6,8 +6,44 @@
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'home/index.css' %}">
     </head>
     <body>
+        <div class="nav" style="padding: 0cm; margin: 0px;" >
+            <span class="link">
+              <a href="/home/index/">Home</a>
+            </span>
+            <div class="link">
+              <a href="/home/profile/">Profile</a>
+            </div>
+            <div class="link">
+                <a href="/home/about/">About</a>
+            </div>
+            <div class="link">
+                <a href="#">Contact us</a>
+            </div>
+            <div class="link">
+                <a href="/home/login/mypost/">My Posts</a>
+            </div>
+    
+            <span style="margin-right: 22rem; "></span>
+            <span style="padding-top: 10px;"><form action="/home/search/"  method="get">
+             <input style="height: 1.7rem; width:14rem; outline: none; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
+                <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 30px; margin-left: 10px; background-color: #FFA500;" type="submit">Search</button>
+            </form>
+        </span>
+        <span style="margin-right: 3rem;"></span>
+    
+            <div class="link">
+                <a href="/home/notify/">Notifications</a>
+            </div>
+    
+            <div class="link">
+                <a href="/home/logout/">Logout</a>
+            </div>
+    
+          </div>
+    
         <div class="container emp-profile">
             <!-- <form method="post" action="/home/profile/edit"> -->
                 <!-- {% csrf_token %} -->
@@ -42,9 +78,9 @@
                                         {{description}}
                                     </h6>
                                     <p class="proile-rating">RANKINGS : <span>8/10</span></p>
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist" style="background-color: white;">
+                                <li class="nav-item" style="background-color: white;">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab"  role="tab" aria-controls="home" aria-selected="true" style="margin-top: 0.8rem;" >About</a>
                                 </li>
                             </ul>
                         </div>
@@ -207,7 +243,6 @@
                 </div>
             </form>           
         </div>
-        <span><a href="/home/logout/"><button>Logout</button></a></span>
 
     </body>
 </html>
