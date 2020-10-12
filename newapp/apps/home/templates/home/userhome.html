@@ -60,6 +60,10 @@
       <br>
 
 
+      <div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v8.0" nonce="SicfPQkD"></script>
+
+
     <span style="margin-left: 460px; font-weight: bold; font-size: 70px; color: #7badd8;">
         Welcome {{username}}
         <br>
@@ -142,6 +146,7 @@
                                     {% endif %}
                                     <span id="avg{{post.id}}">{{post.avgRating}}</span><br>
 
+
                                     {% ifequal post.user.username username %}
 
                                     {% else %}
@@ -160,17 +165,28 @@
                             
 <br><br>
 
+<div class="fb-share-button" data-href="http://127.0.0.1:8000/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
 
-                                    {%for comment in comments%}
-                                    {%if post.id == comment.post.id%}
-                                    <pre>{{comment.user.username}} at {{comment.time}} :{{comment.comment}}</pre><hr>
-                                    {%endif%}
-                                    {%endfor%}
+<br><br>
+                                   
+
+                    <textarea id="cmnt{{post.id}}"  name="comment{{post.id}}" style="resize:none;width:400px;"></textarea>
+                            <button id="{{post.id}}" class="Commentbtn re">Comment</button>
+                            
+                                                        <br><br>
+
                                     <span id="end{{post.id}}"></span> <br>
+                                    {%for comment in comments%}
+                                      {%if post.id == comment.post.id %}
+                                        
+                                            <pre>{% if comment.user.profileImage.url is not None %} <img height="35px" width="35px" src="{{comment.user.profileImage.url}}" alt=""> {{comment.user.username}} at {{comment.time}} :{{comment.comment}} {%else%}<img height="35px" width="35px" src="https://afribary.com/authors/anonymous-user/photo" alt=""> {{comment.user.username}} at {{comment.time}} :{{comment.comment}}  {% endif %} </pre><hr>
+                                       
+                                      {% endif %}
+                                    {%endfor%}
+                                   
+                                    
                                 
-                                    <textarea id="cmnt{{post.id}}"  name="comment{{post.id}}" style="resize:none;width:400px;"></textarea>
-                                    <button id="{{post.id}}" class="Commentbtn re">Comment</button>
-                                    <br><br>
+                                    
                     </div>
                 </div>
             </div>
@@ -193,7 +209,15 @@
     data:{'comment':msg,
            'postid':id},
     success:function(response){
-        $("#end"+id).append(response.username+"at"+response.time+" :"+response.comment+"<hr>")
+
+      $('<img />')
+            .attr('src', "" + response.pic + "")         
+            .width('35px').height('35px')
+
+            .appendTo($('#end'+id));
+        
+         
+        $("#end"+id).append(response.username+"at"+response.time+" :"+response.comment+"<hr>");
 
     }
     })

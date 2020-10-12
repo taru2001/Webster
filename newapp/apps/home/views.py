@@ -523,6 +523,8 @@ def rating(request,*args):
             response = json.dumps(resp)
             return HttpResponse(response, content_type="application/json")
         
+
+
 def comments(request):
     msg=request.GET.get("comment")
     post=Post.objects.get(pk=request.GET.get("postid"))
@@ -532,7 +534,12 @@ def comments(request):
     time=comment.time
     time=str(time.strftime("%b, %d-%m-%y %I:%M %p"))
     print(time)
+    if user.profileImage:
+        pic = user.profileImage.url
+    else:
+        pic = "https://afribary.com/authors/anonymous-user/photo"
     rep={
+        'pic':pic,
         "username":user.username,
         "comment":msg,
         "time":time,
