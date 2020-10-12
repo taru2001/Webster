@@ -60,19 +60,10 @@
       <br>
 
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> e5e5998d96968fddd05a1098d277a2f9fd66b493
       <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v8.0" nonce="SicfPQkD"></script>
 
 
-<<<<<<< HEAD
-=======
-=======
->>>>>>> ddafa45562cf1ffaba82664e9a28741ed9b76d5b
->>>>>>> e5e5998d96968fddd05a1098d277a2f9fd66b493
     <span style="margin-left: 460px; font-weight: bold; font-size: 70px; color: #7badd8;">
         Welcome {{username}}
         <br>
@@ -159,8 +150,6 @@
                                     {% ifequal post.user.username username %}
 
                                     {% else %}
-<<<<<<< HEAD
-=======
 
 
                                     <br><br>
@@ -176,41 +165,19 @@
                             
 <br><br>
 
->>>>>>> ddafa45562cf1ffaba82664e9a28741ed9b76d5b
 
-
-                                    <br><br>
-                                    {% if post in reported_posts %}
-                                    <button class="re like">Reported</button>
-                    
-                                    {% else %}
-                                    <button class="report re" id="r{{post.id}}"><a style="text-decoration: none; color: rgb(229, 226, 226);" href="{% url 'report' %}" class="{{post.id}}" id="report{{post.id}}">
-                                        <span id="s{{post.id}}">Report</span></a></button>
-                                    {% endif %}
-                    
-                                {% endifequal %}
-                            
 <br><br>
 
 <div class="fb-share-button" data-href="http://127.0.0.1:8000/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
 
 <br><br>
                                    
-<<<<<<< HEAD
 
                     <textarea id="cmnt{{post.id}}"  name="comment{{post.id}}" style="resize:none;width:400px;"></textarea>
                             <button id="{{post.id}}" class="Commentbtn re">Comment</button>
                             
                                                         <br><br>
 
-=======
-
-                    <textarea id="cmnt{{post.id}}"  name="comment{{post.id}}" style="resize:none;width:400px;"></textarea>
-                            <button id="{{post.id}}" class="Commentbtn re">Comment</button>
-                            
-                                                        <br><br>
-
->>>>>>> e5e5998d96968fddd05a1098d277a2f9fd66b493
                                     <span id="end{{post.id}}"></span> <br>
                                     {%for comment in comments%}
                                       {%if post.id == comment.post.id %}
@@ -221,18 +188,7 @@
                                     {%endfor%}
                                    
                                     
-                                
-<<<<<<< HEAD
-                                    
-=======
-<<<<<<< HEAD
-                                    
-=======
-                                    <textarea id="cmnt{{post.id}}"  name="comment{{post.id}}" style="resize:none;width:400px;"></textarea>
-                                    <button id="{{post.id}}" class="Commentbtn re">Comment</button>
-                                    <br><br>
->>>>>>> ddafa45562cf1ffaba82664e9a28741ed9b76d5b
->>>>>>> e5e5998d96968fddd05a1098d277a2f9fd66b493
+                        
                     </div>
                 </div>
             </div>

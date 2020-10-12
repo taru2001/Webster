@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import User, Post, Following, Followers, Notification, Comments
 import json 
-from django.conf import settings
+from django.conf import settings 
 from django.core.mail import send_mail
 
 
@@ -131,7 +131,7 @@ def userpage(request):
         reported_posts = []
         name = request.session["username"]
         for i in followedUser_posts:
-            is_liked = i.likes.filter(username=name)
+            is_liked = i.likes.filter(username=name) 
             is_rated = i.raters.filter(username=name)
             is_reported = i.report.filter(username=name)
             if is_liked:
@@ -150,7 +150,7 @@ def userpage(request):
 
         return render(request, 'home/userhome.html', params)
 
-    return redirect('indexx')
+    return redirect('indexx') 
 
 
 def loginUser(request):
@@ -362,22 +362,38 @@ def manage_edit(request):
 
 
 
+def isUserMatching(str1 , str2):
+    m = len(str1) 
+    n = len(str2) 
+      
+    j = 0   
+    i = 0   
+      
+    while j<m and i<n: 
+        if str1[j] == str2[i]:     
+            j = j+1    
+        i = i + 1
+          
+    # If all characters of str1 matched, then j is equal to m 
+    return j==m 
+
+
+
 
 def searchuser(request):
     whichUser = request.GET.get('searchuser')
-    users = User.objects.filter(username=whichUser)
-    names = User.objects.filter(name=whichUser)
+    
+    all_users = User.objects.all()
 
-    if len(users)==0 and len(names)==0:
-        return HttpResponse("No users found...!!")
+    # list of matched users
+    found_users = []
 
-    else:
-        if len(users):
-            users=users[0]
-        else:
-            users = names[0]
-        return render(request,'home/searchuser.html',{'user':users})
+    # Query all usernames for checking if such related username exists or not
+    for user in all_users:
+        if isUserMatching(user.username , whichUser) or isUserMatching(whichUser , user.username):
+            found_users.append(user)
 
+    return render(request , 'home/searchuser.html' , {'found_users':found_users})
 
 
 
@@ -563,8 +579,12 @@ def report(request, *args):
     response = json.dumps(resp)
     return HttpResponse(response, content_type="appllication/json")
 
+
+
 def forgot(request):
     return render(request,'home/forgot.html')
+
+
 
 def manage_forgot(request):
     if request.method=='POST':
@@ -581,3 +601,58 @@ def manage_forgot(request):
 
         else:
             return HttpResponse("Invalid Email Id")
+
+
+def sendmoney(request,usern):
+    if "username" in request.session:
+        # check if it is the same user 
+        currUser = User.objects.get(username=request.session["username"])
+        send_to = User.objects.get(username=usern)
+
+        if currUser==send_to:
+            return redirect('profile')
+
+        else:
+            params = {'send_to':usern }
+            return render(request,'home/sendmoney.html',params)
+
+    return redirect('indexx')
+
+
+
+def handlepayment(request):
+    if "username" in request.session:
+        if request.method=="POST":
+            msg = request.POST.get('send_message')
+            amount = request.POST.get('amount')
+
+            # check if user has that much money or not
+            currUsername = request.session["username"]
+            currUser = User.objects.get(username=currUsername)
+
+            if int(currUser.coins) < int(amount):
+                return HttpResponse("U don't have enough coins") 
+            else:
+                send_to = request.POST.get('send_to')
+                
+                # handle coins increment of paid_user
+                paid_user = User.objects.get(username=send_to)
+                paid_user.coins = int(paid_user.coins) + int(amount)
+                paid_user.save()
+
+                # handle money decrement of sending_user
+                currUser.coins = int(currUser.coins) - int(amount)
+                currUser.save()
+
+                # Notify paid_user about activity
+                message_to_paid = "Hey " + str(send_to) + " , " + str(currUsername) + " sent u " + str(amount) + " flex coins.... " +"Here is a message from him : "+ str(msg)
+                print(message_to_paid)
+                newNotify = Notification(user=paid_user,message=message_to_paid)
+                Notification.save(newNotify)
+                
+                return redirect('login')
+                           
+
+        return redirect('login')
+
+    return redirect('indexx')

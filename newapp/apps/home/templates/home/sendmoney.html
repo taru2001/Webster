@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css'>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
+<style>
+   .myclass{
+    width: max-content;
+   }
+   body{
+       background-color: rgb(17, 37, 31);
+       padding-top: 90px;
+       padding-left: 550px;
+   }
+</style>
+
+
+</head>
+<body>
+    <div class="container myclass">
+        <div class="row">
+            <div class="col-xs-12 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Payment Details
+                        </h3>
+                        
+                    </div>
+                    <div class="panel-body">
+             <form action="/home/handlepayment/" method="post">
+                            {% csrf_token %} 
+                            <input type="text" hidden value="{{send_to}}" name="send_to">
+                        <div class="form-group">
+                            <label for="cardNumber">
+                                Flex Coins</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="cardNumber" placeholder="Flex Coins"
+                                    required autofocus name="amount" />
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                    
+                            <div class="input-group">
+                                <label for="message">
+                                    Message to {{send_to}}
+                                </label>
+                                <textarea class="form-control" id="message" rows="8" cols="25" placeholder="Message to {{send_to}}"
+                                    required autofocus name="send_message"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="checkbox" style="margin-left: 120px;">
+                            <label>
+                                <input type="checkbox" />
+                                Remember
+                            </label>
+                        </div>
+                        
+                <br/>
+                <button class="btn btn-success btn-lg btn-block" type="submit" role="button">Send <span style="font-size: 15px;">>></span></button>
+            </form>
+            </div>
+        </div>
+    </div>
+
+    
+</body>
+</html>

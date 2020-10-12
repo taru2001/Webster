@@ -6,8 +6,10 @@
     <title>Document</title>
 </head>
 <body>
-    {{user.username}} is the person u were looking for
-    <a href="{% url 'searchProfile' user.username %}"><button>Profile</button></a>
-    <a href="#"><button>Posts</button></a>
+    {% for user in found_users %}
+        {{user.username}} 
+        <a href="{% url 'searchProfile' user.username %}"><button>Profile</button></a>
+        <br><br>
+    {% endfor %}
 </body>
 </html>

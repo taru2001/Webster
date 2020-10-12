@@ -70,6 +70,13 @@
                         <a href="{% url 'follow' username %}" id="follow">
                             <button style="margin-left: 110px; height: 50px; width: 100px;" ><span id="mybtn">Follow</span></button></a>
                         {% endif %}
+
+
+                        {% if loggedIn and not same %}  
+                        <a href="{% url 'sendmoney' username %}" id="moneyBtn">
+                            <button style="margin-top: 15px; margin-left: 90px; height: 50px; width: 150px;" ><span id="mybtn">Support Gamer</span></button></a>
+                        {% endif %}
+
                     </div>
                     <div class="col-md-8">
                         <div class="tab-content profile-tab" id="myTabContent">
