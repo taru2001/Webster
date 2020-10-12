@@ -24,5 +24,7 @@ urlpatterns = [
     path('rating/',views.rating,name="rating"),
     path('comments',views.comments,name="comment_post"),
     path('report/',views.report,name="report"),
-    path('user/',views.userpage,name="user_home")
+    path('user/',views.userpage,name="user_home"),
+    path('login/forgot/',views.forgot,name="forgot"),
+    path('login/forgot/manage_forgot',views.manage_forgot,name='manage_forgot')
 ]

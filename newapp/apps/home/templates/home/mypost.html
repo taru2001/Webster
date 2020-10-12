@@ -36,6 +36,7 @@
         <div class="link">
             <a href="/home/login/mypost/">My Posts</a>
         </div>
+<<<<<<< HEAD
 
         <span style="margin-right: 22rem; "></span>
         <span style="padding-top: 10px;"><form action="/home/search/"  method="get">
@@ -49,6 +50,88 @@
             <a href="/home/notify/">Notifications</a>
         </div>
 
+        <div class="link">
+            <a href="/home/logout/">Logout</a>
+        </div>
+
+      </div>
+
+      <br>
+      <br>
+      <br>
+
+
+    <span style="margin-left: 460px; font-weight: bold; font-size: 70px; color: #7badd8;">
+        Welcome {{username}}
+    </span>  
+
+    <br>
+    <button class="re" style="width: 8rem; height: 4rem; margin-left: 680px;"><a class="like" href="/home/login/upload/">Upload post</a></button>
+    <br>
+    
+=======
+
+        <span style="margin-right: 22rem; "></span>
+        <span style="padding-top: 10px;"><form action="/home/search/"  method="get">
+         <input style="height: 1.7rem; width:14rem; outline: none; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
+            <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 30px; margin-left: 10px; background-color: #FFA500;" type="submit">Search</button>
+        </form>
+    </span>
+    <span style="margin-right: 3rem;"></span>
+>>>>>>> ddafa45562cf1ffaba82664e9a28741ed9b76d5b
+
+        <div class="link">
+            <a href="/home/notify/">Notifications</a>
+        </div>
+
+<<<<<<< HEAD
+    
+    {% for post in posts %}
+    <div class="page-content page-container" id="page-content">
+        <div class="padding">
+            <div class="row container d-flex justify-content-center">
+                <div class="col-md-6">
+                    <div class="box box-widget">
+                        <div class="box-header with-border">
+                            <div class="user-block"> 
+
+                                {% if post.user.profileImage.url is not none %}
+                                <img class="img-circle" src="{{post.user.profileImage.url}}" alt="No Pic"> 
+                                {% else %}
+                                <img class="img-circle" src="https://afribary.com/authors/anonymous-user/photo" alt="No pic">
+                                {% endif %}
+                                
+                                <span class="username"><a href="#" data-abc="true" style="font-size: larger;">{{post.user.username}}</a></span> <span class="description">Public - 7:30 PM Today</span> </div>
+                            <div class="box-tools"> <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="" data-original-title="Mark as read"> <i class="fa fa-circle-o"></i></button> <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i> </button> <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> </div>
+                        </div>
+
+
+
+                        {% ifequal post.posttype "image" %}
+                        <div class="box-body"> <img class="img-responsive pad" style="width: 54rem; height: 500px;" src="{{post.video.url}}" alt="Photo">
+                        
+                            {% else %}
+                            <div class="box-body myvideo" style="margin-left: 25px;">
+                                <video  controls class="img-responsive pad myvideo">
+                                    <source src="{{post.video.url}}" type="video/mp4">
+                            
+                                    Your browser does not support the video tag.
+                                </video>
+                        
+                        {% endifequal %}
+                    </div>
+                            
+
+
+                            {% if post in liked_posts %}
+                            <span>
+                            <button id ="{{post.id}}" class="lol"><a href="{%url 'like_post' %}" id="hlike{{post.id}}" class="like">Dislike</a></button>
+                                {%else%}
+                            <button id ="{{post.id}}" class="lol"><a href="{%url 'like_post' %}" id="hlike{{post.id}}" class="like">Like</a></button> 
+                                {%endif%}
+                                   <a class="count" id="count{{post.id}}">{{post.likes.count}}</a>
+
+=======
         <div class="link">
             <a href="/home/logout/">Logout</a>
         </div>
@@ -117,6 +200,7 @@
                                 {%endif%}
                                    <a class="count" id="count{{post.id}}">{{post.likes.count}}</a>
 
+>>>>>>> ddafa45562cf1ffaba82664e9a28741ed9b76d5b
                                 </span>               
 
                                 

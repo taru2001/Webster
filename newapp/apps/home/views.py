@@ -328,7 +328,7 @@ def edit(request):
         user = User.objects.get(username = request.session["username"])
         params = {'name':user.name , 'username':user.username , 'mobile':user.mobile ,
                         'email':user.email, 'games':user.games, 'country':user.country,
-                        'state':user.state, 'description':user.description, 'stats':user.stats ,  'profileImage':user.profileImage}
+                        'state':user.state, 'description':user.description, 'stats':user.stats ,  'profileImage':user.profileImage, 'password':user.password}
         return render(request,'home/edit.html',params)
 
 
@@ -343,6 +343,7 @@ def manage_edit(request):
         country = request.POST.get('country')
         phone = request.POST.get('phone')
         game = request.POST.get('game')
+        password = request.POST.get('password')
         
         user = User.objects.get(username = request.session["username"])
         
@@ -353,6 +354,7 @@ def manage_edit(request):
         user.country = country
         user.phone= phone
         user.games = game
+        user.password = password
             
         user.save()
             
@@ -560,3 +562,22 @@ def report(request, *args):
     }
     response = json.dumps(resp)
     return HttpResponse(response, content_type="appllication/json")
+
+def forgot(request):
+    return render(request,'home/forgot.html')
+
+def manage_forgot(request):
+    if request.method=='POST':
+        email=request.POST.get('email')
+        UserEmail = User.objects.filter(email=email)
+
+        temp2 = len(UserEmail)
+
+        if(temp2==1):
+            password = UserEmail[0].password
+            recipient=[email]
+            send_mail('Password',password,'techstartechtechstar@gmail.com',recipient,fail_silently=False)
+            return redirect('login')
+
+        else:
+            return HttpResponse("Invalid Email Id")
