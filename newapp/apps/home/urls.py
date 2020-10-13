@@ -30,5 +30,8 @@ urlpatterns = [
     path('sendmoney/<str:usern>',views.sendmoney,name="sendmoney"),
 
     path('handlepayment/',views.handlepayment,name="handlepayment"),
-    path('posts/<str:usern>/',views.userposts,name="userposts")
+    path('posts/<str:usern>/',views.userposts,name="userposts"),
+
+    path('topPost/',views.topPost,name="topPost"),
+    path('seepost/<int:postid>/',views.seePost,name="seePost")
 ]

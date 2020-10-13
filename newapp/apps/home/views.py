@@ -711,3 +711,56 @@ def userposts(request,usern):
         return redirect('indexx')
 
     return redirect('indexx')
+
+
+
+def topPost(request):
+    posts = Post.objects.all()
+    all_posts = list(posts)
+    total = len(all_posts)
+    #print(total)
+
+    for i in range(0,total-1):
+        
+        for j in range(i+1,total):
+
+            rating1 = int(all_posts[i].likes.count() + 1) * float(all_posts[i].avgRating + 1)
+            rating2 = int(all_posts[j].likes.count() + 1) * float(all_posts[j].avgRating + 1)
+            print(rating1," ",rating2)
+            if rating1 < rating2:
+                all_posts[i] , all_posts[j] = all_posts[j] , all_posts[i]
+
+    return render(request,'home/topPosts.html' , {'posts': all_posts})
+
+
+def seePost(request,postid):
+    currPost = Post.objects.get(id=postid)
+
+    is_liked = 0 
+    loggedIn = 0
+    is_rated = 0
+    is_reported = 0
+    same = 0
+    if "username" in request.session:
+        name=request.session["username"]
+        loggedIn = 1
+        liked = currPost.likes.filter(username=name)
+        rated = currPost.raters.filter(username=name)
+        reported = currPost.report.filter(username=name)
+
+        if liked:
+            is_liked=1
+        if rated:
+            is_rated=1
+        if reported:
+            is_reported=1
+        if currPost.user.username==name:
+            same=1
+    comments = Comments.objects.all()
+
+    return render(request,'home/seePost.html',{'post':currPost , 'is_liked':is_liked , 'is_rated':is_rated , 'is_reported':is_reported,
+                            'same':same , 'comments':comments , 'loggedIn':loggedIn})
+
+
+    
+
