@@ -32,6 +32,7 @@
         <div class="link">
           <a href="/home/profile/">Profile</a>
         </div>
+        
         <div class="link">
           <a href="/home/about/">About</a>
         </div>
@@ -60,7 +61,7 @@
       </div>
       <br>
     {% for msg in messages %}
-        <div style="align-content: center;"><list style="max-width: 29rem; height: 90px; margin-left: 20px;"  class="list-group-item list-group-item-success">{{msg.message}} 
+        <div style="align-content: center;"><list style="max-width: 29rem; height: 120px; margin-left: 20px;"  class="list-group-item list-group-item-success">{{msg.message}} 
            <button type="button" class="btn btn-danger" style="margin-left: 355px;"> 
             <a href="{% url 'deleteMsg' msg.id %}" style="color: aliceblue;  text-decoration: none;">Close</a></button></list></div>
         <br>

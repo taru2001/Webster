@@ -15,6 +15,7 @@ class User(models.Model):
     state = models.CharField(max_length=25,default="")
     games = models.CharField(max_length=100,default="")
     profileImage = models.ImageField(upload_to = "home/userProfiles",blank=True)
+    coins = models.IntegerField(default=15)
     
 
     def __str__(self):
@@ -110,6 +111,11 @@ class Followers(models.Model):
 class Notification(models.Model):
     user =  models.ForeignKey(User , on_delete=models.CASCADE)
     message = models.CharField(max_length=30,default="")
+    time = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering=['-time']
+
 
 class Comments(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="User_commented")

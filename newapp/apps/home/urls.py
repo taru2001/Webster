@@ -26,5 +26,8 @@ urlpatterns = [
     path('report/',views.report,name="report"),
     path('user/',views.userpage,name="user_home"),
     path('login/forgot/',views.forgot,name="forgot"),
-    path('login/forgot/manage_forgot',views.manage_forgot,name='manage_forgot')
+    path('login/forgot/manage_forgot',views.manage_forgot,name='manage_forgot'),
+    path('sendmoney/<str:usern>',views.sendmoney,name="sendmoney"),
+
+    path('handlepayment/',views.handlepayment,name="handlepayment")
 ]
