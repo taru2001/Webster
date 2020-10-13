@@ -1,0 +1,47 @@
+{% load static %}
+<html>
+    <head>
+        <title>Paytm</title>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'paytm/pay.css' %}">
+    </head>
+    <body>
+        <div class="container" style="margin-left: 60rem; margin-top: 15rem;">
+            <div class="row">
+                <div class="col-xs-12 col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                Payment Details
+                            </h3>
+                            
+                        </div>
+                        <div class="panel-body">
+                            <form role="form" method="POST" action="payment">{% csrf_token %}
+                            <div class="form-group">
+                                <label for="cardNumber">
+                                    Amount</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="amount" name="amount" placeholder="Amount"
+                                        required autofocus />
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                                </div>
+                            </div>
+                            <button class="btn btn-success btn-lg btn-block" type="submit">Pay</button>
+                            </form>
+                        </div>
+                    </div>
+                    <ul class="nav nav-pills nav-stacked">
+                        <li class="active"><a href="#"><span class="badge pull-right"><span class="glyphicon glyphicon-usd"></span>4200</span> Final Payment</a>
+                        </li>
+                    </ul>
+                    <br/>
+                    
+                </div>
+            </div>
+        </div>
+        
+    </body>
+</html>
