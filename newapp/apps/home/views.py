@@ -368,6 +368,7 @@ def searchuser(request):
     users = User.objects.filter(username=whichUser)
     names = User.objects.filter(name=whichUser)
 
+
     if len(users)==0 and len(names)==0:
         return HttpResponse("No users found...!!")
 
@@ -396,6 +397,7 @@ def changephoto(request):
 def search_profile(request,user):
 
     user = User.objects.get(username=user)
+    games=user.games.split(',')
     loggedIn=0
     is_following=0
     same=0
@@ -429,7 +431,8 @@ def search_profile(request,user):
     params = {'name':user.name , 'username':user.username ,
                 'games':user.games, 'country':user.country,
                 'state':user.state, 'description':user.description, 'stats':user.stats , 'profileImage':user.profileImage,
-                  'is_following':is_following , 'same':same , 'followedUsers': followedUsers , 'followers':followers , 'loggedIn':loggedIn}
+                  'is_following':is_following , 'same':same , 'followedUsers': followedUsers , 'followers':followers , 'loggedIn':loggedIn,
+                  'gamesplit':games}
     return render(request,'home/searchedProfile.html',params)
 
 
