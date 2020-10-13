@@ -391,9 +391,22 @@ def searchuser(request):
     # Query all usernames for checking if such related username exists or not
     for user in all_users:
         if isUserMatching(user.username , whichUser) or isUserMatching(whichUser , user.username):
-            found_users.append(user)
+            found_users.append(user.username)
+    
+    loggedIn=0
+    followed_users = []
+    if "username" in request.session:
+        loggedIn=1
+        currUser = User.objects.get(username=request.session["username"])
+        followedObj = Following.objects.filter(user = currUser)
 
-    return render(request , 'home/searchuser.html' , {'found_users':found_users})
+        if followedObj:
+            x = followedObj[0].followed.all()
+            for user in x:
+                followed_users.append(user.username)
+        
+
+    return render(request , 'home/searchuser.html' , {'found_users':found_users , 'loggedIn':loggedIn , 'followed_users':followed_users})
 
 
 
@@ -412,6 +425,7 @@ def changephoto(request):
 def search_profile(request,user):
 
     user = User.objects.get(username=user)
+    games=user.games.split(',')
     loggedIn=0
     is_following=0
     same=0
@@ -445,7 +459,8 @@ def search_profile(request,user):
     params = {'name':user.name , 'username':user.username ,
                 'games':user.games, 'country':user.country,
                 'state':user.state, 'description':user.description, 'stats':user.stats , 'profileImage':user.profileImage,
-                  'is_following':is_following , 'same':same , 'followedUsers': followedUsers , 'followers':followers , 'loggedIn':loggedIn}
+                  'is_following':is_following , 'same':same , 'followedUsers': followedUsers , 'followers':followers , 'loggedIn':loggedIn,
+                  'gamesplit':games}
     return render(request,'home/searchedProfile.html',params)
 
 

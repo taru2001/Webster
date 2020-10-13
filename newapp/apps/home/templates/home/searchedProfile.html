@@ -52,7 +52,10 @@
                             <!-- <a href="">Mein noob hu</a><br/>
                             <a href="">Bootsnipp Profile</a><br/>
                             <a href="">Bootply Profile</a> -->
-                            {{games}}
+                            {% for x in gamesplit %}
+                            {{x}}
+                            <br>
+                            {% endfor %}
                             <!-- <p>SKILLS</p>
                             <a href="">Web Designer</a><br/>
                             <a href="">Web Developer</a><br/>
