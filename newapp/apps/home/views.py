@@ -645,7 +645,7 @@ def handlepayment(request):
                 currUser.save()
 
                 # Notify paid_user about activity
-                message_to_paid = "Hey " + str(send_to) + " , " + str(currUsername) + " sent u " + str(amount) + " flex coins.... " +"Here is a message from him : "+ str(msg)
+                message_to_paid = "Hey " + str(send_to) + " , " + str(currUsername) + " sent u " + str(amount) + " flex coins.... \n" +"Here is a message from him : "+ str(msg)
                 print(message_to_paid)
                 newNotify = Notification(user=paid_user,message=message_to_paid)
                 Notification.save(newNotify)
