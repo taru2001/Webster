@@ -671,3 +671,43 @@ def handlepayment(request):
         return redirect('login')
 
     return redirect('indexx')
+
+
+def userposts(request,usern):
+    if "username" in request.session:
+        currUser = User.objects.get(username=request.session["username"])
+        usern = User.objects.get(username = usern)
+        followerObj = Followers.objects.filter(user=usern)
+
+        if followerObj:
+            is_follower = followerObj[0].follower.all()
+
+            if currUser in is_follower:
+                user_posts = Post.objects.filter(user=usern)
+
+                liked_posts = []
+                rated_posts = []
+                reported_posts = []
+                name = request.session["username"]
+
+                for post in user_posts:
+                    is_liked = post.likes.filter(username=name)
+                    is_rated = post.raters.filter(username=name)
+                    is_reported = post.report.filter(username=name)
+
+                    if is_liked:
+                        liked_posts.append(post)
+                    if is_rated:
+                        rated_posts.append(post)
+                    if is_reported:
+                        reported_posts.append(post)
+                
+                comments = Comments.objects.all()
+
+                return render(request,'home/userpost_searched.html',{'posts': user_posts , 'profusername':usern.username, 'username':currUser.username,
+                                      'liked_posts':liked_posts , 'rated_posts':rated_posts , 'reported_posts':reported_posts , 
+                                        'comments':comments})
+
+        return redirect('indexx')
+
+    return redirect('indexx')

@@ -11,7 +11,7 @@
         <a href="{% url 'searchProfile' user %}"><button>Profile</button></a>
         
         {% if loggedIn and user in followed_users %}
-        <button>Posts</button>
+        <a href="{% url 'userposts' user %}"><button>Posts</button></a>
         {% endif %}
         <br><br>
     {% endfor %}
