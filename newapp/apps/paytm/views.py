@@ -7,7 +7,7 @@ from django.core.mail import send_mail
 import json
 from django.views.decorators.csrf import csrf_exempt
 from paytm import Checksum
-import checksum,paytmchecksum
+
 import hashlib,string,random,base64
 
 # Create your views here.

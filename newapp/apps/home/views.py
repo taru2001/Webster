@@ -762,5 +762,37 @@ def seePost(request,postid):
                             'same':same , 'comments':comments , 'loggedIn':loggedIn})
 
 
+
+def popularity(request):
+    if request.method=='POST':
+        to_whom = request.POST.get('to_whom')
+        popularity_val = request.POST.get('popularity')
+
+        currName = request.session["username"]
+        currUser_obj = User.objects.get(username=currName)
+
+        toUser_obj = User.objects.get(username=to_whom)
+
+        if int(currUser_obj.coins) < int(popularity_val)*2:
+            return HttpResponse("<h1>Action Failed as u do not have enough coins</h1>")
+
+        else:
+            toUser_obj.popularity = int(toUser_obj.popularity) + int(popularity_val)
+            toUser_obj.save()
+
+            currUser_obj.coins = int(currUser_obj.coins) - int(popularity_val)*2
+            currUser_obj.save()
+
+            # Send notification to user
+            msg = "Hey "+str(to_whom)+" , "+str(currName)+" just gave you "+str(popularity_val)+" popularity...!!"
+            addMsg = Notification(user=toUser_obj,message=msg)
+            Notification.save(addMsg)
+
+            return redirect(request.META['HTTP_REFERER'])
+
+    else:
+        return redirect('indexx')
+
+
     
 

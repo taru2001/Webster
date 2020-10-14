@@ -33,5 +33,6 @@ urlpatterns = [
     path('posts/<str:usern>/',views.userposts,name="userposts"),
 
     path('topPost/',views.topPost,name="topPost"),
-    path('seepost/<int:postid>/',views.seePost,name="seePost")
+    path('seepost/<int:postid>/',views.seePost,name="seePost"),
+    path('givePopularity/',views.popularity,name="popularity")
 ]

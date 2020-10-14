@@ -35,12 +35,13 @@ body {
 
 .box-widget {
     border: none;
-    position: relative
+    position: relative;
+    border-radius: 18px;
 }
 
 .box {
     position: relative;
-    border-radius: 3px;
+    border-radius: 18px;
     background:rgb(196, 209, 221);
     border-top: 3px solid #d2d6de;
     margin-bottom: 20px;
