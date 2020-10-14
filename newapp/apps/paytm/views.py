@@ -20,7 +20,7 @@ def payment(request):
     amount = request.POST.get('amount')
     param_dict={
             'MID':'WorldP64425807474247',
-            'ORDER_ID':'1',
+            'ORDER_ID':str(amount),
             'TXN_AMOUNT':'1',
             'CUST_ID':'acfff@paytm.com',
             'INDUSTRY_TYPE_ID':'Retail',
@@ -54,3 +54,6 @@ def handlerequest(request):
         else:
             print('order was not successful because' + response_dict['RESPMSG'])
     return render(request, 'paytm/paytmstatus.html', {'response': response_dict})
+
+def offers(request):
+    return render(request,'paytm/offers.html')
