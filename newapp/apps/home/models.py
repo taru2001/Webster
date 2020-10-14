@@ -58,7 +58,7 @@ class Post(models.Model):
         post.raters.add(user)
         post.rating = int(post.rating) + int(val)
         post.save()
-        post.avgRating = int(post.rating)/float(post.raters.count())
+        post.avgRating = round( ( int(post.rating)/float(post.raters.count()) ) ,2)
         post.save()
 
     class Meta:
