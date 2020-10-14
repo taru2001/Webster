@@ -17,6 +17,7 @@ class User(models.Model):
     profileImage = models.ImageField(upload_to = "home/userProfiles",blank=True)
     coins = models.IntegerField(default=15)
     popularity = models.IntegerField(default=0)
+    rank = models.IntegerField(default=0)
     
 
     def __str__(self):

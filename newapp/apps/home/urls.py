@@ -34,5 +34,8 @@ urlpatterns = [
 
     path('topPost/',views.topPost,name="topPost"),
     path('seepost/<int:postid>/',views.seePost,name="seePost"),
-    path('givePopularity/',views.popularity,name="popularity")
+
+    path('givePopularity/',views.popularity,name="popularity"),
+
+    path('topGamers/',views.topGamers,name="topGamers")
 ]

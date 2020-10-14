@@ -186,7 +186,7 @@
                                     {%for comment in comments%}
                                       {%if post.id == comment.post.id %}
                                         
-                                            <pre>{% if comment.user.profileImage.url is not None %} <img height="35px" width="35px" src="{{comment.user.profileImage.url}}" alt=""> {{comment.user.username}} at {{comment.time}} :{{comment.comment}} {%else%}<img height="35px" width="35px" src="https://afribary.com/authors/anonymous-user/photo" alt=""> {{comment.user.username}} at {{comment.time}} :{{comment.comment}}  {% endif %} </pre><hr>
+                                            <pre>{% if comment.user.profileImage.url is not None %} <img height="35px" width="35px" src="{{comment.user.profileImage.url}}" alt="">  {{comment.user.username}} at {{comment.time}} :{{comment.comment}} {%else%}<img height="35px" width="35px" src="https://afribary.com/authors/anonymous-user/photo" alt=""> {{comment.user.username}} at {{comment.time}} :{{comment.comment}}  {% endif %} </pre><hr>
                                        
                                       {% endif %}
                                     {%endfor%}
@@ -223,7 +223,7 @@
             .appendTo($('#end'+id));
         
          
-        $("#end"+id).append(response.username+"at"+response.time+" :"+response.comment+"<hr>");
+        $("#end"+id).append(response.username+" at "+response.time+" : "+response.comment+"<hr>");
 
     }
     })

@@ -28,7 +28,8 @@ def registerUser(request):
              return  HttpResponse("Empty Credentials!")
 
         else:
-            newUser = User(name=fname,username=fusername,mobile=phone,email=femail,password=passw)
+            total = len(User.objects.all())
+            newUser = User(name=fname,username=fusername,mobile=phone,email=femail,password=passw,rank=total+1)
             User.save(newUser)
             
             # Send Mail
@@ -792,6 +793,49 @@ def popularity(request):
 
     else:
         return redirect('indexx')
+
+
+
+def getUserRating(user):
+    rating = 0.000
+    user_posts = Post.objects.filter(user=user)
+    total = len(user_posts)
+
+    avg=0.000
+
+    for post in user_posts:
+        avg = avg + float(post.avgRating)
+    
+    if total:
+        avg = round( (float(avg)/total) , 3)
+
+
+    rating = ( (avg*5+1) *  int(user.popularity+1) )
+    print(user.username," ",rating)
+    return rating
+
+
+
+def topGamers(request):
+    all_users = list(User.objects.all())
+    lenUsers = len(all_users)
+
+    for i in range(0,lenUsers-1):
+        for j in range(i+1,lenUsers):
+            
+            if getUserRating(all_users[i]) < getUserRating(all_users[j]):
+                all_users[i] , all_users[j] = all_users[j] , all_users[i]
+
+    count = 1
+    for i in all_users:
+        # Update rank of users
+        i.rank = count
+        i.save()
+        count+=1
+
+    return render(request,'home/topGamer.html',{'rankers':all_users})
+
+
 
 
     
