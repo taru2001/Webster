@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.home',
     'channels',
-    'apps.chat'
+    'apps.chat',
+    'apps.paytm'
 ]
 
 MIDDLEWARE = [
@@ -136,6 +137,16 @@ EMAIL_HOST_PASSWORD = 'techstar@123@'
 
 MEDIA_ROOT = os.path.join(BASE_DIR , 'media/')
 MEDIA_URL = '/media/'
+
+PAYTM_COMPANY_NAME = "Company Name"   # For representation purposes 
+PAYTM_INDUSTRY_TYPE_ID = "Retail"     # For staging environment
+PAYTM_CHANNEL_ID = "WEB"
+PAYTM_MERCHANT_KEY = "kbzk1DSbJiV_O3p5"
+PAYTM_MERCHANT_ID = "WorldP64425807474247"
+PAYTM_CALLBACK_URL = "http://localhost:8000/paytm/handlerequest/" # Hardcode
+PAYTM_WEBSITE = "WEBSTAGING"
+PAYTM_PAYMENT_GATEWAY_URL = "https://securegw-stage.paytm.in/order/process"
+PAYTM_TRANSACTION_STATUS_URL = "https://securegw-stage.paytm.in/order/status"
 
 
 CHANNEL_LAYERS = {
