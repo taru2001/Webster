@@ -7,8 +7,12 @@
 </head>
 <body>
     {% for user in found_users %}
-        {{user.username}} 
-        <a href="{% url 'searchProfile' user.username %}"><button>Profile</button></a>
+        {{user}} 
+        <a href="{% url 'searchProfile' user %}"><button>Profile</button></a>
+        
+        {% if loggedIn and user in followed_users %}
+        <a href="{% url 'userposts' user %}"><button>Posts</button></a>
+        {% endif %}
         <br><br>
     {% endfor %}
 </body>

@@ -29,5 +29,6 @@ urlpatterns = [
     path('login/forgot/manage_forgot',views.manage_forgot,name='manage_forgot'),
     path('sendmoney/<str:usern>',views.sendmoney,name="sendmoney"),
 
-    path('handlepayment/',views.handlepayment,name="handlepayment")
+    path('handlepayment/',views.handlepayment,name="handlepayment"),
+    path('posts/<str:usern>/',views.userposts,name="userposts")
 ]

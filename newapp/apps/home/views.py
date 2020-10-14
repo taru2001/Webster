@@ -391,9 +391,22 @@ def searchuser(request):
     # Query all usernames for checking if such related username exists or not
     for user in all_users:
         if isUserMatching(user.username , whichUser) or isUserMatching(whichUser , user.username):
-            found_users.append(user)
+            found_users.append(user.username)
+    
+    loggedIn=0
+    followed_users = []
+    if "username" in request.session:
+        loggedIn=1
+        currUser = User.objects.get(username=request.session["username"])
+        followedObj = Following.objects.filter(user = currUser)
 
-    return render(request , 'home/searchuser.html' , {'found_users':found_users})
+        if followedObj:
+            x = followedObj[0].followed.all()
+            for user in x:
+                followed_users.append(user.username)
+        
+
+    return render(request , 'home/searchuser.html' , {'found_users':found_users , 'loggedIn':loggedIn , 'followed_users':followed_users})
 
 
 
@@ -647,7 +660,7 @@ def handlepayment(request):
                 currUser.save()
 
                 # Notify paid_user about activity
-                message_to_paid = "Hey " + str(send_to) + " , " + str(currUsername) + " sent u " + str(amount) + " flex coins.... " +"Here is a message from him : "+ str(msg)
+                message_to_paid = "Hey " + str(send_to) + " , " + str(currUsername) + " sent u " + str(amount) + " flex coins.... \n" +"Here is a message from him : "+ str(msg)
                 print(message_to_paid)
                 newNotify = Notification(user=paid_user,message=message_to_paid)
                 Notification.save(newNotify)
@@ -656,5 +669,45 @@ def handlepayment(request):
                            
 
         return redirect('login')
+
+    return redirect('indexx')
+
+
+def userposts(request,usern):
+    if "username" in request.session:
+        currUser = User.objects.get(username=request.session["username"])
+        usern = User.objects.get(username = usern)
+        followerObj = Followers.objects.filter(user=usern)
+
+        if followerObj:
+            is_follower = followerObj[0].follower.all()
+
+            if currUser in is_follower:
+                user_posts = Post.objects.filter(user=usern)
+
+                liked_posts = []
+                rated_posts = []
+                reported_posts = []
+                name = request.session["username"]
+
+                for post in user_posts:
+                    is_liked = post.likes.filter(username=name)
+                    is_rated = post.raters.filter(username=name)
+                    is_reported = post.report.filter(username=name)
+
+                    if is_liked:
+                        liked_posts.append(post)
+                    if is_rated:
+                        rated_posts.append(post)
+                    if is_reported:
+                        reported_posts.append(post)
+                
+                comments = Comments.objects.all()
+
+                return render(request,'home/userpost_searched.html',{'posts': user_posts , 'profusername':usern.username, 'username':currUser.username,
+                                      'liked_posts':liked_posts , 'rated_posts':rated_posts , 'reported_posts':reported_posts , 
+                                        'comments':comments})
+
+        return redirect('indexx')
 
     return redirect('indexx')
