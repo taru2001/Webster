@@ -584,16 +584,32 @@ def comments(request):
 
 
 def report(request, *args):
-    id = request.GET.get('postid')
-    currPost = Post.objects.get(pk=id)
-    currUser = User.objects.get(username=request.session["username"])
+    if "username" in request.session:
+        id = request.GET.get('postid')
+        currPost = Post.objects.get(pk=id)
+        currUser = User.objects.get(username=request.session["username"])
 
-    currPost.reported(currUser,id)
-    resp={
+        currPost.reported(currUser,id)
 
-    }
-    response = json.dumps(resp)
-    return HttpResponse(response, content_type="appllication/json")
+        # Check if this post has crossed report threshold----if yes then delete it...!!
+        report_count = currPost.report.count()
+
+        if report_count > 3:
+            print("report")
+            post_user = User.objects.get(username=currPost.user.username)
+            msg = "Hey "+str(currPost.user.username)+",Gamers's community had reported one of your post in huge number....so it has been deleted permanently"
+            addMsg = Notification(user=post_user,message=msg)
+            Notification.save(addMsg)
+            currPost.delete()
+
+        resp={
+
+        }
+        response = json.dumps(resp)
+        return HttpResponse(response, content_type="application/json") 
+
+    else:
+        return redirect('indexx')
 
 
 
