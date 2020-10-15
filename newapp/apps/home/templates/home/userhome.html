@@ -12,6 +12,7 @@
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'home/index.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'home/userhome.css' %}">
+    
     <title>Document</title>
     
     
@@ -20,7 +21,7 @@
     
 
 
-    <div class="nav" style="padding: 0cm; margin: -6px;" >
+    <div class="nav" style="padding: 0cm; margin: 0px;" >
         <span class="link">
           <a href="/home/index/">Home</a>
         </span>
@@ -28,17 +29,28 @@
           <a href="/home/profile/">Profile</a>
         </div>
         <div class="link">
-            <a href="/home/about/">About</a>
+            <a href="/paytm/offers/">Shop</a>
         </div>
-        <div class="link">
-            <a href="#">Contact us</a>
+        <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn">About</button>
+            <div class="dropdown-content link">
+              <a href="/home/about/">About Us</a>
+              <a href="#">Contact Us</a>
+            </div>
         </div>
-        <div class="link">
-            <a href="/home/login/mypost/">My Posts</a>
+        <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn">Assemble</button>
+            <div class="dropdown-content link">
+              <a href="/chat">Chat</a>
+              <a href="#">Clan</a>
+            </div>
         </div>
-
-        <div class="link">
-            <a href="/home/topPost/">Top Posts</a>
+          <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn">Top Rated</button>
+            <div class="dropdown-content link">
+              <a href="/home/topPost/">Posts</a>
+              <a href="/home/topGamers/">Rankers</a>
+            </div>
           </div>
 
         <span style="margin-right: 22rem; "></span>

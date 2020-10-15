@@ -54,13 +54,6 @@ def handlerequest(request):
     if verify:
         if response_dict['RESPCODE'] == '01':
             print(response_dict["TXNAMOUNT"])
-            if "username" in request.session:
-                print(1)
-                user = User.objects.get(username = request.session["username"])
-                if response_dict["TXNAMOUNT"]==100:
-                    user.coins=100
-                    user.save()
-                    print(user.coins)
             print('order successful')
         else:
             print('order was not successful because' + response_dict['RESPMSG'])
