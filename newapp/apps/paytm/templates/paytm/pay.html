@@ -15,7 +15,7 @@
     <body>
         <div class="container">
             <div class="page-header text-center">
-                <h1>Card Payment Gateway</h1>
+                <h1>Paytm Payment Gateway</h1>
             </div>
             <!-- Credit Card Payment Form - START -->
             <div class="container">
@@ -32,22 +32,7 @@
                                 <form role="form" action="/paytm/payment" method="POST">{% csrf_token %}
                                     <div class="row">
                                         <div class="col-xs-12">
-                                            <div class="form-group"> <label>CARD NUMBER</label>
-                                                <div class="input-group"> <input type="tel" class="form-control" placeholder="Valid Card Number" /> <span class="input-group-addon"><span class="fa fa-credit-card"></span></span> </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-7 col-md-7">
-                                            <div class="form-group"> <label><span class="hidden-xs">EXPIRATION DATE</span></label> <input type="tel" class="form-control" placeholder="MM / YY" /> </div>
-                                        </div>
-                                        <div class="col-xs-5 col-md-5 pull-right">
-                                            <div class="form-group"> <label>CV CODE</label> <input type="tel" class="form-control" placeholder="CVC" /> </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <div class="form-group"> <label>CARD OWNER</label> <input type="text" class="form-control" placeholder="Card Owner Name" /> </div>
+                                            <div class="form-group"> <label>ACCOUNT OWNER</label> <input type="text" class="form-control" placeholder="Card Owner Name" /> </div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -55,6 +40,10 @@
                                             <div class="form-group"> <label>AMOUNT</label> <input type="number" name="amount" id="amount" class="form-control" placeholder="Amount from the offers" /> </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="form-group"> <label>ORDER ID</label> <input type="number" class="form-control" placeholder="Order Id"  name="order" id="order" /> </div>
+                                        </div>
                                 
                             </div>
                             <div class="panel-footer">

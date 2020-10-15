@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-# from .models import User, Post, Following, Followers, Notification, Comments
+from apps.home.models import User
 import json 
 from django.conf import settings 
 from django.core.mail import send_mail
@@ -18,25 +18,28 @@ def paytm(request):
 
 def payment(request):
     amount = request.POST.get('amount')
+    order=request.POST.get('order')
+    id = order
     param_dict={
-            'MID':'WorldP64425807474247',
-            'ORDER_ID':str(amount),
-            'TXN_AMOUNT':'1',
-            'CUST_ID':'acfff@paytm.com',
-            'INDUSTRY_TYPE_ID':'Retail',
-            'WEBSITE':'WEBSTAGING',
-            'CHANNEL_ID':'WEB',
-	        'CALLBACK_URL':'http://127.0.0.1:8000/paytm/handlerequest/',
-    }
+                'MID':'WorldP64425807474247',
+                'ORDER_ID':str(id),
+                'TXN_AMOUNT':str(amount),
+                'CUST_ID':'acfff@paytm.com',
+                'INDUSTRY_TYPE_ID':'Retail',
+                'WEBSITE':'WEBSTAGING',
+                'CHANNEL_ID':'WEB',
+	            'CALLBACK_URL':'http://127.0.0.1:8000/paytm/handlerequest/',
+        }
     param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(param_dict,MERCHANT_KEY)
     context = {
-        'payment_url': settings.PAYTM_PAYMENT_GATEWAY_URL,
-        'comany_name': settings.PAYTM_COMPANY_NAME,
-        'param_dict': param_dict
-    }
-    print(param_dict['CHECKSUMHASH'])
-    print(param_dict['CHECKSUMHASH'])
+            'payment_url': settings.PAYTM_PAYMENT_GATEWAY_URL,
+            'comany_name': settings.PAYTM_COMPANY_NAME,
+            'param_dict': param_dict
+        }
     return render(request,'paytm/paytm.html',context)
+
+    # else:
+    #     return redirect('offers')
 
 @csrf_exempt
 def handlerequest(request):
@@ -50,6 +53,14 @@ def handlerequest(request):
     verify = Checksum.verify_checksum(response_dict, MERCHANT_KEY, checksum)
     if verify:
         if response_dict['RESPCODE'] == '01':
+            print(response_dict["TXNAMOUNT"])
+            if "username" in request.session:
+                print(1)
+                user = User.objects.get(username = request.session["username"])
+                if response_dict["TXNAMOUNT"]==100:
+                    user.coins=100
+                    user.save()
+                    print(user.coins)
             print('order successful')
         else:
             print('order was not successful because' + response_dict['RESPMSG'])

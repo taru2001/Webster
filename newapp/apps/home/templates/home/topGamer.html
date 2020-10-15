@@ -8,7 +8,7 @@
 <body>
     {% for user in rankers %}
 
-       {{user.rank}}.  <a href="{% url 'searchProfile' user %}">{{user.username}}</a> <br>
+       {{user.rank}}.  <a href="{% url 'searchProfile' user.username %}">{{user.username}}</a> <br>
 
     {% endfor %}
 
