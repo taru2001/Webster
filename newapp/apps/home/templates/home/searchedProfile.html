@@ -3,6 +3,8 @@
     <head>
         <title>{{user.username}}</title>
         <link rel="stylesheet" type="text/css" href="{% static 'home/profile.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'home/index.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'home/userhome.css' %}">
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
@@ -18,6 +20,54 @@
         
     </head>
     <body>
+        <div class="nav" style="padding: 0cm; margin: 0px;height: 3.85rem;" >
+            <span class="link">
+              <a href="/home/index/">Home</a>
+            </span>
+            <div class="link">
+              <a href="/home/profile/">Profile</a>
+            </div>
+            <div class="link">
+                <a href="/paytm/offers/">Shop</a>
+            </div>
+            <div style="width: 6rem;text-align: center;" class="dropdown">
+                <button class="dropbtn" >About</button>
+                <div class="dropdown-content link">
+                  <a href="/home/about/">About Us</a>
+                  <a href="#">Contact</a>
+                </div>
+            </div>
+            <div style="width: 6rem;text-align: center;" class="dropdown">
+                <button class="dropbtn">Assemble</button>
+                <div class="dropdown-content link">
+                  <a href="/chat">Chat</a>
+                  <a href="#">Clan</a>
+                </div>
+            </div>
+              <div style="width: 6rem;text-align: center;" class="dropdown">
+                <button class="dropbtn">Top Rated</button>
+                <div class="dropdown-content link">
+                  <a href="/home/topPost/">Posts</a>
+                  <a href="/home/topGamers/">Rankers</a>
+                </div>
+              </div>
+        
+            <span style="margin-right: 22rem; "></span>
+            <span style="padding-top: 10px;"><form action="/home/search/"  method="get">
+             <input style="height: 1.7rem; width:14rem; outline: none; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
+                <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 30px; margin-left: 10px; background-color: #FFA500;" type="submit">Search</button>
+            </form>
+        </span>
+        <span style="margin-right: 3rem;"></span>
+        
+            <div class="link">
+                <a href="/home/notify/">Notifications</a>
+            </div>
+        
+            <div class="link">
+                <a href="/home/logout/">Logout</a>
+            </div>
+        </div>
         <div class="container emp-profile">
             
                 <div class="row">
