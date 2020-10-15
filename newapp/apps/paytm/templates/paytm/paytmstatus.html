@@ -2,13 +2,13 @@
     <head>
         <title>Status</title>
     </head>
-    <body>
-        {{response}}
-        <h2>Payment status regarding your order Id {{response.ORDERID}}</h2>
+    <body style="background-image: url('https://wallpapercave.com/wp/wp2533041.jpg');">
+        <div style="color: aliceblue;">{{response}}</div>
+        <h2 style="color: aliceblue;">Payment status regarding your order Id {{response.ORDERID}}</h2>
         {% if response.RESPCODE == '01' %}
-        ORDER SUCCESS
+        <div style="color: aliceblue;">ORDER SUCCESS</div>
         {% else %}
-        ORDER FAILURE
+        <div style="color: aliceblue;">ORDER FAILURE</div>
         {% endif%}
 
     </body>
