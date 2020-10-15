@@ -12,6 +12,8 @@
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
     <link rel="stylesheet" type="text/css" href="{% static 'home/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/userhome.css' %}">
+
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -30,43 +32,49 @@
   </head>
 
   <body>
-    <div class="nav" style="padding: 0cm;">
-      <!-- <span style="margin-right: 55rem;"></span> -->
+    
+    
+      
+    <div class="nav" style="padding: 0cm; height: 61px;">
       <span class="link">
         <a href="/home/index/">Home</a>
       </span>
-      <div class="link">
-        <a href="#">Dashboard</a>
+      <div style="width: 12rem;text-align: center;" class="dropdown">
+        <button class="dropbtn">About</button>
+        <div class="dropdown-content link">
+          <a href="/home/about/">About Us</a>
+          <a href="#">Contact Us</a>
+        </div>
       </div>
-      <div class="link">
-        <a href="#">Services</a>
-      </div>
-      <div class="link">
-        <a href="/home/about/">About</a>
-      </div>
-      <div class="link">
-        <a href="#">Contact us</a>
-      </div>
-      <div class="link">
-        <a href="/home/topPost/">Top Posts</a>
-      </div>
+        <div style="width: 12rem;text-align: center;" class="dropdown">
+          <button class="dropbtn">Top Rated</button>
+          <div class="dropdown-content link">
+            <a href="/home/topPost/">Posts</a>
+            <a href="/home/topGamers/">Rankers</a>
+          </div>
+        </div>
+  
       <span style="margin-right: 22rem; "></span>
-      <span style="padding-top: 5px;"><form action="/home/search/"  method="get">
-       <input style="height: 2rem; width:14rem; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
-          <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 30px; margin-left: 10px; margin-top: 00.5rem; background-color: #FFA500;" type="submit">Search</button>
+      <span style="padding-top: 14px;"><form action="/home/search/"  method="get">
+       <input style="height: 1.9rem; width:14rem; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
+          <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 30px; margin-left: 10px; background-color: #FFA500;" type="submit">Search</button>
       </form>
   </span>
   <span style="margin-right: 3rem;"></span>
-
+  
       <div class="link">
           <a href="/home/register/">Register</a>
       </div>
-
+  
       <div class="link">
           <a href="/home/login/">Login</a>
       </div>
-
+  
     </div>
+
+
+
+
     <div class="padded-m" style="margin-top: 8rem; margin-left: -5rem;">
 
     <form class="form-signin" action="/home/login/" method="POST" autocomplete="off">
@@ -89,7 +97,7 @@
       </div>
       <button class="btn btn-lg btn-primary btn-block bgnew" style="background-color: #FFA500; color: black;" type="submit">Sign in</button>
       <a href='forgot' style="margin-left: 5.5rem;" >Forgot Password?</a>
-      <p class="mt-5 mb-3 text-muted"><span style="margin-left: 3.5rem;" class="new">&copy; Flex Gamers 2020-2021</span></p>
+      <p class="mt-5 mb-3"><span style="margin-left: 3.5rem;" class="new">&copy; Flex Gamers 2020-2021</span></p>
     </form>
 
 

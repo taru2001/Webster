@@ -6,7 +6,8 @@
         <link rel="stylesheet" type="text/css" href="{% static 'home/index.css' %}">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
+        <link rel="stylesheet" type="text/css" href="{% static 'home/index.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'home/userhome.css' %}"> 
         <style>
         body{
             /* background-image: url('https://images.wallpapersden.com/image/download/playerunknowns-battlegrounds-pc_72805_3840x2160.jpg'); */
@@ -20,43 +21,48 @@
 
     </head>
     <body>
-        <div class="nav">
-            <span class="link">
-              <a href="/home/index/">Home</a>
-            </span>
-            <div class="link">
-              <a href="#">Dashboard</a>
-            </div>
-            <div class="link">
-              <a href="#">Services</a>
-            </div>
-            <div class="link">
-              <a href="/home/about/">About</a>
-            </div>
-            <div class="link">
-              <a href="#">Contact us</a>
-            </div>
+        
 
-            <div class="link">
-              <a href="/home/topPost/">Top Posts</a>
-            </div>
 
-            
-            <span style="margin-right: 22rem; "></span>
-            <span style="padding-top: 10px;"><form action="/home/search/"  method="get">
-             <input style="height: 3.5rem; width:20 rem; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
-                <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 30px; margin-left: 10px; background-color: #FFA500;" type="submit">Search</button>
-            </form>
+      <div class="nav" style="padding: 0cm; height: 61px;">
+        <span class="link">
+          <a href="/home/index/">Home</a>
         </span>
-        <span style="margin-right: 3rem;"></span>
-    
-            <div class="link">
-                <a href="/home/register/">Register</a>
+        <div style="width: 12rem;text-align: center;" class="dropdown">
+          <button class="dropbtn">About</button>
+          <div class="dropdown-content link">
+            <a href="/home/about/">About Us</a>
+            <a href="#">Contact Us</a>
+          </div>
+        </div>
+          <div style="width: 12rem;text-align: center;" class="dropdown">
+            <button class="dropbtn">Top Rated</button>
+            <div class="dropdown-content link">
+              <a href="/home/topPost/">Posts</a>
+              <a href="/home/topGamers/">Rankers</a>
             </div>
+          </div>
     
-            <div class="link">
-                <a href="/home/login/">Login</a>
-            </div>
+        <span style="margin-right: 22rem; "></span>
+        <span style="padding-top: 14px;"><form action="/home/search/"  method="get">
+         <input style="height: 1.9rem; width:14rem; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
+            <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 30px; margin-left: 10px; background-color: #FFA500;" type="submit">Search</button>
+        </form>
+    </span>
+    <span style="margin-right: 3rem;"></span>
+    
+        <div class="link">
+            <a href="/home/register/">Register</a>
+        </div>
+    
+        <div class="link">
+            <a href="/home/login/">Login</a>
+        </div>
+    
+      </div>
+  
+
+
     
           </div>
         <div style="background-color:initial; height:655px; width:370px; border-radius:30px; text-align:center; margin-left: 670px;" class="col-md-offset-4">

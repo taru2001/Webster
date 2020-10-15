@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
     <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
     <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
     <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css'>
@@ -13,6 +15,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'home/index.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'home/userhome.css' %}">
     
+
+
     <title>Document</title>
     
     
@@ -21,33 +25,37 @@
     
 
 
-    <div class="nav" style="padding: 0cm; margin: -6px;" >
+    <div class="nav" style="padding: 0cm; margin: 0px;" >
         <span class="link">
           <a href="/home/index/">Home</a>
         </span>
         <div class="link">
           <a href="/home/profile/">Profile</a>
         </div>
-        <div class="dropdown">
-            <button class="dropbtn">Dropdown</button>
+        
+        <div class="link">
+            <a href="/paytm/offers/">Shop</a>
+        </div>
+        <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn">About</button>
             <div class="dropdown-content link">
-              <a href="#">Link 1</a>
-              <a href="#">Link 2</a>
-              <a href="#">Link 3</a>
+              <a href="/home/about/">About Us</a>
+              <a href="#">Contact Us</a>
             </div>
-          </div>
-        <div class="link">
-            <a href="/home/about/">About</a>
         </div>
-        <div class="link">
-            <a href="#">Contact us</a>
+        <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn">Assemble</button>
+            <div class="dropdown-content link">
+              <a href="/chat">Chat</a>
+              <a href="#">Clan</a>
+            </div>
         </div>
-        <div class="link">
-            <a href="/home/login/mypost/">My Posts</a>
-        </div>
-
-        <div class="link">
-            <a href="/home/topPost/">Top Posts</a>
+          <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn">Top Rated</button>
+            <div class="dropdown-content link">
+              <a href="/home/topPost/">Posts</a>
+              <a href="/home/topGamers/">Rankers</a>
+            </div>
           </div>
 
         <span style="margin-right: 22rem; "></span>

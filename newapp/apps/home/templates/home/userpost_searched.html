@@ -18,9 +18,7 @@
 </head>
 <body>
     
-
-
-    <div class="nav" style="padding: 0cm; margin: -6px;" >
+    <div class="nav" style="padding: 0cm; margin: 0px;height: 3.85rem; padding-top: 0rem;" >
         <span class="link">
           <a href="/home/index/">Home</a>
         </span>
@@ -28,19 +26,30 @@
           <a href="/home/profile/">Profile</a>
         </div>
         <div class="link">
-            <a href="/home/about/">About</a>
+            <a href="/paytm/offers/">Shop</a>
         </div>
-        <div class="link">
-            <a href="#">Contact us</a>
+        <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn" >About</button>
+            <div class="dropdown-content link">
+              <a href="/home/about/">About Us</a>
+              <a href="#">Contact</a>
+            </div>
         </div>
-        <div class="link">
-            <a href="/home/login/mypost/">My Posts</a>
+        <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn">Assemble</button>
+            <div class="dropdown-content link">
+              <a href="/chat">Chat</a>
+              <a href="#">Clan</a>
+            </div>
         </div>
-
-        <div class="link">
-            <a href="/home/topPost/">Top Posts</a>
+          <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn">Top Rated</button>
+            <div class="dropdown-content link">
+              <a href="/home/topPost/">Posts</a>
+              <a href="/home/topGamers/">Rankers</a>
+            </div>
           </div>
-
+    
         <span style="margin-right: 22rem; "></span>
         <span style="padding-top: 10px;"><form action="/home/search/"  method="get">
          <input style="height: 1.7rem; width:14rem; outline: none; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
@@ -48,20 +57,23 @@
         </form>
     </span>
     <span style="margin-right: 3rem;"></span>
-
+    
         <div class="link">
             <a href="/home/notify/">Notifications</a>
         </div>
-
+    
         <div class="link">
             <a href="/home/logout/">Logout</a>
         </div>
+    </div>
 
-      </div>
 
-      <br>
-      <br>
-      <br>
+
+
+      
+    <br>
+    <br>
+    <br>
 
 
       <div id="fb-root"></div>

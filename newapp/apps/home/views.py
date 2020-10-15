@@ -737,6 +737,11 @@ def topPost(request):
     total = len(all_posts)
     #print(total)
 
+    loggedIn = 0
+
+    if "username" in request.session:
+        loggedIn = 1
+
     for i in range(0,total-1):
         
         for j in range(i+1,total):
@@ -747,7 +752,7 @@ def topPost(request):
             if rating1 < rating2:
                 all_posts[i] , all_posts[j] = all_posts[j] , all_posts[i]
 
-    return render(request,'home/topPosts.html' , {'posts': all_posts})
+    return render(request,'home/topPosts.html' , {'posts': all_posts , 'loggedIn':loggedIn})
 
 
 def seePost(request,postid):
@@ -842,6 +847,12 @@ def topGamers(request):
             if getUserRating(all_users[i]) < getUserRating(all_users[j]):
                 all_users[i] , all_users[j] = all_users[j] , all_users[i]
 
+    loggedIn = 0
+
+    if "username" in request.session:
+        loggedIn = 1
+
+
     count = 1
     for i in all_users:
         # Update rank of users
@@ -849,7 +860,7 @@ def topGamers(request):
         i.save()
         count+=1
 
-    return render(request,'home/topGamer.html',{'rankers':all_users})
+    return render(request,'home/topGamer.html',{'rankers':all_users , 'loggedIn':loggedIn})
 
 
 
