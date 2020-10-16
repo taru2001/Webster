@@ -126,7 +126,7 @@
         <br>
     {% for post in posts %}
 
-    <list style="width: 39rem; height: 80px; margin-left: 20px;border-radius: 1rem; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: xx-large;"  class="list-group-item list-group-item-success">{{msg.message}} {{post.user.username}} : {{post.tagline}}  <a class="btn btn-outline-success" href="{% url 'seePost' post.id %}">See Post</a></list>
+    <list style="width: 49rem; height: 80px; margin-left: 20px;border-radius: 1rem; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: xx-large;"  class="list-group-item list-group-item-success">{{msg.message}} {{post.user.username}} : {{post.tagline}}  <a class="btn btn-outline-success" href="{% url 'seePost' post.id %}">See Post</a></list>
         <br><br>
 
     {% endfor %}
