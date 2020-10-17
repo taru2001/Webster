@@ -214,6 +214,19 @@
         </div>
     </div>
     {% endfor %}
+
+    <br>
+    <br>
+    <br>
+    
+
+    {% if posts.has_previous %}
+    <a href="{% url 'user_home' %}?page={{posts.previous_page_number}}" style="color: antiquewhite;">Previous</a>
+    {% endif %}
+
+    {% if posts.has_next %}
+    <a href="{% url 'user_home' %}?page={{posts.next_page_number}}" style="color: antiquewhite;">Next</a>
+    {% endif %}
     
     <script>
      $(".Commentbtn").click(

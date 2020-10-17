@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .models import User, Post, Following, Followers, Notification, Comments
 import json 
 from django.conf import settings 
+from django.core.paginator import Paginator
 from django.core.mail import send_mail
 
 
@@ -145,6 +146,13 @@ def userpage(request):
                 reported_posts.append(i)
 
         comments = Comments.objects.all()
+
+        # Pagination of posts
+        p=Paginator(followedUser_posts,2)
+        page_num = request.GET.get('page',1)
+        followedUser_posts=p.page(page_num)
+
+
         # print(followedUser_posts)
         params = {'username': username, 'posts': followedUser_posts, 'liked_posts': liked_posts, 'rated_posts': rated_posts,
                 'comments': comments, 'reported_posts': reported_posts}
