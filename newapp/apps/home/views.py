@@ -8,11 +8,15 @@ from django.core.mail import send_mail
 
 
 def index(request):
+    #If user is logged in redirects to home page
     if "username" in request.session:
+
        return redirect('login')
+       # Home Page User enters here
     return render(request,'home/index.html')
 
 def registerUser(request):
+    #Signup Here
     if request.method=='POST':
         fname = request.POST.get('name')
         fusername = request.POST.get('username')
@@ -21,14 +25,15 @@ def registerUser(request):
         passw = request.POST.get('password')
         confpass = request.POST.get('confirmpassword')
 
-        
+        # Check if confpass==passw
         if passw!=confpass:
             return  HttpResponse("passwords did not matched...!!")
-
+        # if null return empty credentials
         if len(passw)==0 or len(phone)==0 or len(femail)==0 or len(fname)==0 or len(fusername)==0:
              return  HttpResponse("Empty Credentials!")
 
         else:
+            # All Checks Pass
             total = len(User.objects.all())
             newUser = User(name=fname,username=fusername,mobile=phone,email=femail,password=passw,rank=total+1)
             User.save(newUser)
@@ -49,12 +54,13 @@ def registerUser(request):
 
 
 def about(request):
+    # About Is empty
     return HttpResponse("About page")
 
 
 
 def get_followingPost(user):
-
+    # Fetches Posts of the ppl user is following
     followed_obj = Following.objects.filter(user=user)
     followed_user_posts = []
     if followed_obj:
@@ -73,6 +79,7 @@ def get_followingPost(user):
 
 
 def logout(request):
+    # Logout user
     if "username" in request.session:
         del request.session["username"]
         return redirect('indexx')
@@ -109,6 +116,7 @@ def likes(request, *args):  # individually handles posts for likes by ajax but r
 
 
 def userpage(request):
+    # Main page shown to User after login
     if "username" in request.session:
         username = request.session["username"]
         currUser = User.objects.filter(username=username)
@@ -127,7 +135,7 @@ def userpage(request):
 
         # Fetching following users posts
         followedUser_posts = get_followingPost(currUser)
-
+        # Fetches users post and all his followings posts
         liked_posts = []
         rated_posts = []
         reported_posts = []
@@ -167,7 +175,7 @@ def loginUser(request):
     # User already Logged In
     if "username" in request.session:
         return redirect("user_home")
-       
+
 
     # Method==POST
     elif request.method=='POST':
@@ -206,7 +214,7 @@ def loginUser(request):
 
 
 def upload(request):
-
+    # User Post uploader
     if "username" in request.session: 
         if request.method=='POST':
             user = User.objects.get(username = request.session["username"])
@@ -241,7 +249,7 @@ def upload(request):
 
 
 def mypost(request):
-
+    # Fetches users post
     if "username" in request.session:
         posts = Post.objects.all()
         #print(posts)
@@ -254,7 +262,7 @@ def mypost(request):
 
         liked_posts = []
         rated_posts = []
-        
+
         name = request.session["username"]
         for i in mylist:
             is_liked = i.likes.filter(username=name)
@@ -265,7 +273,7 @@ def mypost(request):
 
             if is_rated:
                 rated_posts.append(i)
-
+        #Comments Are fetched Here
         comments = Comments.objects.all()
         
         params = {'username': name, 'posts': mylist, 'liked_posts': liked_posts, 'rated_posts': rated_posts,
@@ -292,6 +300,7 @@ def deletePost(request,postId):
 
 
 def playvideo(request,postId):
+    # Plays Video
     posts = Post.objects.filter(id=postId)
     posts=posts[0]
     params = {'posts':posts}
@@ -299,6 +308,7 @@ def playvideo(request,postId):
 
 
 def profile(request):
+    #Profile backend for usera
     if "username" in request.session:  
         user = User.objects.get(username = request.session["username"])
         
@@ -333,6 +343,7 @@ def profile(request):
 
 
 def edit(request):
+    #redirects to edit profile Taking current user data
     if "username" in request.session:
         user = User.objects.get(username = request.session["username"])
         params = {'name':user.name , 'username':user.username , 'mobile':user.mobile ,
@@ -344,6 +355,7 @@ def edit(request):
 
 
 def manage_edit(request):
+    # Profile Edit Option
     if request.method=="POST" and "username" in request.session :
         name = request.POST.get('name')
         stats = request.POST.get('stats')
@@ -372,6 +384,7 @@ def manage_edit(request):
 
 
 def isUserMatching(str1 , str2):
+    #Filters user based on search
     m = len(str1) 
     n = len(str2) 
       
@@ -390,13 +403,13 @@ def isUserMatching(str1 , str2):
 
 
 def searchuser(request):
+    # Search Users
     whichUser = request.GET.get('searchuser')
     
     all_users = User.objects.all()
 
     # list of matched users
     found_users = []
-
     # Query all usernames for checking if such related username exists or not
     for user in all_users:
         if isUserMatching(user.username , whichUser) or isUserMatching(whichUser , user.username):
@@ -404,6 +417,7 @@ def searchuser(request):
     
     loggedIn=0
     followed_users = []
+
     if "username" in request.session:
         loggedIn=1
         currUser = User.objects.get(username=request.session["username"])
@@ -413,13 +427,14 @@ def searchuser(request):
             x = followedObj[0].followed.all()
             for user in x:
                 followed_users.append(user.username)
-        
+
 
     return render(request , 'home/searchuser.html' , {'found_users':found_users , 'loggedIn':loggedIn , 'followed_users':followed_users})
 
 
 
 def changephoto(request):
+    # Changes Photos
     if "username" in request.session and request.method=='POST':
         profilePic = request.FILES['profilePic']
 
@@ -432,7 +447,7 @@ def changephoto(request):
 
 
 def search_profile(request,user):
-
+    # Filters the profile after search user is done
     user = User.objects.get(username=user)
     games=user.games.split(',')
     loggedIn=0
@@ -477,6 +492,7 @@ def search_profile(request,user):
 
 
 def follow(request,usern):
+    # Follow/unfollow button
     if request.session["username"]==usern:
         return redirect('profile')
 
@@ -522,6 +538,7 @@ def follow(request,usern):
 
 
 def notify(request):
+    # Users Notification Fetching Happens here
     if "username" in request.session:
         currUser = User.objects.get(username=request.session["username"])
         my_message = Notification.objects.filter(user = currUser)
@@ -532,6 +549,7 @@ def notify(request):
 
 
 def delete_notify(request,msgId):
+    # Delete notifications
     if "username" in request.session:
         thisMsg = Notification.objects.filter(id=msgId)
         if request.session["username"]==thisMsg[0].user.username:
@@ -545,8 +563,8 @@ def delete_notify(request,msgId):
 
 
 
-
 def rating(request,*args):
+    # Rating  Implementaion for Posts
     if "username" in request.session:
         id = request.GET.get('rateid')
         ratingValue = request.GET.get('value')
@@ -568,6 +586,7 @@ def rating(request,*args):
 
 
 def comments(request):
+    # Commments are fetched here for posts
     msg=request.GET.get("comment")
     post=Post.objects.get(pk=request.GET.get("postid"))
     user=User.objects.get(username=request.session['username'])
@@ -592,6 +611,7 @@ def comments(request):
 
 
 def report(request, *args):
+    # reporting posts backend
     if "username" in request.session:
         id = request.GET.get('postid')
         currPost = Post.objects.get(pk=id)
@@ -620,13 +640,14 @@ def report(request, *args):
         return redirect('indexx')
 
 
-
 def forgot(request):
+    # Fetches forgot template after main implementaion of forgot
     return render(request,'home/forgot.html')
 
 
 
 def manage_forgot(request):
+    # Main Implementaion of forgot password
     if request.method=='POST':
         email=request.POST.get('email')
         UserEmail = User.objects.filter(email=email)
@@ -644,6 +665,7 @@ def manage_forgot(request):
 
 
 def sendmoney(request,usern):
+    # Sents money from current user
     if "username" in request.session:
         # check if it is the same user 
         currUser = User.objects.get(username=request.session["username"])
@@ -661,6 +683,7 @@ def sendmoney(request,usern):
 
 
 def handlepayment(request):
+    # Checks before sending money
     if "username" in request.session:
         if request.method=="POST":
             msg = request.POST.get('send_message')
@@ -699,6 +722,7 @@ def handlepayment(request):
 
 
 def userposts(request,usern):
+
     if "username" in request.session:
         currUser = User.objects.get(username=request.session["username"])
         usern = User.objects.get(username = usern)
@@ -740,6 +764,7 @@ def userposts(request,usern):
 
 
 def topPost(request):
+    # fetches Trending Post
     posts = Post.objects.all()
     all_posts = list(posts)
     total = len(all_posts)
@@ -764,6 +789,7 @@ def topPost(request):
 
 
 def seePost(request,postid):
+    # See posts in notifications
     currPost = Post.objects.get(id=postid)
 
     is_liked = 0 
@@ -794,6 +820,7 @@ def seePost(request,postid):
 
 
 def popularity(request):
+    # Users Popularity
     if request.method=='POST':
         to_whom = request.POST.get('to_whom')
         popularity_val = request.POST.get('popularity')
@@ -826,6 +853,7 @@ def popularity(request):
 
 
 def getUserRating(user):
+    #Gets User Rating
     rating = 0.000
     user_posts = Post.objects.filter(user=user)
     total = len(user_posts)
@@ -846,6 +874,7 @@ def getUserRating(user):
 
 
 def topGamers(request):
+    # Fetches top Gamers based on rating
     all_users = list(User.objects.all())
     lenUsers = len(all_users)
 
