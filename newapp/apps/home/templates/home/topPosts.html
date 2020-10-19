@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Top Posts</title>
     <link rel="stylesheet" type="text/css" href="{% static 'home/index.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'home/userhome.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -126,7 +126,7 @@
         <br>
     {% for post in posts %}
 
-    <list style="width: 49rem; height: 80px; margin-left: 20px;border-radius: 1rem; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: xx-large;"  class="list-group-item list-group-item-success">{{msg.message}} {{post.user.username}} : {{post.tagline}}  <a class="btn btn-outline-success" href="{% url 'seePost' post.id %}">See Post</a></list>
+    <list style="width: 49rem; height: 80px; margin-left: 600px;border-radius: 1rem; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: xx-large;"  class="list-group-item list-group-item-success">{{msg.message}} {{post.user.username}} : {{post.tagline}}  <a class="btn btn-outline-success" href="{% url 'seePost' post.id %}">See Post</a></list>
         <br><br>
 
     {% endfor %}

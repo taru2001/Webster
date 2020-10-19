@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css'>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+</head>
+<body>
+    <div id="chat-content">
+
+        {% for i in room_chats %}
+
+       {{i.by_whom.username}}  :  {{i.message}}  <br><br>
+
+        {% endfor %}
+
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    Message: <input id="myinput" type="text">
+    <button id="mybtn">Send</button>
+
+
+
+
+
+    <script type="text/javascript">
+
+        function updateMsg()
+        {
+            console.log("requesting json");
+    
+            $.getJSON("{% url 'getchats' currRoom.id %}" , function(response)
+            {
+                console.log(response.chats.length);
+    
+                $("#chat-content").empty();
+    
+                for(var i=0;i<response.chats.length;i++)
+                {
+                    
+                    $("#chat-content").append(response.users[i]+"  :  "+response.chats[i]+'<br><br>');
+                }
+                setTimeout('updateMsg()' , 500);
+            });
+        }
+    
+    
+        $(document).ready(function() {
+            $.ajaxSetup({cache:false});
+            updateMsg();
+        });
+    
+    
+    
+    
+        $("#mybtn").click(
+                       function(e){                       
+                            var href = "{%  url 'handlemsg' %}"
+                            var roomid = "{{currRoom.id}}"
+                            var user = "{{currUser}}"
+                            console.log(href,roomid);
+                            e.preventDefault();
+                            var message = document.getElementById("myinput");
+                            message=message.value;
+                            console.log(message);
+    
+                            $("#myinput").val("");
+                    
+                    $.ajax({
+                        url:href,
+                        data : {'msg':message , 'roomid':roomid},
+                        success:function(response){
+                           
+                          $("#chat-content").append(user+" : "+message+"<br>");
+    
+                        }
+                        
+                    })
+                       }
+                   );
+    </script>
+</body>
+</html>

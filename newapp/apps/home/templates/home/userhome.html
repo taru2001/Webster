@@ -14,7 +14,7 @@
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'home/index.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'home/userhome.css' %}">
-    <title>Document</title>
+    <title>Home</title>
     
     
 </head>
@@ -88,8 +88,8 @@
     </span>  
 
     <br>
-    <div style="display: inline-block;"><button class="re" style="width: 8rem; height: 4rem; margin-left: 480px;"><a class="like" href="/home/login/upload/">Upload post</a></button>
-    <button class="re" style="width: 8rem; height: 4rem; margin-left: 880px;margin-top: 0rem;"><a class="like" href="/home/login/mypost/">My posts</a></button></div>
+    <div ><button class="re" style="width: 8rem; height: 4rem; margin-left: 600px;"><a class="like" href="/home/login/upload/">Upload post</a></button>
+    <button class="re" style="width: 8rem; height: 4rem; margin-left: 0px;margin-top: 0rem;"><a  class="like" href="/home/login/mypost/">My posts</a></button></div>
     <br>
     
 
@@ -145,13 +145,18 @@
                                 
                                 
                                    {% if post not in rated_posts %}
-                                   <span  style=" margin-left: 3rem;"><img style="margin-top: -2rem;" src="https://webstockreview.net/images/clipart-gun-long-gun-11.png" width="50px" height="30px" alt=""></span>    
-                                   <span id="rate{{post.id}}" >           
-                                    <input type="radio" name="rate{{post.id}}" value="1" id="1"  > 
-                                    <input type="radio" name="rate{{post.id}}" value="2" id="2"  >
-                                    <input type="radio" name="rate{{post.id}}" value="3" id="3"  >
-                                    <input type="radio" name="rate{{post.id}}" value="4" id="4"  >
-                                    <input type="radio" name="rate{{post.id}}" value="5" id="5"  >
+                                   <span  style=" margin-left: 3rem;"><img style="margin-top: -2rem;"  width="50px" height="30px" alt=""></span>    
+                                   <span id="rate{{post.id}}" >
+                                    <label for="1"><img style="border-radius: 3rem;" height="22rem" width="35rem" src="https://webstockreview.net/images/clipart-gun-long-gun-11.png" alt="I'm sad" /></label>           
+                                    <input style="display: none;" type="radio" name="rate{{post.id}}" value="1" id="1"  > 
+                                    <label for="2"><img style="border-radius: 3rem;" height="22rem" width="35rem" src="https://webstockreview.net/images/clipart-gun-long-gun-11.png" alt="I'm sad" /></label>
+                                    <input style="display: none;" type="radio" name="rate{{post.id}}" value="2" id="2"  >
+                                    <label for="3"><img style="border-radius: 3rem;" height="22rem" width="35rem" src="https://webstockreview.net/images/clipart-gun-long-gun-11.png" alt="I'm sad" /></label>
+                                    <input style="display: none;" type="radio" name="rate{{post.id}}" value="3" id="3"  >
+                                    <label for="4"><img style="border-radius: 3rem;" height="22rem" width="35rem" src="https://webstockreview.net/images/clipart-gun-long-gun-11.png" alt="I'm sad" /></label>
+                                    <input style="display: none;" type="radio" name="rate{{post.id}}" value="4" id="4"  >
+                                    <label for="5"><img style="border-radius: 3rem;" height="22rem" width="35rem" src="https://webstockreview.net/images/clipart-gun-long-gun-11.png" alt="I'm sad" /></label>
+                                    <input style="display: none;" type="radio" name="rate{{post.id}}" value="5" id="5"  >
                         
                                    </span>
 
@@ -185,15 +190,13 @@
 <br><br>
 
 
-<br><br>
+<div style="margin-left: 45rem;" class="fb-share-button" data-href="http://127.0.0.1:8000/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
 
-<div class="fb-share-button" data-href="http://127.0.0.1:8000/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
-
-<br><br>
+<br>
                                    
 
-                    <textarea id="cmnt{{post.id}}"  name="comment{{post.id}}" style="resize:none;width:400px;"></textarea>
-                            <button id="{{post.id}}" class="Commentbtn re">Comment</button>
+                   <div> <textarea id="cmnt{{post.id}}"  name="comment{{post.id}}" style="resize:none;width:400px; margin-left: 4rem;border-radius: 2rem;height: 4rem;outline: 0ch;padding: 1rem;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;font-size:large;"></textarea>
+                            <button style="margin-left: 0%;" id="{{post.id}}" class="Commentbtn re">Comment</button></div>
                             
                                                         <br><br>
 
@@ -201,12 +204,12 @@
                                     {%for comment in comments%}
                                       {%if post.id == comment.post.id %}
                                         
-                                            <pre>{% if comment.user.profileImage.url is not None %} <img height="35px" width="35px" src="{{comment.user.profileImage.url}}" alt="">  {{comment.user.username}} at {{comment.time}} :{{comment.comment}} {%else%}<img height="35px" width="35px" src="https://afribary.com/authors/anonymous-user/photo" alt=""> {{comment.user.username}} at {{comment.time}} :{{comment.comment}}  {% endif %} </pre><hr>
+                                            <pre style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;font-size:large;">{% if comment.user.profileImage.url is not None %} <img height="35px" width="35px" src="{{comment.user.profileImage.url}}" alt="">  {{comment.user.username}} at {{comment.time}} :{{comment.comment}} {%else%}<img height="35px" width="35px" src="https://afribary.com/authors/anonymous-user/photo" alt=""> {{comment.user.username}} at {{comment.time}} :{{comment.comment}}  {% endif %} </pre><hr>
                                        
                                       {% endif %}
                                     {%endfor%}
                                    
-                                    
+                                    <br>
                         
                     </div>
                 </div>

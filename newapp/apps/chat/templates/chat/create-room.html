@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/chat/create-room/" method="post">
+        {% csrf_token %}
+       Admin Name: <input type="text" value="{{username}}" readonly name="adminName"><br>
+       Room Name: <input type="text" name="roomName"><br>
+       Limit of Members: <input type="number" name="limit"><br>
+       Password of Room: <input type="text" name="password"><br>
+       <button type="submit">Create Room</button>
+
+    </form>
+</body>
+</html>
