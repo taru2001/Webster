@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from . import views,replies
 
 urlpatterns = [
     path('index/',views.index,name="indexx"),
@@ -37,5 +37,7 @@ urlpatterns = [
 
     path('givePopularity/',views.popularity,name="popularity"),
 
-    path('topGamers/',views.topGamers,name="topGamers")
+    path('topGamers/',views.topGamers,name="topGamers"),
+    path('Comments/replies',replies.replies,name='replies'),
+    path('deletereply/',replies.delete_reply,name="deletereply")
 ]

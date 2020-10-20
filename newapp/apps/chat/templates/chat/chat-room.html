@@ -29,12 +29,20 @@
     <br>
     <br>
 
-    Message: <input id="myinput" type="text">
+    Message: <input id="myinput" type="text" required>
     <button id="mybtn">Send</button>
 
 
 
-
+<script>
+var input = document.getElementById("myinput");
+input.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   document.getElementById("mybtn").click();
+  }
+});
+</script>
 
     <script type="text/javascript">
 

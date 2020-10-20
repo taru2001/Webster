@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import User, Post, Following, Followers, Notification, Comments
+from .models import User, Post, Following, Followers, Notification, Comments, Replies
 import json 
 from django.conf import settings 
 from django.core.mail import send_mail
@@ -153,9 +153,10 @@ def userpage(request):
                 reported_posts.append(i)
 
         comments = Comments.objects.all()
+        replies=Replies.objects.all()
         # print(followedUser_posts)
         params = {'username': username, 'posts': followedUser_posts, 'liked_posts': liked_posts, 'rated_posts': rated_posts,
-                'comments': comments, 'reported_posts': reported_posts}
+                'commentss': comments, 'reported_posts': reported_posts,'replies':replies}
 
         return render(request, 'home/userhome.html', params)
 
@@ -267,9 +268,10 @@ def mypost(request):
                 rated_posts.append(i)
         #Comments Are fetched Here
         comments = Comments.objects.all()
+        replies=Replies.objects.all()
         
         params = {'username': name, 'posts': mylist, 'liked_posts': liked_posts, 'rated_posts': rated_posts,
-                'comments': comments}
+                'comments': comments , 'replies':replies}
 
         return render(request,'home/mypost.html',params)
 

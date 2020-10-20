@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'apps.home',
     # 'channels',
     'apps.chat',
-    'apps.paytm'
+    # 'apps.paytm'
 ]
 
 MIDDLEWARE = [
