@@ -130,3 +130,24 @@ class Comments(models.Model):
     def __str__(self):
         return self.user.username+"  : "+self.comment
 
+class Replies(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="user_replied")
+    comments=models.ForeignKey(Comments,on_delete=models.CASCADE,related_name="comments_replied")
+    reply=models.CharField(max_length=100,default="")
+    time=models.DateTimeField(auto_now_add=True)
+    class Meta:
+        ordering=['-time']
+    def __str__(self):
+        return self.user.username+"replied:"+self.reply
+    @classmethod
+    def add_reply(cls,id,msg,username):
+        user=User.objects.get(username=username)
+        comment=Comments.objects.get(pk=id)
+        create=Replies(user=user ,comments=comment,reply=msg)
+        create.save()
+    @classmethod
+    def delete_reply(cls,id):
+        object=cls.get(pk=id)
+        object.delete()
+
+

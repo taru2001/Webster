@@ -201,29 +201,88 @@
                                                         <br><br>
 
                                     <span id="end{{post.id}}"></span> <br>
-                                    {%for comment in comments%}
+                                    {%for comment in commentss%}
                                       {%if post.id == comment.post.id %}
                                         
-                                            <pre style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;font-size:large;">{% if comment.user.profileImage.url is not None %} <img height="35px" width="35px" src="{{comment.user.profileImage.url}}" alt="">  {{comment.user.username}} at {{comment.time}} :{{comment.comment}} {%else%}<img height="35px" width="35px" src="https://afribary.com/authors/anonymous-user/photo" alt=""> {{comment.user.username}} at {{comment.time}} :{{comment.comment}}  {% endif %} </pre><hr>
-                                       
+                                            <pre style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;font-size:large;">{% if comment.user.profileImage.url is not None %} <img height="35px" width="35px" src="{{comment.user.profileImage.url}}" alt="">  {{comment.user.username}} at {{comment.time}} :{{comment.comment}} {%else%}<img height="35px" width="35px" src="https://afribary.com/authors/anonymous-user/photo" alt=""> {{comment.user.username}} at {{comment.time}} :{{comment.comment}}  {% endif %} </pre>
+                            <br>
+                             <a id="re{{comment.id}}"> <span id="{{comment.id}}" class="replies">reply</span></a>
+                            <hr style="border-color: lightseagreen;border-width: 0.1px;">
+                            <div id="reply{{comment.id}}" style="display:none;">
+                              <input type="name" name="replytext" id='replycmnt{{comment.id}}' >
+                              <button id='{{comment.id}}' class='replybtn' style="background:transparent">reply</button>
+                              <br>
+<div>
+                                    <span class="newreply{{comment.id}}"> </span>
+                                </div>
+                            {% for replie in replies%}
+                            {%if replie.comments.id == comment.id %}
+                                
+                            {{replie.user.username}} to {{comment.user.username}} replied:<br>
+                            {{replie.reply}}<br>
+                            {% endif %}
+                            {% endfor %}
+
+                            </div>
+
+
+
+
                                       {% endif %}
                                     {%endfor%}
-                                   
+
                                     <br>
-                        
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
     {% endfor %}
-    
+
     <script>
+    $(".replies").click(
+    function(e){
+      id = this.id;
+
+   var divreply =document.getElementById("reply"+id);
+
+   if(divreply.style.display=="none"){
+    divreply.style.display="block";
+    $(this).html("hide");
+   }else{ $(this).html("reply");
+    divreply.style.display="none"
+   }e.preventDefault();
+    }
+    );
+    $(".replybtn").click(
+        function(e){
+          href="{% url 'replies' %}"
+          id=this.id;
+          alert(href);
+          var msg=document.getElementById("replycmnt"+id).value;   //gets text of the reply text area
+          e.preventDefault();
+          console.log(id,msg)
+$.ajax({
+            url:href,
+            data:{'commentid':id,'msg':msg},
+            success:function(response){
+              if(response.msg="success"){
+                    $(".newreply"+id).prepend(response.user+" to "+response.commentuser+" replied : "+"<br>"+msg+"<br>");
+              }else{
+                alert("There Is some problem with your account please contact admin");
+              }
+            }
+          })
+
+        }
+      );
      $(".Commentbtn").click(
     function(e){
     href="{% url 'comment_post'%}"
     var id=this.id;
     var msg=$("#cmnt"+id).val();
+
     $("#cmnt"+id).val("");
 
     e.preventDefault();

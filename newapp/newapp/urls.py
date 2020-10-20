@@ -11,5 +11,5 @@ urlpatterns = [
     path('home/',include('apps.home.urls')),
     path('',views.index,name="site_index"),
     path('chat/',include('apps.chat.urls')),
-    path('paytm/',include('apps.paytm.urls'))
+    # path('paytm/',include('apps.paytm.urls'))
 ] + static(settings.MEDIA_URL , document_root = settings.MEDIA_ROOT)
