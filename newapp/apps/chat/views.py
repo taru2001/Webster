@@ -17,7 +17,7 @@ def create_room(request):
     if "username" in request.session:
 
         if request.method=='POST':
-            admin_name = request.POST.get('adminName')
+            admin_name = request.session["username"]
             user_obj = User.objects.get(username=admin_name)
             password = request.POST.get('password')
             room_name = request.POST.get('roomName')
@@ -46,7 +46,7 @@ def handle_join_room(request):
         room_name = request.POST.get('roomName')
         password = request.POST.get('password')
 
-        currUser_obj = User.objects.get(username=request.session["username"])
+        currUser_obj = User.objects.get(username=request.session["username"])    
 
         all_rooms = Room.objects.all()
 
@@ -65,12 +65,15 @@ def handle_join_room(request):
                 is_member = currRoom.members.filter(username=currUser_obj.username)
 
                 # Main chat html rendering............!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                if is_member:
-                    currRoom.members.add(currUser_obj)
-                    currRoom.save()
+                if not is_member:
+                    
+                    if currRoom.members.count()==currRoom.limit:
+                        return HttpResponse("<h1>Sorry the room is full</h1>")
 
-                elif currRoom.members.count()==currRoom.limit:
-                    return HttpResponse("<h1>Sorry the room is full</h1>")
+                    else:
+                        currRoom.members.add(currUser_obj)
+                        currRoom.save()
+
                       
                 room_chats = Chats.objects.filter(room=currRoom)
 
@@ -151,4 +154,3 @@ def handlemsg(request,*args):
             redirect('chatindex')
 
     return redirect('login')
-

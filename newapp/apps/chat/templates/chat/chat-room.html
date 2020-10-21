@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Chat</title>
+    <title>Chat Room</title>
 
     <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
     <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
@@ -14,9 +14,10 @@
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'chat/index.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'chat/userhome.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'chat/create.css' %}">
 </head>
-<body>
-    <div class="nav" style="padding: 0cm; margin: 0px;height: 3.85rem;" >
+<body style="background-image: url('https://images8.alphacoders.com/719/thumb-1920-719873.jpg');background-repeat: no-repeat;background-size: cover;">
+    <div class="nav" style="padding: 0cm; margin-top: -8px;height: 3.4rem;" >
         <span class="link">
           <a href="/home/index/">Home</a>
         </span>
@@ -67,7 +68,7 @@
       </div>
       <br>
       <br>
-    <div id="chat-content">
+    <div id="chat-content" style="color:white;">
 
         {% for i in room_chats %}
 
@@ -82,9 +83,10 @@
     <br>
     <br>
     <br>
-
-    Message: <input id="myinput" type="text" required>
-    <button id="mybtn">Send</button>
+    <div>
+    <input class="formStyle" id="myinput" type="text" required placeholder="Enter Message">
+    <button style="margin-right: 55rem;" class="formButton" id="mybtn">Send</button>
+    </div>
 
 
 
