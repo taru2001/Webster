@@ -1,18 +1,76 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Create Chat</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'chat/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'chat/userhome.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'chat/create.css' %}">
 </head>
-<body>
-    <form action="/chat/create-room/" method="post">
-        {% csrf_token %}
-       Admin Name: <input type="text" value="{{username}}" readonly name="adminName"><br>
-       Room Name: <input type="text" name="roomName"><br>
-       Limit of Members: <input type="number" name="limit"><br>
-       Password of Room: <input type="text" name="password"><br>
-       <button type="submit">Create Room</button>
+<body style="background-image: url('https://images8.alphacoders.com/719/thumb-1920-719873.jpg');background-repeat: no-repeat;background-size: cover;">
+    <div class="nav" style="padding: 0cm; margin-top: -8px;height: 3.5rem;" >
+        <span class="link">
+          <a href="/home/index/">Home</a>
+        </span>
+        <div class="link">
+          <a href="/home/profile/">Profile</a>
+        </div>
+        <div class="link">
+            <a href="/paytm/offers/">Shop</a>
+        </div>
+        <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn" >About</button>
+            <div class="dropdown-content link">
+              <a href="/home/about/">About Us</a>
+              <a href="#">Contact</a>
+            </div>
+        </div>
+        <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn">Assemble</button>
+            <div class="dropdown-content link">
+              <a href="/chat">Chat</a>
+              <a href="#">Clan</a>
+            </div>
+        </div>
+          <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn">Top Rated</button>
+            <div class="dropdown-content link">
+              <a href="/home/topPost/">Posts</a>
+              <a href="/home/topGamers/">Rankers</a>
+            </div>
+          </div>
+    
+        <span style="margin-right: 22rem; "></span>
+        <span style="padding-top: 10px;"><form action="/home/search/"  method="get">
+         <input style="height: 1.7rem; width:14rem; outline: none; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
+            <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 30px; margin-left: 10px; background-color: #FFA500;" type="submit">Search</button>
+        </form>
+    </span>
+    <span style="margin-right: 3rem;"></span>
+    
+        <div class="link">
+            <a href="/home/notify/">Notifications</a>
+        </div>
+    
+        <div class="link">
+            <a href="/home/logout/">Logout</a>
+        </div>
+    
+      </div>
+      <br><br><br><br><br>
+      <div style="margin-left: 500px;">
+        <form action="/chat/create-room/" method="post">
+            {% csrf_token %}
+            <input style="font-size: larger;" type="text" value="{{username}}" class="formStyle" readonly name="adminName"><br>
+            <input style="font-size: larger;" type="text" placeholder="Room Name"required class="formStyle" name="roomName"><br>
+            <input style="font-size: larger;" type="number" placeholder="Limit of Members"required class="formStyle" name="limit"><br>
+            <input style="font-size: larger;" type="text" placeholder="Password for Room"required class="formStyle" name="password"><br>
+            <button  class="formButton" type="submit">Create Room</button>
+        </form>
+      </div>
+    
 
     </form>
 </body>
