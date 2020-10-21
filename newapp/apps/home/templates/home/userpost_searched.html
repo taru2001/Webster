@@ -194,12 +194,59 @@
     
                                 
 
-            <span id="end{{post.id}}"></span> 
+            <div id="end{{post.id}}"></div> 
             {%for comment in comments%}
               {%if post.id == comment.post.id %}
                 
-                    <pre style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;font-size:large;">{% if comment.user.profileImage.url is not None %} <img height="35px" width="35px" src="{{comment.user.profileImage.url}}" alt="">  {{comment.user.username}} at {{comment.time}} :{{comment.comment}} {%else%}<img height="35px" width="35px" src="https://afribary.com/authors/anonymous-user/photo" alt=""> {{comment.user.username}} at {{comment.time}} :{{comment.comment}}  {% endif %} </pre><hr>
-               
+                    <pre style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;font-size:large;">{% if comment.user.profileImage.url is not None %} <img height="35px" width="35px" src="{{comment.user.profileImage.url}}" alt="">  {{comment.user.username}} at {{comment.time}} :{{comment.comment}} {%else%}<img height="35px" width="35px" src="https://afribary.com/authors/anonymous-user/photo" alt=""> {{comment.user.username}} at {{comment.time}} :{{comment.comment}}  {% endif %} </pre>
+                
+                    <br>
+
+                    <a id="re{{comment.id}}" style="cursor: pointer;"> <span id="{{comment.id}}" class="replies">reply</span></a>
+                            
+                            <div id="reply{{comment.id}}" style="display:none;">
+                              <input type="name" name="replytext" id='replycmnt{{comment.id}}' >
+                              <button id='{{comment.id}}' class='replybtn' style="background:transparent">reply</button>
+                              <br>
+                            <div id="ajax{{comment.id}}">
+                                    
+                                </div>
+                            
+
+
+                            {% for replie in replies%}
+                            {%if replie.comments.id == comment.id %}
+
+                            <span class="{{replie.id}}">
+                                
+                           {{replie.user.username}} to {{comment.user.username}} replied:<br>
+                            {{replie.reply}}     
+
+                          
+
+                            {% ifequal replie.user.username username%}
+                            <input type="button"  class="{{replie.id}} deletereply" value="Delete Reply">
+                            
+                            {% endifequal %}
+                            
+                            <!-- 
+                            {%ifequal post.user.username username %}
+                            <input type="button"  class="{{replie.id}} deletereply" value="Delete Reply">
+                            {% endifequal %} -->
+                          
+
+                            <br><br>
+                          </span>
+
+                            {% endif %}
+                            {% endfor %}
+
+                            </div>
+                            <hr style="border-color: lightseagreen;border-width: 0.1px;">
+
+
+
+
               {% endif %}
             {%endfor%}
             <br>
@@ -213,12 +260,132 @@
     </div>
     {% endfor %}
     
-    <script>
+
+
+
+
+    <script>  
+    
+    $(".replies").click(
+    function(e){
+      id = this.id;
+
+   var divreply =document.getElementById("reply"+id);
+
+   if(divreply.style.display=="none"){
+    divreply.style.display="block";
+    $(this).html("hide");
+   }else{ $(this).html("reply");
+    divreply.style.display="none"
+   }e.preventDefault();
+    }
+    );
+
+
+    $(document).on('click','.replybtn',
+        function(e){
+          href="{% url 'replies' %}"
+          id=this.id;
+  
+          var msg=document.getElementById("replycmnt"+id).value;   //gets text of the reply text area
+          e.preventDefault();
+          console.log(id,msg)
+          $("#replycmnt"+id).val("");
+$.ajax({
+            url:href,
+            data:{'commentid':id,'msg':msg},
+            success:function(response){
+              if(response.msg="success"){
+
+                var rid=response.replyid;
+                console.log(rid);
+
+                var gotmsg = response.user+" to "+response.commentuser+" replied : "+"<br>" +msg;
+
+                
+
+                $("#ajax"+id).prepend( "<span></span>");
+                $("."+rid).html(gotmsg);
+
+                var all = document.getElementById("ajax"+id).querySelectorAll('span');
+                all[0].className=rid;
+
+                $("."+rid).html(gotmsg);
+
+              
+                var newbt = $('<input/>').attr({
+                  type:"button",
+                  value:"Delete Reply",
+                  class: rid,
+                });
+
+              $("."+rid).append(newbt);
+              $("."+rid).append("<br><br>" );
+              $("input."+rid).addClass("deletereply");
+           //   $("input."+rid).on("click",del());
+            //  all = document.getElementsByClassName(rid).querySelectorAll('input');
+              
+              }
+              
+              else{
+                alert("There Is some problem with your account please contact admin");
+              }
+
+            }
+          })
+
+        }
+      );
+
+
+
+
+    
+        $(document).on('click','.deletereply',
+          function (e)
+          {
+              var href="{% url 'deletereply' %}";
+              var replyid = $(this).attr('class');
+            
+              var i,x="";
+              for(i=0;i<replyid.length;i++)
+              {
+                if(replyid[i]==' ')
+                {
+                  break;
+                }
+                else{
+                  x+=replyid[i];
+                }
+              }
+              replyid =x;
+              console.log(replyid);
+              e.preventDefault();
+
+
+              $.ajax({
+                url:href,
+                data:{'replyid':replyid},
+
+                success:function(response){
+                $("."+replyid).remove();
+                
+                //  $("."+replyid).find('span').remove();
+                }
+              });
+
+          }
+        );
+
+
+
+
      $(".Commentbtn").click(
     function(e){
     href="{% url 'comment_post'%}"
     var id=this.id;
     var msg=$("#cmnt"+id).val();
+
     $("#cmnt"+id).val("");
 
     e.preventDefault();
@@ -229,14 +396,18 @@
            'postid':id},
     success:function(response){
 
-      $('<img />')
-            .attr('src', "" + response.pic + "")         
-            .width('35px').height('35px')
+      var msg=response.username+" at "+response.time+" : "+response.comment+"<hr>";
 
-            .appendTo($('#end'+id));
+
+    var newimg =  $('<img />')
+            .attr('src', "" + response.pic + "")         
+            .width('35px').height('35px');
+
+    var newspan=$('<span />');
         
-         
-        $("#end"+id).append(response.username+"at"+response.time+" :"+response.comment+"<hr>");
+        $("#end"+id).prepend(newspan);
+        $(newspan).html("             "+msg);
+        $(newspan).prepend(newimg);
 
     }
     })
@@ -244,6 +415,9 @@
 
     }
     );
+
+
+
         $(".lol").click(
                function(e){
                var id =this.id;

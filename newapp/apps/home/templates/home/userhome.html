@@ -200,24 +200,28 @@
                             
                                                         <br><br>
 
-                                    <span id="end{{post.id}}"></span> <br>
+                                    <div id="end{{post.id}}"></div> <br>
+              <div style="width: ;">
                                     {%for comment in commentss%}
                                       {%if post.id == comment.post.id %}
                                         
-                                            <pre style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;font-size:large;">{% if comment.user.profileImage.url is not None %} <img height="35px" width="35px" src="{{comment.user.profileImage.url}}" alt="">  {{comment.user.username}} at {{comment.time}} :{{comment.comment}} {%else%}<img height="35px" width="35px" src="https://afribary.com/authors/anonymous-user/photo" alt=""> {{comment.user.username}} at {{comment.time}} :{{comment.comment}}  {% endif %} </pre>
+                                    <div style="max-width: 20px; height: auto;">    <pre style="  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;font-size:large;">{% if comment.user.profileImage.url is not None %} <img height="35px" width="35px" src="{{comment.user.profileImage.url}}" alt="">  {{comment.user.username}} at {{comment.time}} :{{comment.comment}} {%else%}<img height="35px" width="35px" src="https://afribary.com/authors/anonymous-user/photo" alt=""> {{comment.user.username}} at {{comment.time}} :{{comment.comment}}  {% endif %} </pre>
+                                    </div> 
                             <br>
 
 
                              <a id="re{{comment.id}}" style="cursor: pointer;"> <span id="{{comment.id}}" class="replies">reply</span></a>
-                            <hr style="border-color: lightseagreen;border-width: 0.1px;">
+                            
+                    <div id="reply{{comment.id}}" style="display:none;">
 
-                            <div id="reply{{comment.id}}" style="display:none;">
                               <input type="name" name="replytext" id='replycmnt{{comment.id}}' >
                               <button id='{{comment.id}}' class='replybtn' style="background:transparent">reply</button>
                               <br>
                             <div id="ajax{{comment.id}}">
                                     
                                 </div>
+                            
+
 
                             {% for replie in replies%}
                             {%if replie.comments.id == comment.id %}
@@ -246,13 +250,16 @@
                             {% endif %}
                             {% endfor %}
 
-                            </div>
+                    </div>
+                            <hr style="border-color: lightseagreen;border-width: 0.1px;">
 
 
 
 
                                       {% endif %}
                                     {%endfor%}
+
+              </div>
 
                                     <br>
 
@@ -262,6 +269,9 @@
         </div>
     </div>
     {% endfor %}
+
+
+
 
     <script>
 
@@ -395,14 +405,18 @@ $.ajax({
            'postid':id},
     success:function(response){
 
-      $('<img />')
-            .attr('src', "" + response.pic + "")         
-            .width('35px').height('35px')
+      var msg=response.username+" at "+response.time+" : "+response.comment+"<hr>";
 
-            .appendTo($('#end'+id));
+
+    var newimg =  $('<img />')
+            .attr('src', "" + response.pic + "")         
+            .width('35px').height('35px');
+
+    var newspan=$('<span />');
         
-         
-        $("#end"+id).append(response.username+" at "+response.time+" : "+response.comment+"<hr>");
+        $("#end"+id).prepend(newspan);
+        $(newspan).html("             "+msg);
+        $(newspan).prepend(newimg);
 
     }
     })
@@ -410,6 +424,9 @@ $.ajax({
 
     }
     );
+
+
+    
         $(".lol").click(
                function(e){
                var id =this.id;
