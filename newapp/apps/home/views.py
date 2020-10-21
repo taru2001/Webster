@@ -328,7 +328,8 @@ def profile(request):
         params = {'name':user.name , 'username':user.username , 'mobile':user.mobile ,
                         'email':user.email, 'games':user.games, 'country':user.country,
                         'state':user.state, 'description':user.description, 'stats':user.stats , 'profileImage':user.profileImage,
-                         'followedUsers' : followedUsers , 'followers':followers, 'gamessplit':games}
+                         'followedUsers' : followedUsers , 'followers':followers, 'gamessplit':games, 'rank':user.rank,
+                          'popularity':user.popularity}
 
         return render(request,'home/dashboard.html',params)
 
