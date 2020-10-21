@@ -39,4 +39,5 @@ urlpatterns = [
 
     path('topGamers/',views.topGamers,name="topGamers"),
     path('Comments/replies',replies.replies,name='replies'),
+    path('deletereply/',replies.delete_reply,name="deletereply")
 ]

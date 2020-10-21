@@ -61,7 +61,7 @@ input.addEventListener("keyup", function(event) {
                     
                     $("#chat-content").append(response.users[i]+"  :  "+response.chats[i]+'<br><br>');
                 }
-                setTimeout('updateMsg()' , 500);
+                setTimeout('updateMsg()' , 1000);
             });
         }
     
@@ -99,6 +99,16 @@ input.addEventListener("keyup", function(event) {
                     })
                        }
                    );
+    </script>
+
+<script>
+    var input = document.getElementById("myinput");
+    input.addEventListener("keyup", function(event) {
+      if (event.keyCode === 13) {
+       event.preventDefault();
+       document.getElementById("mybtn").click();
+      }
+    });
     </script>
 </body>
 </html>

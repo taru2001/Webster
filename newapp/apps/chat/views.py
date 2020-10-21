@@ -61,17 +61,20 @@ def handle_join_room(request):
 
         if found:
             if currRoom.password==password:
-                if currRoom.members.count()==currRoom.limit:
-                    return HttpResponse("<h1>Sorry the room is full</h1>")
-
+                
+                is_member = currRoom.members.filter(username=currUser_obj.username)
 
                 # Main chat html rendering............!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                else:
+                if is_member:
                     currRoom.members.add(currUser_obj)
                     currRoom.save()
-                    room_chats = Chats.objects.filter(room=currRoom)
 
-                    return render(request,'chat/chat-room.html',{'currRoom':currRoom , 'room_chats':room_chats ,
+                elif currRoom.members.count()==currRoom.limit:
+                    return HttpResponse("<h1>Sorry the room is full</h1>")
+                      
+                room_chats = Chats.objects.filter(room=currRoom)
+
+                return render(request,'chat/chat-room.html',{'currRoom':currRoom , 'room_chats':room_chats ,
                                                                  'currUser':currUser_obj.username})
 
 

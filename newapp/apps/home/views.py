@@ -268,9 +268,10 @@ def mypost(request):
                 rated_posts.append(i)
         #Comments Are fetched Here
         comments = Comments.objects.all()
+        replies=Replies.objects.all()
         
         params = {'username': name, 'posts': mylist, 'liked_posts': liked_posts, 'rated_posts': rated_posts,
-                'comments': comments}
+                'comments': comments , 'replies':replies}
 
         return render(request,'home/mypost.html',params)
 

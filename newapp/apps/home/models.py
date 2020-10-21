@@ -137,17 +137,23 @@ class Replies(models.Model):
     time=models.DateTimeField(auto_now_add=True)
     class Meta:
         ordering=['-time']
+
     def __str__(self):
         return self.user.username+"replied:"+self.reply
+
     @classmethod
     def add_reply(cls,id,msg,username):
         user=User.objects.get(username=username)
         comment=Comments.objects.get(pk=id)
         create=Replies(user=user ,comments=comment,reply=msg)
         create.save()
+
+        return create.id
+
     @classmethod
     def delete_reply(cls,id):
-        object=cls.get(pk=id)
-        object.delete()
+        reply_obj = Replies.objects.get(pk=id)
+        reply_obj.delete()
+        
 
 
