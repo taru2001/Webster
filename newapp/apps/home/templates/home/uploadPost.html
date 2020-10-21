@@ -5,16 +5,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>upload Posts</title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'home/index.css' %}">
-
+<link rel="stylesheet" type="text/css" href="{% static 'home/userhome.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'home/upload.css' %}">
 </head>
 <body>
-    <div class="nav" style="padding: 0cm; margin: 0px;" >
+    <div class="nav" style="padding: 0cm; margin: 0px;height: 3.85rem;" >
         <span class="link">
           <a href="/home/index/">Home</a>
         </span>
@@ -22,21 +22,30 @@
           <a href="/home/profile/">Profile</a>
         </div>
         <div class="link">
-            <a href="/home/about/">About</a>
+            <a href="/paytm/offers/">Shop</a>
         </div>
-        <div class="link">
-            <a href="#">Contact us</a>
+        <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn" >About</button>
+            <div class="dropdown-content link">
+              <a href="/home/about/">About Us</a>
+              <a href="#">Contact</a>
+            </div>
         </div>
-        <div class="link">
-            <a href="/home/login/mypost/">My Posts</a>
+        <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn">Assemble</button>
+            <div class="dropdown-content link">
+              <a href="/chat">Chat</a>
+              <a href="#">Clan</a>
+            </div>
         </div>
-
-        <div class="link">
-            <a href="/home/topPost/">Top Posts</a>
+          <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn">Top Rated</button>
+            <div class="dropdown-content link">
+              <a href="/home/topPost/">Posts</a>
+              <a href="/home/topGamers/">Rankers</a>
+            </div>
           </div>
-
-          
-
+    
         <span style="margin-right: 22rem; "></span>
         <span style="padding-top: 10px;"><form action="/home/search/"  method="get">
          <input style="height: 1.7rem; width:14rem; outline: none; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
@@ -44,17 +53,16 @@
         </form>
     </span>
     <span style="margin-right: 3rem;"></span>
-
+    
         <div class="link">
             <a href="/home/notify/">Notifications</a>
         </div>
-
+    
         <div class="link">
             <a href="/home/logout/">Logout</a>
         </div>
-
+    
       </div>
-
     
     <div class="col-md-4 col-md-offset-4" id="login">
         <section id="inner-wrapper" class="login">
@@ -82,7 +90,7 @@
                     <div class="form-group">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user"> </i></span>
-                            <input type="radio" class="form-control" id="type1" name="filetype" value="image">
+                            <input style="outline: none;border: none;" type="radio" class="form-control" id="type1" name="filetype" value="image">
                             <label for="type1">Image</label><br>
                             <input type="radio" class="form-control"  id="type2" name="filetype" value="video">
                             <label for="type2">Video</label>
