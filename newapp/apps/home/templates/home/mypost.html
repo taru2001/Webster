@@ -20,7 +20,7 @@
     
 
 
-    <div class="nav" style="padding: 0cm; margin: -6px;" >
+    <div class="nav" style="padding: 0cm; margin: 0px;height: 3.5rem;" >
         <span class="link">
           <a href="/home/index/">Home</a>
         </span>
@@ -28,19 +28,30 @@
           <a href="/home/profile/">Profile</a>
         </div>
         <div class="link">
-            <a href="/home/about/">About</a>
+            <a href="/paytm/offers/">Shop</a>
         </div>
-        <div class="link">
-            <a href="#">Contact us</a>
+        <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn" >About</button>
+            <div class="dropdown-content link">
+              <a href="/home/about/">About Us</a>
+              <a href="#">Contact</a>
+            </div>
         </div>
-        <div class="link">
-            <a href="/home/login/mypost/">My Posts</a>
+        <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn">Assemble</button>
+            <div class="dropdown-content link">
+              <a href="/chat">Chat</a>
+              <a href="#">Clan</a>
+            </div>
         </div>
-
-        <div class="link">
-            <a href="/home/topPost/">Top Posts</a>
+          <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn">Top Rated</button>
+            <div class="dropdown-content link">
+              <a href="/home/topPost/">Posts</a>
+              <a href="/home/topGamers/">Rankers</a>
+            </div>
           </div>
-
+    
         <span style="margin-right: 22rem; "></span>
         <span style="padding-top: 10px;"><form action="/home/search/"  method="get">
          <input style="height: 1.7rem; width:14rem; outline: none; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
@@ -48,15 +59,15 @@
         </form>
     </span>
     <span style="margin-right: 3rem;"></span>
-
+    
         <div class="link">
             <a href="/home/notify/">Notifications</a>
         </div>
-
+    
         <div class="link">
             <a href="/home/logout/">Logout</a>
         </div>
-
+    
       </div>
 
       <br>
@@ -124,17 +135,17 @@
                                 
                                 
                                    {% if post not in rated_posts %}
-                                   <span  style=" margin-left: 3rem;"><img style="margin-top: -2rem;"  width="50px" height="30px" alt=""></span>    
+                                   <span  style=" margin-left: 4rem;"><span style="margin-top: -2rem;"  width="50px" height="30px" alt=""></span></span>    
                                    <span id="rate{{post.id}}" >
                                     <label for="1"><img style="border-radius: 3rem;" height="22rem" width="35rem" src="https://webstockreview.net/images/clipart-gun-long-gun-11.png" alt="I'm sad" /></label>           
                                     <input style="display: none;" type="radio" name="rate{{post.id}}" value="1" id="1"  > 
-                                    <label for="2"><img style="border-radius: 3rem;" height="22rem" width="35rem" src="https://webstockreview.net/images/clipart-gun-long-gun-11.png" alt="I'm sad" /></label>
+                                    <label for="2"><img style="border-radius: 3rem;" height="32rem" width="45rem" src="https://webstockreview.net/images/clipart-gun-long-gun-11.png" alt="I'm sad" /></label>
                                     <input style="display: none;" type="radio" name="rate{{post.id}}" value="2" id="2"  >
-                                    <label for="3"><img style="border-radius: 3rem;" height="22rem" width="35rem" src="https://webstockreview.net/images/clipart-gun-long-gun-11.png" alt="I'm sad" /></label>
+                                    <label for="3"><img style="border-radius: 3rem;" height="42rem" width="55rem" src="https://webstockreview.net/images/clipart-gun-long-gun-11.png" alt="I'm sad" /></label>
                                     <input style="display: none;" type="radio" name="rate{{post.id}}" value="3" id="3"  >
-                                    <label for="4"><img style="border-radius: 3rem;" height="22rem" width="35rem" src="https://webstockreview.net/images/clipart-gun-long-gun-11.png" alt="I'm sad" /></label>
+                                    <label for="4"><img style="border-radius: 3rem;" height="52rem" width="65rem" src="https://webstockreview.net/images/clipart-gun-long-gun-11.png" alt="I'm sad" /></label>
                                     <input style="display: none;" type="radio" name="rate{{post.id}}" value="4" id="4"  >
-                                    <label for="5"><img style="border-radius: 3rem;" height="22rem" width="35rem" src="https://webstockreview.net/images/clipart-gun-long-gun-11.png" alt="I'm sad" /></label>
+                                    <label for="5"><img style="border-radius: 3rem;" height="62rem" width="85rem" src="https://webstockreview.net/images/clipart-gun-long-gun-11.png" alt="I'm sad" /></label>
                                     <input style="display: none;" type="radio" name="rate{{post.id}}" value="5" id="5"  >
                         
                                    </span>

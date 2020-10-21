@@ -1,12 +1,74 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'chat/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'chat/userhome.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'chat/chat.css' %}">
+    <!-- <script src="{% static 'chat/chat.js' %}"></script> -->
+    <title>Chat</title>
 </head>
-<body>
-    <a href="/chat/create-room/"><button>Create Room</button></a>
-    <a href="/chat/join-room/"><button>Join Room</button></a>
+<!-- <body style="background-image: url('https://www.pixelstalk.net/wp-content/uploads/2016/08/Free-crack-wall-photos.jpg');"> -->
+  <body style="background-image: url('https://image-cdn.essentiallysports.com/wp-content/uploads/20200913150337/93GAa4wm3z4HbenzLbxWeQ.jpg');background-repeat: no-repeat;background-size: cover;">
+    <div class="nav" style="padding: 0cm; margin: 0px;height: 3.85rem;" >
+        <span class="link">
+          <a href="/home/index/">Home</a>
+        </span>
+        <div class="link">
+          <a href="/home/profile/">Profile</a>
+        </div>
+        <div class="link">
+            <a href="/paytm/offers/">Shop</a>
+        </div>
+        <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn" >About</button>
+            <div class="dropdown-content link">
+              <a href="/home/about/">About Us</a>
+              <a href="#">Contact</a>
+            </div>
+        </div>
+        <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn">Assemble</button>
+            <div class="dropdown-content link">
+              <a href="/chat">Chat</a>
+              <a href="#">Clan</a>
+            </div>
+        </div>
+          <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn">Top Rated</button>
+            <div class="dropdown-content link">
+              <a href="/home/topPost/">Posts</a>
+              <a href="/home/topGamers/">Rankers</a>
+            </div>
+          </div>
+    
+        <span style="margin-right: 22rem; "></span>
+        <span style="padding-top: 10px;"><form action="/home/search/"  method="get">
+         <input style="height: 1.7rem; width:14rem; outline: none; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
+            <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 30px; margin-left: 10px; background-color: #FFA500;" type="submit">Search</button>
+        </form>
+    </span>
+    <span style="margin-right: 3rem;"></span>
+    
+        <div class="link">
+            <a href="/home/notify/">Notifications</a>
+        </div>
+    
+        <div class="link">
+            <a href="/home/logout/">Logout</a>
+        </div>
+    
+      </div>
+      <br>
+      <br>
+    
+    
+    <a  href="/chat/create-room/"><button style="width: 16rem;margin-top: 4rem;margin-left: 24rem;background-color: darkgreen;" class="button"><span>Create Room</span></button></a>
+    <a href="/chat/join-room/"><button style="width: 16rem;margin-left: 20rem;" class="button"><span>Join Room</span></button></a>
 </body>
 </html>

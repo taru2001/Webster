@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <title>Status</title>
+    </head>
+    <body style="background-image: url('https://wallpapercave.com/wp/wp2533041.jpg');">
+        <div style="color: aliceblue;">{{response}}</div>
+        <h2 style="color: aliceblue;">Payment status regarding your order Id {{response.ORDERID}}</h2>
+        {% if response.RESPCODE == '01' %}
+        <div style="color: aliceblue;">ORDER SUCCESS</div>
+        {% else %}
+        <div style="color: aliceblue;">ORDER FAILURE</div>
+        {% endif%}
+
+    </body>
+</html>

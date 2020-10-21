@@ -154,4 +154,3 @@ def handlemsg(request,*args):
             redirect('chatindex')
 
     return redirect('login')
-

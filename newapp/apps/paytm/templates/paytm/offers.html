@@ -1,0 +1,88 @@
+{% load static %}
+<html>
+    <head>
+        <title>Offers</title>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'home/index.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'home/userhome.css' %}">
+    </head>
+    <body style="background-image: url('https://wallpapercave.com/wp/wp2533041.jpg');">
+        <div class="nav" style="padding: 0cm; margin: 0px;" >
+            <span class="link">
+              <a href="/home/index/">Home</a>
+            </span>
+            <div class="link">
+              <a href="/home/profile/">Profile</a>
+            </div>
+            <div class="link">
+                <a href="/paytm/offers/">Shop</a>
+            </div>
+            <div style="width: 12rem;text-align: center;" class="dropdown">
+                <button class="dropbtn">About</button>
+                <div class="dropdown-content link">
+                  <a href="/home/about/">About Us</a>
+                  <a href="#">Contact Us</a>
+                </div>
+            </div>
+            <div style="width: 12rem;text-align: center;" class="dropdown">
+                <button class="dropbtn">Assemble</button>
+                <div class="dropdown-content link">
+                  <a href="/chat">Chat</a>
+                  <a href="#">Clan</a>
+                </div>
+            </div>
+              <div style="width: 12rem;text-align: center;" class="dropdown">
+                <button class="dropbtn">Top Rated</button>
+                <div class="dropdown-content link">
+                  <a href="/home/topPost/">Posts</a>
+                  <a href="/home/topGamers/">Rankers</a>
+                </div>
+              </div>
+    
+            <span style="margin-right: 22rem; "></span>
+            <span style="padding-top: 10px;"><form action="/home/search/"  method="get">
+             <input style="height: 2.7rem; width:16rem; outline: none; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
+                <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 30px; margin-left: 10px; background-color: #FFA500;" type="submit">Search</button>
+            </form>
+        </span>
+        <span style="margin-right: 3rem;"></span>
+    
+            <div class="link">
+                <a href="/home/notify/">Notifications</a>
+            </div>
+    
+            <div class="link">
+                <a href="/home/logout/">Logout</a>
+            </div>
+    
+          </div>
+    
+        <div style="text-align: center; color: blue; font-size: xx-large;">Offers</div>
+        <br><br>
+        <form style="margin-left: 20rem;" action='/paytm/' method="POST">{% csrf_token %}
+        <input type="radio" name="emotion" id="sad" style="display: none; " />
+        <label for="sad"><img style="border-radius: 3rem;" height="200rem" width="550rem" src="{% static 'paytm/100.png' %}" alt="I'm sad" /></label>
+
+        <input type="radio" name="emotion" id="sad" style="display: none;" />
+        <label for="sad"><img style="border-radius: 3rem;" src="{% static 'paytm/200.png' %}" height="200rem" width="550rem" alt="I'm sad" /></label>
+
+        <input type="radio" name="emotion" id="sad" style="display: none;" />
+        <label for="sad"><img style="border-radius: 3rem;" src="{% static 'paytm/500.png' %}" alt="I'm sad" height="200rem" width="550rem" /></label>
+
+        <input type="radio" name="emotion" id="sad" style="display: none;" />
+        <label for="sad"><img style="border-radius: 3rem;" src="{% static 'paytm/1000.png' %}" alt="I'm sad" height="200rem" width="550rem" /></label>
+
+        <input type="radio" name="emotion" id="sad" style="display: none;" />
+        <label for="sad"><img style="border-radius: 3rem;" src="{% static 'paytm/2500.png' %}" alt="I'm sad" height="200rem" width="550rem" /></label>
+
+        <input type="radio" name="emotion" id="sad" style="display: none;" />
+        <label for="sad"><img style="border-radius: 3rem;" src="{% static 'paytm/5000.png' %}" alt="I'm sad" height="200rem" width="550rem" /></label>
+
+        <br><br>
+
+        <button style="margin-left: 49rem;" class="btn btn-warning" type="submit">Go for Payment</button>
+        </form>
+    </body>
+</html>
