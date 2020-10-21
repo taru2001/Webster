@@ -169,7 +169,7 @@
                     <pre style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;font-size:large;">{% if comment.user.profileImage.url is not None %} <img height="35px" width="35px" src="{{comment.user.profileImage.url}}" alt="">  {{comment.user.username}} at {{comment.time}} :{{comment.comment}} {%else%}<img height="35px" width="35px" src="https://afribary.com/authors/anonymous-user/photo" alt=""> {{comment.user.username}} at {{comment.time}} :{{comment.comment}}  {% endif %} </pre>
                <br>
 
-               <a id="re{{comment.id}}"> <span id="{{comment.id}}" class="replies">reply</span></a>
+               <a id="re{{comment.id}}" style="cursor: pointer;"> <span id="{{comment.id}}" class="replies">reply</span></a>
                <hr style="border-color: lightseagreen;border-width: 0.1px;">
 
                <div id="reply{{comment.id}}" style="display:none;">
@@ -218,12 +218,13 @@
     </div>
     {% endfor %}
     
+
+
+
     <script>
 
 
-
-
-$(".replies").click(
+    $(".replies").click(
     function(e){
       id = this.id;
 
@@ -337,25 +338,12 @@ $.ajax({
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-$(".Commentbtn").click(
+     $(".Commentbtn").click(
     function(e){
     href="{% url 'comment_post'%}"
     var id=this.id;
     var msg=$("#cmnt"+id).val();
+
     $("#cmnt"+id).val("");
 
     e.preventDefault();
@@ -366,14 +354,18 @@ $(".Commentbtn").click(
            'postid':id},
     success:function(response){
 
-      $('<img />')
-            .attr('src', "" + response.pic + "")         
-            .width('35px').height('35px')
+      var msg=response.username+" at "+response.time+" : "+response.comment+"<hr>";
 
-            .appendTo($('#end'+id));
+
+    var newimg =  $('<img />')
+            .attr('src', "" + response.pic + "")         
+            .width('35px').height('35px');
+
+    var newspan=$('<span />');
         
-         
-        $("#end"+id).append(response.username+"at"+response.time+" :"+response.comment+"<hr>");
+        $("#end"+id).prepend(newspan);
+        $(newspan).html("             "+msg);
+        $(newspan).prepend(newimg);
 
     }
     })
