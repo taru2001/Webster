@@ -101,7 +101,19 @@ def handle_join_room(request):
 
 def get_chats(request,room_id):
     if "username" in request.session:
-        room_obj = Room.objects.get(id=room_id)
+        room_obj = Room.objects.filter(id=room_id)
+
+        if not room_obj:
+            resp = {
+            'check':"no room",
+            'chats':"",
+            'users':""
+            }
+            response = json.dumps(resp)
+            return HttpResponse(response, content_type="application/json")
+
+        room_obj=room_obj[0]
+
         currUser_obj = User.objects.get(username = request.session["username"])
 
         member = room_obj.members.filter(username=currUser_obj.username)
@@ -115,6 +127,7 @@ def get_chats(request,room_id):
                 users.append(msg.by_whom.username)
 
             resp = {
+                'check':"ok",
             'chats':chats,
             'users':users
             }
@@ -134,6 +147,15 @@ def handlemsg(request,*args):
     if "username" in request.session:
         roomid = request.GET.get('roomid')
         room_obj = Room.objects.get(id=roomid)
+
+        if not room_obj:
+            resp = {
+            'check':"room not there or u r not member of it",
+            'msg':""
+            }
+            response = json.dumps(resp)
+            return HttpResponse(response, content_type="application/json")
+        
         currUser_obj = User.objects.get(username = request.session["username"])
 
         member = room_obj.members.filter(username=currUser_obj.username) 
@@ -144,6 +166,7 @@ def handlemsg(request,*args):
             Chats.save(newmsg)
 
             resp = {
+            'check':"ok",
             'msg':msg
             }
             response = json.dumps(resp)
@@ -151,6 +174,46 @@ def handlemsg(request,*args):
 
 
         else:
-            redirect('chatindex')
+            resp = {
+            'check':"room does not exist or u r not member of it",
+            }
+            response = json.dumps(resp)
+            return HttpResponse(response, content_type="application/json")
+
+    return redirect('login')
+
+
+
+def handleleave(request,*args):
+    if "username" in request.session:
+        print("yes")
+        username = request.session["username"]
+        roomid = request.GET.get('roomid')
+        room_obj = Room.objects.filter(id=roomid)
+
+        if not room_obj:
+            return redirect('chatindex')
+
+        room_obj=room_obj[0]
+
+        is_member = room_obj.members.filter(username=username)
+
+        if is_member:
+            is_admin = True if room_obj.admin.username == username else False
+
+            if is_admin:
+                room_obj.delete()
+                all_chats=Chats.objects.filter(room=room_obj)
+                all_chats.delete()
+
+            else:
+                room_obj.members.remove(is_member[0])
+                all_chats = Chats.objects.filter(by_whom=is_member[0],room=room_obj)
+                all_chats.delete()
+                room_obj.save()
+
+        
+        return redirect('chatindex')
+
 
     return redirect('login')
