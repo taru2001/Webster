@@ -114,6 +114,8 @@ class Notification(models.Model):
     user =  models.ForeignKey(User , on_delete=models.CASCADE)
     message = models.TextField(max_length=30,default="")
     time = models.DateTimeField(auto_now_add=True)
+    which = models.CharField(max_length=30,default="")
+    getid = models.IntegerField(default=0)
 
     class Meta:
         ordering=['-time']

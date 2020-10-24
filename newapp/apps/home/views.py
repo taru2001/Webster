@@ -101,6 +101,13 @@ def likes(request, *args):  # individually handles posts for likes by ajax but r
         print("disliked_p")
         Post.disliked_p(userr, id)
     else:
+        if p1.user.username != request.session["username"]:
+            currUser = User.objects.get(username=request.session["username"])
+            to = User.objects.get(username=p1.user.username)
+            msg = str(request.session["username"]) +" just liked your post"
+            newNotify = Notification(user=to,message=msg,which="post",getid=id)
+            Notification.save(newNotify)
+
         liked = False
         print("like_p")
         Post.liked_p(userr, id)
@@ -227,7 +234,7 @@ def upload(request):
 
                 for users in followers:
                     message = str(user.username) + " uploaded a new post. Go check it out"
-                    addMsg = Notification(user=users,message=message)
+                    addMsg = Notification(user=users,message=message,which="post",getid=newPost.id)
                     Notification.save(addMsg)
             
             return redirect('login')
@@ -568,6 +575,14 @@ def rating(request,*args):
             currUser = User.objects.get(username=request.session["username"])
             Post.rateNow(id,currUser,ratingValue)
 
+            post=Post.objects.get(id=id)
+
+            if post.user.username != currUser.username:
+                msg = str(request.session["username"]) +" just rated your post : "+str(ratingValue)+" star"
+                to = User.objects.get(username=post.user.username)
+                newNotify = Notification(user=to,message=msg,which="post",getid=id)
+                Notification.save(newNotify)
+
             currPost = Post.objects.get(id=id)
             avg = currPost.avgRating
             
@@ -588,7 +603,15 @@ def comments(request):
     comment.save()
     time=comment.time
     time=str(time.strftime("%b, %d-%m-%y %I:%M %p"))
+
+    if post.user.username != user.username:
+        msgs = str(request.session["username"]) +" commented on your post"
+        to = User.objects.get(username=post.user.username)
+        newNotify = Notification(user=to,message=msgs,which="post",getid=request.GET.get("postid"))
+        Notification.save(newNotify)
+
     print(time)
+
     if user.profileImage:
         pic = user.profileImage.url
     else:
@@ -612,6 +635,10 @@ def report(request, *args):
         currUser = User.objects.get(username=request.session["username"])
 
         currPost.reported(currUser,id)
+
+        msg = str(request.session["username"]) +" just reported your post"
+        newNotify = Notification(user=currUser,message=msg,which="post",getid=id)
+        Notification.save(newNotify)
 
         # Check if this post has crossed report threshold----if yes then delete it...!!
         report_count = currPost.report.count()
@@ -782,9 +809,15 @@ def topPost(request):
     return render(request,'home/topPosts.html' , {'posts': all_posts , 'loggedIn':loggedIn})
 
 
+
+
 def seePost(request,postid):
+
+    f = Post.objects.filter(id=postid)
+    if not f:
+        return HttpResponse("this post no longer exists")
     # See posts in notifications
-    currPost = Post.objects.get(id=postid)
+    currPost = Post.objects.get(id=postid)    
 
     is_liked = 0 
     loggedIn = 0
