@@ -195,6 +195,7 @@
                                 
 
             <div id="end{{post.id}}"></div> 
+            <div style="height: 450px; overflow-y: auto; width: 800px; overflow-x: auto;">
             {%for comment in comments%}
               {%if post.id == comment.post.id %}
                 
@@ -249,6 +250,7 @@
 
               {% endif %}
             {%endfor%}
+            </div>
             <br>
                                    
                                     

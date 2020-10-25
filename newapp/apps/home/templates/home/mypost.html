@@ -173,7 +173,8 @@
     
                                 
 
-            <span id="end{{post.id}}"></span> <br>
+            <div id="end{{post.id}}"></div> <br>
+        <div style="height: 450px; overflow-y: auto; width: 800px; overflow-x: auto;">
             {%for comment in comments%}
               {%if post.id == comment.post.id %}
                 
@@ -181,7 +182,7 @@
                <br>
 
                <a id="re{{comment.id}}" style="cursor: pointer;"> <span id="{{comment.id}}" class="replies">reply</span></a>
-               <hr style="border-color: lightseagreen;border-width: 0.1px;">
+               
 
                <div id="reply{{comment.id}}" style="display:none;">
                  <input type="name" name="replytext" id='replycmnt{{comment.id}}' >
@@ -218,9 +219,12 @@
                {% endif %}
                {% endfor %}
 
-               </div>
+         </div>
+         <hr style="border-color: lightseagreen;border-width: 0.1px;">
               {% endif %}
             {%endfor%}
+
+        </div>
                             <br>
                     </div>
                 </div>

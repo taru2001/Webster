@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Room</title>
+    <title>Chat Room : {{currRoom.roomName}}</title>
 
     <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
     <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
@@ -51,7 +51,7 @@
     
         <span style="margin-right: 22rem; "></span>
         <span style="padding-top: 10px;"><form action="/home/search/"  method="get">
-         <input style="height: 1.7rem; width:14rem; outline: none; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
+         <input style="height: 1.7rem; width:14rem; outline: none; border-radius: 20px; padding-left: 6px;  " type="text" name="searchuser"  placeholder="Search User">
             <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 30px; margin-left: 10px; background-color: #FFA500;" type="submit">Search</button>
         </form>
     </span>
@@ -68,6 +68,21 @@
       </div>
       <br>
       <br>
+
+
+
+      <div>
+        <input class="formStyle" id="myinput" type="text" required placeholder="Enter Message">
+        <button style="margin-right: 55rem;" class="formButton" id="mybtn">Send</button>
+        </div>
+
+        <button style="margin-right: 25rem;" class="formButton" id="leavebtn">Leave room</button>
+
+        <br>
+        <br>
+        <br>
+
+
     <div id="chat-content" style="color:white;">
 
         {% for i in room_chats %}
@@ -77,16 +92,7 @@
         {% endfor %}
 
     </div>
-
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <div>
-    <input class="formStyle" id="myinput" type="text" required placeholder="Enter Message">
-    <button style="margin-right: 55rem;" class="formButton" id="mybtn">Send</button>
-    </div>
+    
 
 
 
@@ -108,6 +114,10 @@ input.addEventListener("keyup", function(event) {
     
             $.getJSON("{% url 'getchats' currRoom.id %}" , function(response)
             {
+                if(response.check=="no room")
+                {
+                    window.location.href="http://127.0.0.1:8000/chat/";
+                }
                 console.log(response.chats.length);
     
                 $("#chat-content").empty();
@@ -115,7 +125,7 @@ input.addEventListener("keyup", function(event) {
                 for(var i=0;i<response.chats.length;i++)
                 {
                     
-                    $("#chat-content").append(response.users[i]+"  :  "+response.chats[i]+'<br><br>');
+                    $("#chat-content").prepend(response.users[i]+"  :  "+response.chats[i]+'<br><br>');
                 }
                 setTimeout('updateMsg()' , 1000);
             });
@@ -126,6 +136,37 @@ input.addEventListener("keyup", function(event) {
             $.ajaxSetup({cache:false});
             updateMsg();
         });
+
+
+        $("#leavebtn").click(
+            function(e){
+                var check = confirm("Are you sure you want to leave the chat room...??");
+
+                if(check==false)
+                {
+
+                }
+                else{
+
+                var href = "{% url 'handleleave' %}";
+                var roomid = "{{currRoom.id}}";
+
+                e.preventDefault();
+
+                $.ajax({
+                    url:href,
+                    data:{'roomid':roomid},
+                    success:function(){
+                        window.location.href="http://127.0.0.1:8000/chat/";
+
+                    }
+
+                });
+
+            }
+
+        }
+    );
     
     
     
@@ -142,29 +183,30 @@ input.addEventListener("keyup", function(event) {
                             console.log(message);
     
                             $("#myinput").val("");
+                        if(message.length!=0){
+                        
                     
                     $.ajax({
                         url:href,
                         data : {'msg':message , 'roomid':roomid},
                         success:function(response){
-                           
-                          $("#chat-content").append(user+" : "+message+"<br>");
+                            
+                          if(response.check=="ok"){
+                          $("#chat-content").prepend(user+" : "+message+"<br><br>");
+                          }
+                          else{
+                            window.location.href="http://127.0.0.1:8000/chat/";
+                          }
     
                         }
                         
                     })
-                       }
-                   );
+                }
+            }
+        );
+            
     </script>
 
-<script>
-    var input = document.getElementById("myinput");
-    input.addEventListener("keyup", function(event) {
-      if (event.keyCode === 13) {
-       event.preventDefault();
-       document.getElementById("mybtn").click();
-      }
-    });
-    </script>
+
 </body>
 </html>

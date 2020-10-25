@@ -8,6 +8,11 @@ class Room(models.Model):
     password = models.CharField(max_length=20,default="")
     limit = models.IntegerField(default=0)
     members = models.ManyToManyField(User,related_name="members_of_room")
+    time = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering=['-time']
+
 
     def __str__(self):
         return self.roomName
@@ -22,5 +27,5 @@ class Chats(models.Model):
     time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.by_whom.username
+        return self.by_whom.username +" : "+ self.room.roomName
 
