@@ -486,7 +486,7 @@ def search_profile(request,user):
                 'games':user.games, 'country':user.country,
                 'state':user.state, 'description':user.description, 'stats':user.stats , 'profileImage':user.profileImage,
                   'is_following':is_following , 'same':same , 'followedUsers': followedUsers , 'followers':followers , 'loggedIn':loggedIn,
-                  'gamesplit':games}
+                  'gamesplit':games, 'rank':user.rank, 'popularity':user.popularity}
     return render(request,'home/searchedProfile.html',params)
 
 

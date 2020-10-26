@@ -146,7 +146,8 @@
                                     <h6>
                                         {{description}}
                                     </h6>
-                                    <p class="proile-rating">RANKINGS : <span>8/10</span></p>
+                                    <div style="font-size: small;">RANK: {{rank}}</div>
+                                    <div style="font-size: small;">POPULARITY: {{popularity}}</div>
                             <ul style="background-color: white; line-height: 2.3rem;" class="nav nav-tabs" id="myTab" role="tablist">
                                 <li style="">
                                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
@@ -167,35 +168,45 @@
                             {{x}}
                             <br>
                             {% endfor %}
-                            <!-- <p>SKILLS</p>
-                            <a href="">Web Designer</a><br/>
-                            <a href="">Web Developer</a><br/>
-                            <a href="">WordPress</a><br/>
-                            <a href="">WooCommerce</a><br/>
-                            <a href="">PHP, .Net</a><br/> -->
+                           
                         </div>
                         {% if not loggedIn %}
 
                         {% elif is_following and not same %}
+                        <div>
                         <a href="{% url 'follow' username %}" id="follow">
-                            <button style="margin-left: 110px; height: 50px; width: 100px;" ><span id="mybtn">Unfollow</span></button></a>
+                            <button class="btn btn-primary" style="margin-left: 3rem;" ><span id="mybtn">Unfollow</span></button></a>
+                            <br>
+                        </div>
+                        <br>
 
                         {% elif not same %}
+                        <div>
                         <a href="{% url 'follow' username %}" id="follow">
-                            <button style="margin-left: 110px; height: 50px; width: 100px;" ><span id="mybtn">Follow</span></button></a>
+                            <button class="btn btn-primary" style="margin-left: 3rem;" ><span id="mybtn">Follow</span></button></a>
+                            <br>
+                        </div>
+                        <br>
                         {% endif %}
+                        
 
 
-                        {% if loggedIn and not same %}  
+                        {% if loggedIn and not same %} 
+                        <div> 
                         <a href="{% url 'sendmoney' username %}" id="moneyBtn">
-                            <button style="margin-top: 15px; margin-left: 90px; height: 50px; width: 150px;" ><span id="mybtn">Support Gamer</span></button></a>
+                            <button class="btn btn-primary" style="margin-left: 3rem;" ><span id="mybtn">Support Gamer</span></button></a>
+                            <br>
+                        </div>
+                        <br>
                         {% endif %}
+                        
 
                         {% if loggedIn and not same and is_following %}
-
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        <div>
+                        <button type="button" class="btn btn-primary" style="margin-left: 3rem;" data-toggle="modal" data-target="#exampleModal">
                             Give Popularity
                           </button>
+                        </div>
                           
                           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog " role="document">
