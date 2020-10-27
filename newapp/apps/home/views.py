@@ -4,6 +4,7 @@ from .models import User, Post, Following, Followers, Notification, Comments, Re
 import json 
 from django.conf import settings 
 from django.core.mail import send_mail
+import os
 
 
 def index(request):
@@ -236,10 +237,23 @@ def upload(request):
             user = User.objects.get(username = request.session["username"])
             tagline = request.POST.get('tagline')
             video = request.FILES['videofile']
-            posttype = request.POST.get('filetype')
+            #posttype = request.POST.get('filetype')
 
-            newPost = Post(user=user,tagline=tagline,video=video,posttype=posttype)
+
+            newPost = Post(user=user,tagline=tagline,video=video)
             Post.save(newPost)
+
+            url = newPost.video.url
+            name,ext = os.path.splitext(url)
+            posttype=""
+
+            if ext==".png" or ext==".jpg":
+                posttype="image"
+            elif ext==".mp4":
+                posttype="video"
+
+            newPost.posttype=posttype
+            newPost.save()
 
             # Handle post notifications to followers
             #currUser = User.objects.get(username=request.sessiom("username"))
