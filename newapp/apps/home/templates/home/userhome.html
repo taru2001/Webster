@@ -72,7 +72,7 @@
         </div>
 
       </div>
-      <img style="width: 6rem;" src="{% static 'home/icon.jpg' %}">
+      <img style="width: 8rem;" src="{% static 'home/icon.jpg' %}">
 
       <br>
       <br>
@@ -389,7 +389,6 @@ $.ajax({
 
 
 
-
      $(".Commentbtn").click(
     function(e){
     href="{% url 'comment_post'%}"
@@ -416,7 +415,9 @@ $.ajax({
     var newspan=$('<span />');
         
         $("#end"+id).prepend(newspan);
-        $(newspan).html("             "+msg);
+        $(newspan).css({"font-family":"Lucida Sans" , "font-size":"18px"});
+        $(newspan).html("  "+msg);
+       
         $(newspan).prepend(newimg);
 
     }

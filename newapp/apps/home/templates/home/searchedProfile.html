@@ -332,9 +332,11 @@
 
                             if(response["following"]){
                                 $("#mybtn").html("Unfollow");
+                                window.location.reload();
                             }
                             else{
                                 $("#mybtn").html("Follow");
+                                window.location.reload();
                             }
                         }
                     })

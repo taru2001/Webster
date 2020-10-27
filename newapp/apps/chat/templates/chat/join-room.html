@@ -68,6 +68,21 @@
         <input style="font-size: larger;" type="text" placeholder="Password"required class="formStyle" name="password"><br>
         <button style="margin-top: 4rem;margin-right: 76rem;" class="formButton" type="submit">Join Room</button>
     </form>
+
+
+    <div style="margin-top: 0px; color: white;">
+
+    <h1>Public Rooms: </h1><br>
+    {% for room in rooms %}
+
+      Room name: {{room.roomName}}   <br>
+      Password: {{room.password}} <br>
+      <br>
+      <br>
+
+    {% endfor %}
+
+  </div>
 </div>
 </body>
 </html>

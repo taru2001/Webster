@@ -22,9 +22,14 @@ def create_room(request):
             password = request.POST.get('password')
             room_name = request.POST.get('roomName')
             limit  = request.POST.get('limit')
+            which = request.POST.get('which')
 
-            newroom = Room(admin=user_obj,roomName=room_name,limit=limit,password=password)
+            currUser = User.objects.get(username=request.session["username"])
+
+            newroom = Room(admin=user_obj,roomName=room_name,limit=limit,password=password,which=which)
             Room.save(newroom)
+            newroom.members.add(currUser)
+            newroom.save()
             return redirect('chatindex')
 
         return render(request,'chat/create-room.html',{'username':request.session["username"]})
@@ -35,7 +40,9 @@ def create_room(request):
 
 def join_room(request):
     if "username" in request.session:
-        return render(request,'chat/join-room.html')
+        all_public_rooms = Room.objects.filter(which="public")
+        print(all_public_rooms)
+        return render(request,'chat/join-room.html',{'rooms':all_public_rooms})
 
     return render(request,'chat/join-room.html')
 

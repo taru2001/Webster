@@ -6,10 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'home/index.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'home/userhome.css' %}">
+    
+    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <title>Notifications</title>
 
     <style>
@@ -77,6 +83,9 @@
 
   </div>
       <br>
+
+      <button type="button"  class="btn btn-danger closeall" style="height: 50px; width: 100px; margin-left: 655px;">Close All</button>
+
     {% for msg in messages %}
         <div style="align-content: center;"><list style="max-width: 29rem; height: auto; margin-left: 20px;"  class="list-group-item list-group-item-success">{{msg.message}} 
 
@@ -89,5 +98,42 @@
             <a href="{% url 'deleteMsg' msg.id %}" style="color: aliceblue;  text-decoration: none;">Close</a></button></list></div>
         <br>
     {% endfor %}
+
+
+
+    <script>
+      $(".closeall").click(
+        function(e){
+          console.log("llll");
+
+        var href = "{% url 'closeall' %}";
+
+        var conf = confirm("Are you sure you want to close all notifications..?");
+
+        if(conf){
+
+        $.ajax({
+          url:href,
+          data:{},
+          success:function(response){
+            if(response.ok==1)
+            {
+             window.location.reload();
+              alert(response.msg);
+             // window.location.href="http://127.0.0.1:8000/home/notify/";
+            }
+            else{
+              alert(response.msg);
+            }
+            
+          }
+
+        });
+        }
+      
+      });
+    </script>
+
+
 </body>
 </html>

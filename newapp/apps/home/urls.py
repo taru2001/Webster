@@ -39,5 +39,6 @@ urlpatterns = [
 
     path('topGamers/',views.topGamers,name="topGamers"),
     path('Comments/replies',replies.replies,name='replies'),
-    path('deletereply/',replies.delete_reply,name="deletereply")
+    path('deletereply/',replies.delete_reply,name="deletereply"),
+    path('closeall/',views.closeall,name="closeall")
 ]

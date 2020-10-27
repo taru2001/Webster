@@ -112,6 +112,22 @@ def likes(request, *args):  # individually handles posts for likes by ajax but r
         print("like_p")
         Post.liked_p(userr, id)
     count = p1.likes.all().count()
+
+    if p1.paid is False and count>=4:
+        print("ok given")
+        p1.paid=True
+        p1.save()
+        # Give money for posts...!!
+        to = User.objects.get(username=p1.user.username)
+        to.coins = int(to.coins) + 3
+        to.save()
+
+        # Notify user about this milestone...!!
+        to = User.objects.get(username=p1.user.username)
+        msg = "Congratulations "+str(to.username) +" : you got 3 flex coins for crossing "+str(count)+" likes on your post"
+        newNotify = Notification(user=to,message=msg,which="post",getid=id)
+        Notification.save(newNotify)
+
     resp = {
     'liked': liked,
     'count': count
@@ -928,6 +944,30 @@ def topGamers(request):
     return render(request,'home/topGamer.html',{'rankers':all_users , 'loggedIn':loggedIn})
 
 
+def closeall(request):
+    if "username" in request.session:
+        currUser = User.objects.get(username=request.session["username"])
+
+        all_notify = Notification.objects.filter(user=currUser)
+        msg = ""
+        ok=0
+        if all_notify:
+            all_notify.delete()
+            ok=1
+            msg="All notifications Successully closed"
+
+        else:
+            ok=0
+            msg="No notifications to delete...!!"
+
+        resp={
+        'msg':msg,
+        'ok':ok
+        }
+        response=json.dumps(resp)
+        return HttpResponse(response,content_type='application/json')
+
+    return redirect('indexx')
 
 
     

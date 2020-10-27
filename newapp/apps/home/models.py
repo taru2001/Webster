@@ -36,6 +36,7 @@ class Post(models.Model):
     rating = models.IntegerField(default=0)
     avgRating = models.FloatField(default=0.0)
     report = models.ManyToManyField(User,related_name='who_reported')
+    paid = models.BooleanField(default=False)
 
 
     @classmethod
