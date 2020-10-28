@@ -73,7 +73,11 @@ def handle_join_room(request):
 
                 # Main chat html rendering............!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 if not is_member:
-                    
+
+                    blocked = currRoom.blocked.filter(username=currUser_obj.username)
+                    if blocked:
+                        return HttpResponse("You have been banned from the room...!!")
+
                     if currRoom.members.count()==currRoom.limit:
                         return HttpResponse("<h1>Sorry the room is full</h1>")
 
@@ -83,9 +87,20 @@ def handle_join_room(request):
 
                       
                 room_chats = Chats.objects.filter(room=currRoom)
+                is_admin = 1 if currRoom.admin.username==currUser_obj.username else 0
+                all_members = []
+
+                if is_admin:
+                    all_members = list(currRoom.members.all())
+                    #print(all_members)
+
+                for i in all_members:
+                    if i.username==currUser_obj.username:
+                        all_members.remove(i)
+                        break
 
                 return render(request,'chat/chat-room.html',{'currRoom':currRoom , 'room_chats':room_chats ,
-                                                                 'currUser':currUser_obj.username})
+                                                            'currUser':currUser_obj.username , 'all_members':all_members , 'is_admin':is_admin})
 
 
             else:
@@ -143,7 +158,13 @@ def get_chats(request,room_id):
 
 
         else:
-            redirect('chatindex')
+            resp = {
+            'check':"not member",
+            'chats':"",
+            'users':""
+            }
+            response = json.dumps(resp)
+            return HttpResponse(response, content_type="application/json")
 
     return redirect('login')
 
@@ -222,5 +243,74 @@ def handleleave(request,*args):
         
         return redirect('chatindex')
 
-
     return redirect('login')
+
+
+
+def handlekick(request,*args):
+    if "username" in request.session:
+        roomid = request.GET.get('roomid')
+        to_kick = request.GET.get('user')
+
+        curr_username = request.session["username"]
+        curr_obj = User.objects.get(username=curr_username)
+        kick_obj = User.objects.get(username=to_kick)
+
+        room_obj = Room.objects.get(id=roomid)
+
+
+        if room_obj.admin.username==curr_username:
+
+            if to_kick==room_obj.admin.username:
+                return redirect(request.META['HTTP_REFERER'])
+
+            room_obj.members.remove(kick_obj)
+            room_obj.save()
+
+            resp = {
+            }
+            response = json.dumps(resp)
+            return HttpResponse(response, content_type="application/json")
+
+        else:
+            return redirect('chatindex')
+
+    else:
+        return redirect('login')
+
+
+        
+def handleban(request):
+    if "username" in request.session:
+        roomid = request.GET.get('roomid')
+        to_ban = request.GET.get('user')
+
+        curr_username = request.session["username"]
+        curr_obj = User.objects.get(username=curr_username)
+        ban_obj = User.objects.get(username=to_ban)
+
+        room_obj = Room.objects.get(id=roomid)
+
+
+        if room_obj.admin.username==curr_username:
+
+            if to_ban==room_obj.admin.username:
+                return redirect(request.META['HTTP_REFERER'])
+
+            room_obj.members.remove(ban_obj)
+            room_obj.blocked.add(ban_obj)
+            room_obj.save()
+
+            resp = {
+            }
+            response = json.dumps(resp)
+            return HttpResponse(response, content_type="application/json")
+
+        else:
+            return redirect('chatindex')
+
+    else:
+        return redirect('login')
+
+
+

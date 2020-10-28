@@ -10,6 +10,7 @@ class Room(models.Model):
     members = models.ManyToManyField(User,related_name="members_of_room")
     time = models.DateTimeField(auto_now_add=True)
     which = models.CharField(default="private",max_length=20)
+    blocked = models.ManyToManyField(User,related_name="blocked_users")
 
     class Meta:
         ordering=['-time']

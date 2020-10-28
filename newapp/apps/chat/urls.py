@@ -8,6 +8,8 @@ urlpatterns = [
     path('handle_join_room/',views.handle_join_room,name="handleJoin"),
     path('getChats/<int:room_id>/',views.get_chats,name="getchats"),
     path('handlemsg/',views.handlemsg,name="handlemsg"),
-    path('handleleave/',views.handleleave,name="handleleave")
+    path('handleleave/',views.handleleave,name="handleleave"),
+    path('handlekick/',views.handlekick,name="handlekick"),
+    path('handleban/',views.handleban,name="handleban")
    
 ]
