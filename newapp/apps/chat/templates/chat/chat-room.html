@@ -70,6 +70,20 @@
       <br>
 
 
+<div style="color: white;">
+      {% if is_admin %}
+
+        <h1>Members: </h1>
+        {% for member in all_members %}
+            {{member.username}}
+            <button name="{{member.username}}" class="kick">Kick</button>
+            <button name="{{member.username}}" class="ban">Ban</button><br><br>
+        {% endfor %}
+
+      {% endif %}
+
+</div>
+
 
       <div>
         <input class="formStyle" id="myinput" type="text" required placeholder="Enter Message">
@@ -116,7 +130,13 @@ input.addEventListener("keyup", function(event) {
             {
                 if(response.check=="no room")
                 {
-                    window.location.href="http://127.0.0.1:8000/chat/";
+                    alert("This room no longer exists...!!");
+                    setTimeout(function(){window.location.href="http://127.0.0.1:8000/chat/";},2000);
+                }
+                else if(response.check=="not member")
+                {
+                    alert("You have been kicked out of the room...!!");
+                    setTimeout(function(){window.location.href="http://127.0.0.1:8000/chat/";},2000); 
                 }
                 console.log(response.chats.length);
     
@@ -167,6 +187,43 @@ input.addEventListener("keyup", function(event) {
 
         }
     );
+
+
+
+        $(".kick").click(
+            function(e){
+                var href = "{% url 'handlekick' %}";
+                var user = this.name;
+                var roomid = "{{currRoom.id}}";
+               // console.log(user);
+
+               $.ajax({
+                   url:href,
+                   data:{'user':user , 'roomid':roomid},
+                   success:function(response){
+                        alert(user+" Kicked from the room...!!");
+                   }
+               })
+            }
+        );
+
+
+        $(".ban").click(
+            function(e){
+                var href = "{% url 'handleban' %}";
+                var user = this.name;
+                var roomid = "{{currRoom.id}}";
+               // console.log(user);
+
+               $.ajax({
+                   url:href,
+                   data:{'user':user , 'roomid':roomid},
+                   success:function(response){
+                        alert(user+" Banned from the room...!!");
+                   }
+               })
+            }
+        );
     
     
     
