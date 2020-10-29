@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views,replies
+from . import views,replies,streaming
 
 urlpatterns = [
     path('index/',views.index,name="indexx"),
@@ -40,5 +40,9 @@ urlpatterns = [
     path('topGamers/',views.topGamers,name="topGamers"),
     path('Comments/replies',replies.replies,name='replies'),
     path('deletereply/',replies.delete_reply,name="deletereply"),
-    path('closeall/',views.closeall,name="closeall")
+    path('closeall/',views.closeall,name="closeall"),
+
+    path('check/',streaming.check,name="check"),
+    path('render/',streaming.renders,name="render"),
+    path('getstream/',streaming.getstream,name="getstream")
 ]

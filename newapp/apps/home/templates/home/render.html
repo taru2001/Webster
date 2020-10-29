@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css'>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
+</head>
+<body>
+    
+    <img src="" alt="nope" id="myimg" height="300px" width="300px">
+
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({cache:false});
+            setInterval(function(){getnewImg();} , 150);
+            setInterval(function(){newrel();} , 60000);
+        });
+
+        function getnewImg(){
+            console.log("request image");
+            $.getJSON("{% url 'getstream' %}" , function(response){
+                var img = document.getElementById("myimg");
+                img.src=response.url;
+            });
+
+        }
+
+        function newrel(){
+            console.log("ok");
+            window.location.reload(true);
+        }
+
+
+
+    </script>
+</body>
+</html>

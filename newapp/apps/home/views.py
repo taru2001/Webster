@@ -55,7 +55,7 @@ def registerUser(request):
 
 def about(request):
     # About Is empty
-    return HttpResponse("About page")
+    return render(request,'home/about.html')
 
 
 

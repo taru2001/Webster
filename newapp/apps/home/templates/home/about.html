@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css'>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
+    <style>
+        .wrap {
+  border: solid 1px #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+#output {
+  display: inline-block;
+  top: 4px;
+  position: relative;
+  border: dotted 1px #ccc;
+  padding: 2px;
+}
+
+.button {
+  border: solid 2px #ccc;
+}
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        
+        <video id="video" width="320" crossorigin="anonymous" autoplay>
+          
+          Your browser does not support HTML5 video tag. Please download FireFox 3.5 or higher.
+        </video>
+   
+        <br/>
+        <button id="cit" onclick="shoot()" class="button" style="display: none;">Capture</button>
+        <br/>
+        <div id="output"></div>
+      </div><br>
+      
+      <!-- <img src="" id="kk" alt="no img" crossorigin="anonymous"> -->
+      
+      
+      <!-- <script>
+        $(document).ready(function() {
+          
+                  $.ajaxSetup({cache:false});
+                  shoot();
+                  console.log("yobro");
+              });
+      </script> -->
+
+      <script>
+
+var video = document.querySelector("#video");
+
+if (navigator.mediaDevices.getUserMedia) {
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(function (stream) {
+      video.srcObject = stream;
+    })
+    .catch(function (err0r) {
+      console.log("Something went wrong!");
+    });
+}
+      </script>
+
+      
+
+      <script>
+          var videoId = 'video';
+    var scaleFactor = 0.25;
+    var snapshots = [];
+    
+
+    function capture(video, scaleFactor) {
+        if (scaleFactor == null) {
+            scaleFactor = 1;
+        }
+      var   w = video.videoWidth * scaleFactor;
+       var  h = video.videoHeight * scaleFactor;
+      
+     
+        var canvas = document.createElement('canvas');
+        var img=document.getElementById("kk");
+        canvas.width = w;
+        canvas.height = h;
+        console.log(w,h);
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(video, 0, 0, w, h);
+        
+        return canvas;
+    }
+
+    /**
+     * Invokes the <code>capture</code> function and attaches the canvas element to the DOM.
+     */
+     
+    function shoot() {
+       // console.log("haha");
+        
+        var output = document.getElementById('output');
+        var img = document.getElementById("kk");
+        var canvas = capture(video, scaleFactor);
+        
+
+      //  img.src = canvas.toDataURL('image/webp/png');
+
+        canvas.setAttribute('crossorigin' , 'anonymous');
+
+        //  var srci = canvas.getAttribute('src');
+        //  console.log(srci);
+         
+        
+       //  console.log(canvas.toDataURL("image/webp"));
+        
+       
+        // canvas.onclick = function() {
+        //     console.log(this.toDataURL());
+                    
+        // };
+        snapshots.unshift(canvas);
+        output.innerHTML = '';
+        for (var i = 0; i < 1; i++) {
+            output.appendChild(snapshots[i]);
+          //  console.log(snapshots[i].toDataURL("image/webp"));
+        }
+
+        var href = "{% url 'check' %}";
+        var picurl = snapshots[0].toDataURL("image/webp");
+        console.log(picurl.length);
+       
+        setTimeout(function () {shoot();
+        
+        // Send data to django...!!
+        $.ajax({
+            url:href,
+            data:{'pic':picurl},
+            success:function(response){
+
+            }
+        });
+        
+        }, 200);
+    }
+
+
+
+    $(document).ready(function() {
+            $.ajaxSetup({cache:false});
+           shoot();
+        });
+      </script>
+</body>
+</html>

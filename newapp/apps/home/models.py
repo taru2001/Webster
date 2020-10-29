@@ -157,6 +157,16 @@ class Replies(models.Model):
     def delete_reply(cls,id):
         reply_obj = Replies.objects.get(pk=id)
         reply_obj.delete()
+
+
+class stream(models.Model):
+    ss = models.CharField(max_length=5000,default="")
+    time=models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering=['time']
         
+    def __str__(self):
+        return str(self.time)
 
 
