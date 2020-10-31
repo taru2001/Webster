@@ -8,6 +8,12 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link rel="stylesheet" type="text/css" href="{% static 'home/index.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'home/userhome.css' %}"> 
+        <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css'>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
         <style>
         body{
             /* background-image: url('https://images.wallpapersden.com/image/download/playerunknowns-battlegrounds-pc_72805_3840x2160.jpg'); */
@@ -68,7 +74,7 @@
         <div style="background-color:initial; height:655px; width:370px; border-radius:30px; text-align:center; margin-left: 670px;" class="col-md-offset-4">
             <h1 style="text-align:center; padding-top:30px; color:#8375c3; margin-top: 0rem;">Sign Up</h1>
             
-            <form action="/home/register/" method="post">{% csrf_token %}
+            <form action="/home/register/" method="post" id="registerForm">{% csrf_token %}
 
             <div class="col-sm-12" style="padding-top:35px;">
             <input type="text" class="form-control" id="name" placeholder="Name" name="name" style="border-radius:15px;">
@@ -97,4 +103,79 @@
             </div>
 
     </body>
+
+    <script>
+      $(document).on('submit', '#registerForm', function(){
+    $.ajax({ 
+        type: $(this).attr('method'), 
+        url: this.action, 
+        data: $(this).serialize()+ '&which_msg=' + "register1",
+        context: this,
+        success: function(response) {
+          var x = response.msg;
+            if(x=="Password not equal")
+            alert(x);
+            else if(x=="check otp"){
+    
+              $("body").empty();
+              var newspan = document.createElement('SPAN');
+              var newtext = document.createTextNode("OTP : ");
+              newspan.appendChild(newtext);
+              newspan.style.color="white";
+              var newinput = document.createElement('input');
+              newinput.type="text";
+              $("body").append(newspan);
+             $("body").append(newinput);
+    
+             var newbtn = document.createElement('button');
+             newbtn.innerHTML="check";
+             newbtn.id="check_otp";
+          //   newbtn.addEventListener(onclick,check_otp());
+             $("body").append(newbtn);
+    
+            }
+            else
+            $("#registerForm")[0].reset();
+        }
+        });
+        return false;
+    });
+    
+    
+    $(document).on('click','#check_otp',
+      function(){check_now();
+      }
+    );
+
+    function check_now(){
+      
+       // console.log("clicked");
+        var otp = $("input").val();
+        var href = "{% url 'register' %}";
+    
+        $.ajax({
+          type:"post",
+          url: href,
+          data:{'otp':otp,'which_msg':"check_otp"},
+          success:function(response){
+            var x = response.msg;
+            var ty = response.msgtype;
+            if(ty==1){
+              alert(x);
+              window.location.href="/home/index/";
+            }
+            else if(ty==2){
+              alert(x);
+            }
+            else{
+              alert(x);
+              window.location.href="/home/login/";
+            }
+        }
+      });
+      }
+    
+    
+    
+    </script>
 </html>
