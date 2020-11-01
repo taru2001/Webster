@@ -6,7 +6,7 @@ class User(models.Model):
     name_id=models.AutoField
     name=models.CharField(max_length=100)
     username=models.CharField(max_length=100)
-    mobile=models.IntegerField()
+    mobile=models.IntegerField(default=0)
     email=models.EmailField(max_length=100)
     password=models.CharField(max_length=25)
     description = models.CharField(max_length=25,default="")
@@ -18,6 +18,7 @@ class User(models.Model):
     coins = models.IntegerField(default=15)
     popularity = models.IntegerField(default=0)
     rank = models.IntegerField(default=0)
+    paytm = models.IntegerField(default=0)
     
 
     def __str__(self):
