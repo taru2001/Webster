@@ -112,7 +112,7 @@
                                 <img class="img-circle" src="https://afribary.com/authors/anonymous-user/photo" alt="No pic">
                                 {% endif %}
                                 
-                                <span class="username"><a href="{% url 'searchProfile' post.user.username %}" data-abc="true" style="font-size: larger;">{{post.user.username}}</a></span> <span class="description">Public - 7:30 PM Today</span> </div>
+                                <span class="username"><a href="{% url 'searchProfile' post.user.username %}" data-abc="true" style="font-size: larger;">{{post.user.username}}</a></span> <span style="margin-left: .75rem;font-size: large;">{{post.tagline}}</span> </div>
                             <div class="box-tools"> <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="" data-original-title="Mark as read"> <i class="fa fa-circle-o"></i></button> <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i> </button> <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> </div>
                         </div>
 

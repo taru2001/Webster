@@ -410,7 +410,7 @@ def mypost(request):
         replies=Replies.objects.all()
         
         params = {'username': name, 'posts': mylist, 'liked_posts': liked_posts, 'rated_posts': rated_posts,
-                'comments': comments , 'replies':replies}
+                'comments': comments , 'replies':replies,}
 
         return render(request,'home/mypost.html',params)
 
