@@ -44,7 +44,7 @@ def join_room(request):
         print(all_public_rooms)
         return render(request,'chat/join-room.html',{'rooms':all_public_rooms})
 
-    return render(request,'chat/join-room.html')
+    return redirect('login')
 
 
 

@@ -64,20 +64,19 @@
           <div style="margin-left: 5rem;">
     <form action="/chat/handle_join_room/" method="post">
         {% csrf_token %}
-        <input style="font-size: larger;" type="text" placeholder="Room Name"required class="formStyle" name="roomName"><br>
-        <input style="font-size: larger;" type="text" placeholder="Password" class="formStyle" name="password"><br>
+        <input  style="font-size: larger;" type="text" autocomplete="off" placeholder="Room Name"required class="formStyle" name="roomName"><br>
+        <input style="font-size: larger;" type="password" placeholder="Password" class="formStyle" name="password"><br>
         <button style="margin-top: 4rem;margin-right: 76rem;" class="formButton" type="submit">Join Room</button>
     </form>
 
 
-    <div style="margin-top: 0px; color: white;">
+    <div style="margin-top: 0px; color: white; position: absolute;left: 1000px;bottom: 500px;">
 
     <h1>Public Rooms: </h1><br>
     {% for room in rooms %}
 
       Room name: {{room.roomName}}   <br>
       Password: {{room.password}} <br>
-      <br>
       <br>
 
     {% endfor %}
