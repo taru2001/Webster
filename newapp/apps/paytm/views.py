@@ -19,6 +19,11 @@ def paytm(request):
 def payment(request):
     amount = request.POST.get('amount')
     order=request.POST.get('order')
+    user = User.objects.get(username = request.session["username"])
+    b = user.coins
+    (b)=(b)+ int(amount)
+    user.coins=int(b)
+    user.save()
     id = order
     param_dict={
                 'MID':'WorldP64425807474247',
