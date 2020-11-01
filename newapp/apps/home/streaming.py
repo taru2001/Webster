@@ -4,22 +4,23 @@ from .models import User, Post, Following, Followers, Notification, Comments, Re
 import json 
 from django.conf import settings 
 from django.core.mail import send_mail
+from django.views.decorators.csrf import csrf_exempt
 import os
 
 
 
-
-def check(request,*args):
-    uri = request.GET.get('pic')
+@csrf_exempt
+def check(request):
+    uri = request.POST.get('pic')
 
     all_streams = stream.objects.all()
 
     total = 0
 
-    if len(all_streams)<=30:
+    if len(all_streams)<=15:
         pass
     else:
-        total = len(all_streams)-30
+        total = len(all_streams)-11
         for i in all_streams:
             if total==0:
                 break

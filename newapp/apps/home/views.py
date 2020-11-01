@@ -5,6 +5,23 @@ import json
 from django.conf import settings 
 from django.core.mail import send_mail
 import os
+from django.contrib.auth.models import User as auth_User
+from django.views.decorators.csrf import csrf_exempt
+import string,random
+
+s1=string.ascii_lowercase
+s2=string.ascii_uppercase
+s3=string.digits
+s=[]
+s.extend(list(s1))
+s.extend(list(s2))
+s.extend(list(s3))
+
+
+def otp_generator():
+    random.shuffle(s)
+    return str("".join(s[0:6]))
+
 
 
 def index(request):
@@ -15,37 +32,102 @@ def index(request):
        # Home Page User enters here
     return render(request,'home/index.html')
 
+
+currData = []
+otpCount = 0
+
+@csrf_exempt
 def registerUser(request):
     #Signup Here
     if request.method=='POST':
-        fname = request.POST.get('name')
-        fusername = request.POST.get('username')
-        femail = request.POST.get('email')
-        phone = request.POST.get('mobileno')
-        passw = request.POST.get('password')
-        confpass = request.POST.get('confirmpassword')
 
-        # Check if confpass==passw
-        if passw!=confpass:
-            return  HttpResponse("passwords did not matched...!!")
-        # if null return empty credentials
-        if len(passw)==0 or len(phone)==0 or len(femail)==0 or len(fname)==0 or len(fusername)==0:
-             return  HttpResponse("Empty Credentials!")
+        msgs=request.POST.get('which_msg')
+        print(msgs)
 
-        else:
-            # All Checks Pass
-            total = len(User.objects.all())
-            newUser = User(name=fname,username=fusername,mobile=phone,email=femail,password=passw,rank=total+1)
-            User.save(newUser)
-            
-            # Send Mail
-            subject = 'Thank u for registering'
-            message = f'Welcome to the hard core gaming world'
-            email_from = settings.EMAIL_HOST_USER
-            recipient_list = [femail]
-            send_mail(subject,message,email_from,recipient_list)
+        if msgs=="register1":
+            fname = request.POST.get('name')
+            fusername = request.POST.get('username')
+            femail = request.POST.get('email')
+            phone = request.POST.get('mobileno')
+            passw = request.POST.get('password')
+            confpass = request.POST.get('confirmpassword')
 
-            return redirect('indexx')
+            # Check if confpass==passw
+            if passw!=confpass:
+                msg="Password not equal"
+                resp = {
+                'msg':msg
+                }
+                response = json.dumps(resp)
+                return HttpResponse(response, content_type="application/json")
+
+
+            # if null return empty credentials
+            # if len(passw)==0 or len(phone)==0 or len(femail)==0 or len(fname)==0 or len(fusername)==0:
+            #     msg="Empty credentials"
+
+            else:
+                currData.append(fname)
+                currData.append(fusername)
+                currData.append(phone)
+                currData.append(femail)
+                currData.append(passw)
+                
+                # Send Mail
+                subject = 'Thank u for registering'
+                myotp = otp_generator()
+                message = "Your Registration OTP is : "+ str(myotp)
+                
+                currData.append(myotp)
+
+                email_from = settings.EMAIL_HOST_USER
+                recipient_list = [femail]
+                send_mail(subject,message,email_from,recipient_list)
+
+                resp = {
+                'msg':"check otp"
+                }
+                response = json.dumps(resp)
+                return HttpResponse(response, content_type="application/json")
+
+        elif msgs=="check_otp":
+            #print(currData)
+            otp = request.POST.get('otp')
+            print(otp)
+
+            otp_msg = ""
+            msgtype = None
+            global otpCount
+            otpCount+=1
+
+            if otp!=currData[5]:
+                if otpCount>2:
+                    msgtype=1
+                    otp_msg="Incorrect , OTP entering limit exceeded...!!"
+                    otpCount=0
+                else:
+                    msgtype=2
+                    otp_msg="Incorrect otp...Please try again"
+                    
+            else:
+                msgtype=3
+                otp_msg = "You have successfully registered"
+                otpCount=0
+                # All Checks Pass
+                total = len(User.objects.all())
+                newUser = User(name=currData[0],username=currData[1],mobile=currData[2],email=currData[3],
+                                password=currData[4],rank=total+1)
+                User.save(newUser)
+
+                # Save in AUTH_USER
+                myuser = auth_User.objects.create_user(currData[1] , currData[3] , currData[4])
+                myuser.save()
+            resp = {
+                'msg':otp_msg,
+                'msgtype':msgtype
+            }
+            response = json.dumps(resp)
+            return HttpResponse(response, content_type="application/json")
 
 
     else:
