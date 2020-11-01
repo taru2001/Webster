@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'chat/userhome.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'chat/create.css' %}">
 </head>
-<body style="background-image: url('https://images8.alphacoders.com/719/thumb-1920-719873.jpg');background-repeat: no-repeat;background-size: cover;">
+<body style="background-image: url('https://images8.alphacoders.com/719/thumb-1920-719873.jpg');background-repeat: no-repeat;background-size: cover;background-attachment: fixed;">
     <div class="nav" style="padding: 0cm; margin-top: -8px;height: 3.4rem;" >
         <span class="link">
           <a href="/home/index/">Home</a>
@@ -69,44 +69,61 @@
       <br>
       <br>
 
+      <table style="">
+          <tr>
+              <td style="width: 5rem;">
+      <span style="margin-top: 0em;">
+        <input class="formStyle" id="myinput" type="text" required placeholder="Enter Message">
+        <span><button style= "margin-top: 0rem;margin-left: 20rem;" class="formButton" id="mybtn">Send</button></span>
+        <span><button style="margin-left: 0rem;" class="formButton" id="leavebtn">Leave room</button></span>
+      </span>
+    
 
-<div style="color: white;">
+    
+    <br><br>
+    <br><br>
+    <br><br>
+    <br>
+    <br>
+
+
+<span  id="chat-content" style="color:white;">
+
+    {% for i in room_chats %}
+
+   {{i.by_whom.username}}  :  {{i.message}}  <br><br>
+
+    {% endfor %}
+
+</span>
+</td>
+
+
+
+<td style="position: absolute;">
+<div style="color: white;margin-top: 0rem;margin-left: 0%;position: absolute;">
       {% if is_admin %}
 
         <h1>Members: </h1>
         {% for member in all_members %}
-            {{member.username}}
-            <button name="{{member.username}}" class="kick">Kick</button>
-            <button name="{{member.username}}" class="ban">Ban</button><br><br>
+            <div style="margin-left: 0rem;font-size: larger;max-width: 0rem;margin-top: 0%;">{{member.username}}</div>
+            <span>
+            <button style="background-color: rgb(176, 30, 206);color: white;font-size:14px;font-weight: 500;padding:6px 24px;
+            text-decoration:none;" name="{{member.username}}" class="kick">Kick</button>
+            <button style="background-color: rgb(176, 30, 206);color: white;font-size:14px;font-weight: 500;padding:6px 24px;
+            text-decoration:none;" name="{{member.username}}" class="ban">Ban</button><br><br>
+            </span>
         {% endfor %}
 
       {% endif %}
 
 </div>
+</td>
+</tr>
+</table>
 
 
-      <div>
-        <input class="formStyle" id="myinput" type="text" required placeholder="Enter Message">
-        <button style="margin-right: 55rem;" class="formButton" id="mybtn">Send</button>
-        </div>
 
-        <button style="margin-right: 25rem;" class="formButton" id="leavebtn">Leave room</button>
-
-        <br>
-        <br>
-        <br>
-
-
-    <div id="chat-content" style="color:white;">
-
-        {% for i in room_chats %}
-
-       {{i.by_whom.username}}  :  {{i.message}}  <br><br>
-
-        {% endfor %}
-
-    </div>
-    
 
 
 
