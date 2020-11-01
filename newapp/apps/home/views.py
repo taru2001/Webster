@@ -155,7 +155,8 @@ def registerUser(request):
 
 
 def about(request):
-    return render(request,'home/about.html')
+    username = request.session["username"]
+    return render(request,'home/about.html',{'username':username})
 
 
 
@@ -410,7 +411,7 @@ def mypost(request):
         replies=Replies.objects.all()
         
         params = {'username': name, 'posts': mylist, 'liked_posts': liked_posts, 'rated_posts': rated_posts,
-                'comments': comments , 'replies':replies}
+                'comments': comments , 'replies':replies,}
 
         return render(request,'home/mypost.html',params)
 
@@ -1113,4 +1114,7 @@ def check_unique(request,*args):
     }
     response=json.dumps(resp)
     return HttpResponse(response,content_type='application/json')
+
+def events(request):
+    return render(request,'home/events.html')
 

@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.home',
     # 'channels',
-    'apps.chat',z
+    'apps.chat',
     # 'apps.paytm'
 ]
 

@@ -1,0 +1,123 @@
+{% load static %}
+<html>
+    <head>
+        <title>Events</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'home/index.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'home/userhome.css' %}">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css'>
+    </head>
+    <body style="background-color: black;">
+        {% if loggedIn %}
+        <div class="nav" style="padding: 0cm; margin: 0px;height: 3.85rem; padding-top: 0rem;" >
+            <span class="link">
+              <a href="/home/index/">Home</a>
+            </span>
+            <div class="link">
+              <a href="/home/profile/">Profile</a>
+            </div>
+            <div class="link">
+                <a href="/paytm/offers/">Shop</a>
+            </div>
+            <div style="width: 6rem;text-align: center;" class="dropdown">
+                <button class="dropbtn" >About</button>
+                <div class="dropdown-content link">
+                  <a href="/home/about/">About Us</a>
+                  <a href="#">Contact</a>
+                  <a href="/home/event/">Events</a>
+                </div>
+            </div>
+            <div style="width: 6rem;text-align: center;" class="dropdown">
+                <button class="dropbtn">Assemble</button>
+                <div class="dropdown-content link">
+                  <a href="{% url 'about' %}">Go Live</a>
+                  <a href="#">Clan</a>
+                </div>
+            </div>
+              <div style="width: 6rem;text-align: center;" class="dropdown">
+                <button class="dropbtn">Top Rated</button>
+                <div class="dropdown-content link">
+                  <a href="/home/topPost/">Posts</a>
+                  <a href="/home/topGamers/">Rankers</a>
+                </div>
+              </div>
+        
+            <span style="margin-right: 22rem; "></span>
+            <span style="padding-top: 10px;"><form action="/home/search/"  method="get">
+             <input style="height: 1.7rem; width:14rem; outline: none; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
+                <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 30px; margin-left: 10px; background-color: #FFA500;" type="submit">Search</button>
+            </form>
+        </span>
+        <span style="margin-right: 3rem;"></span>
+        
+            <div class="link">
+                <a href="/home/notify/">Notifications</a>
+            </div>
+        
+            <div class="link">
+                <a href="/home/logout/">Logout</a>
+            </div>
+        </div>
+        
+      
+      
+      
+      
+          {% else %}
+      
+          <div class="nav" style="padding: 0cm; height: 61.5px;">
+            <span class="link">
+              <a href="/home/index/">Home</a>
+            </span>
+            <div style="width: 12rem;text-align: center;" class="dropdown">
+              <button class="dropbtn">About</button>
+              <div class="dropdown-content link">
+                <a href="/home/about/">About Us</a>
+                <a href="#">Contact Us</a>
+                <a href="/home/event/">Events</a>
+              </div>
+            </div>
+              <div style="width: 12rem;text-align: center;" class="dropdown">
+                <button class="dropbtn">Top Rated</button>
+                <div class="dropdown-content link">
+                  <a href="/home/topPost/">Posts</a>
+                  <a href="/home/topGamers/">Rankers</a>
+                </div>
+              </div>
+        
+            <span style="margin-right: 22rem; "></span>
+            <span style="padding-top: 10px;"><form action="/home/search/"  method="get">
+             <input style="height: 1.7rem; width:14rem; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
+                <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 30px; margin-left: 10px; background-color: #FFA500;" type="submit">Search</button>
+            </form>
+        </span>
+        <span style="margin-right: 3rem;"></span>
+        
+            <div class="link">
+                <a href="/home/register/">Register</a>
+            </div>
+        
+            <div class="link">
+                <a href="/home/login/">Login</a>
+            </div>
+        
+          </div>
+          
+          
+      
+          {% endif %}
+          
+          <br><br><br>
+      
+        <img style="height: 35rem;width: 45rem;" src='/static/home/kreedomania.jpg'>
+        <img style="height: 35rem;width: 45rem;" src='/static/home/event.jpg'>
+        <br><br>
+        <img style="height: 35rem;width: 45rem;" src='/static/home/events/1.jpg'>
+        <img style="height: 35rem;width: 45rem;" src='/static/home/events/2.jpg'>
+    </body>
+</html>

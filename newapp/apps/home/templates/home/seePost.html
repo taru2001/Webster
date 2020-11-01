@@ -37,13 +37,14 @@
             <div class="dropdown-content link">
               <a href="/home/about/">About Us</a>
               <a href="#">Contact</a>
+              <a href="/home/event/">Events</a>
             </div>
         </div>
         <div style="width: 6rem;text-align: center;" class="dropdown">
             <button class="dropbtn">Assemble</button>
             <div class="dropdown-content link">
               <a href="/chat">Chat</a>
-              <a href="#">Clan</a>
+              <a href="{% url 'about' %}">Go Live</a>
             </div>
         </div>
           <div style="width: 6rem;text-align: center;" class="dropdown">
@@ -86,6 +87,7 @@
           <div class="dropdown-content link">
             <a href="/home/about/">About Us</a>
             <a href="#">Contact Us</a>
+            <a href="/home/event/">Events</a>
           </div>
         </div>
           <div style="width: 12rem;text-align: center;" class="dropdown">
@@ -139,7 +141,7 @@
                                 <img class="img-circle" src="https://afribary.com/authors/anonymous-user/photo" alt="No pic">
                                 {% endif %}
                                 
-                                <span class="username"><a href="{% url 'searchProfile' post.user.username %}" data-abc="true" style="font-size: larger;">{{post.user.username}}</a></span> <span class="description">Public - 7:30 PM Today</span> </div>
+                                <span class="username"><a href="{% url 'searchProfile' post.user.username %}" data-abc="true" style="font-size: larger;">{{post.user.username}}</a></span> <span style="margin-left: .75rem;font-size: large;">{{post.tagline}}</span> </div>
                             <div class="box-tools"> <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="" data-original-title="Mark as read"> <i class="fa fa-circle-o"></i></button> <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i> </button> <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> </div>
                         </div>
 

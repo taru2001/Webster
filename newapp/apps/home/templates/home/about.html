@@ -12,9 +12,12 @@
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 
     <style>
+      body{
+        background-color:  rgb(16, 19, 44);
+      }
         .wrap {
-  border: solid 1px #ccc;
-  padding: 10px;
+  
+  padding: 50px;
   text-align: center;
 }
 
@@ -22,27 +25,29 @@
   display: inline-block;
   top: 4px;
   position: relative;
-  border: dotted 1px #ccc;
+  border: solid 15px rgb(54, 179, 201);
+  border-radius: 15px;
   padding: 2px;
 }
 
-.button {
-  border: solid 2px #ccc;
-}
     </style>
 </head>
 <body>
-    <div class="wrap">
+    <div class="wrap" style="background-color: rgb(14, 17, 46);" >
         
-        <video id="video" width="320" crossorigin="anonymous" autoplay>
-          
+        <video id="video" width="400" crossorigin="anonymous" autoplay style="border-top: 0px; border-radius: 15px; border: solid 10px coral;">
+          <span style="color: aqua; font-size: 30px;">{{username}}</span>
           Your browser does not support HTML5 video tag. Please download FireFox 3.5 or higher.
         </video>
+        <br>
+        <span style="color: aqua; font-size: 30px;">{{username}}</span>
    
         <br/>
         <button id="cit" onclick="shoot()" class="button" style="display: none;">Capture</button>
         <br/>
-        <div id="output"></div>
+        <div id="output" style="outline: none;"></div>
+        <br>
+        <span style="color: coral; font-size: 30px;">Streamed Video</span>
       </div><br>
       
       <!-- <img src="" id="kk" alt="no img" crossorigin="anonymous"> -->
@@ -76,7 +81,7 @@ if (navigator.mediaDevices.getUserMedia) {
 
       <script>
           var videoId = 'video';
-    var scaleFactor = 0.25;
+    var scaleFactor = 0.55;
     var snapshots = [];
     
 
@@ -161,3 +166,5 @@ if (navigator.mediaDevices.getUserMedia) {
       </script>
 </body>
 </html>
+
+

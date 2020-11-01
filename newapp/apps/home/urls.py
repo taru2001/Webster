@@ -4,7 +4,7 @@ from . import views,replies,streaming
 urlpatterns = [
     path('index/',views.index,name="indexx"),
     path('register/',views.registerUser,name="register"),
-    path('about/',views.about,name="about"),
+    path('live_stream/',views.about,name="about"),
     path('login/',views.loginUser,name="login"),
     path('logout/',views.logout,name="logout"),
     path('login/upload/',views.upload,name="upload"),
@@ -28,7 +28,7 @@ urlpatterns = [
     path('login/forgot/',views.forgot,name="forgot"),
     path('login/forgot/manage_forgot',views.manage_forgot,name='manage_forgot'),
     path('sendmoney/<str:usern>',views.sendmoney,name="sendmoney"),
-
+    path('event/',views.events,name="event"),
     path('handlepayment/',views.handlepayment,name="handlepayment"),
     path('posts/<str:usern>/',views.userposts,name="userposts"),
 
