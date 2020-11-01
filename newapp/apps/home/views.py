@@ -1114,3 +1114,6 @@ def check_unique(request,*args):
     response=json.dumps(resp)
     return HttpResponse(response,content_type='application/json')
 
+def events(request):
+    return render(request,'home/events.html')
+
