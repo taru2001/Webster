@@ -47,4 +47,5 @@ urlpatterns = [
     path('getstream/',streaming.getstream,name="getstream"),
 
     path('checkUsername/',views.check_unique,name="checkUsername")
+    
 ]
