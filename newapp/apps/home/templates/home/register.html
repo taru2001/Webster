@@ -77,26 +77,30 @@
             <form action="/home/register/" method="post" id="registerForm">{% csrf_token %}
 
             <div class="col-sm-12" style="padding-top:35px;">
-            <input type="text" class="form-control" id="name" placeholder="Name" name="name" style="border-radius:15px;">
+            <input type="text" class="form-control" id="name" required placeholder="Name" autocomplete="off" name="name" style="border-radius:15px;">
+            
             </div>
             <div class="col-sm-12" style="padding-top:35px;">
-            <input type="text" class="form-control" id="username" placeholder="User Name" name="username" style="border-radius:15px;">
+            <input type="text" class="form-control" id="username" minlength="4" maxlength="15" required placeholder="User Name" autocomplete="off" name="username" style="border-radius:15px;">
+            <p id="unique_username" style="color: white; font-size: 18px;"></p>
+            </div>
+            <div class="col-sm-12" style="padding-top:27px;">
+            <input type="email" class="form-control" id="email" required  placeholder="Enter email" autocomplete="off" name="email" style="border-radius:15px;">
+            <p id="unique_email" style="color: white; font-size: 18px;"></p>
+
+            </div>
+            <div class="col-sm-12" style="padding-top:27px;">
+            <input type="number" class="form-control" id="mobileno" maxlength="10" minlength="7" required placeholder="Enter Mobile No." autocomplete="off" name="mobileno" style="border-radius:15px;">
             </div>
             <div class="col-sm-12" style="padding-top:35px;">
-            <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" style="border-radius:15px;">
+            <input type="password" class="form-control" id="password" minlength="6" maxlength="15"  placeholder="Type your Password" autocomplete="off" name="password" style="border-radius:15px;">
             </div>
             <div class="col-sm-12" style="padding-top:35px;">
-            <input type="text" class="form-control" id="mobileno" placeholder="Enter Mobile No." name="mobileno" style="border-radius:15px;">
-            </div>
-            <div class="col-sm-12" style="padding-top:35px;">
-            <input type="text" class="form-control" id="password" placeholder="Type your Password" name="password" style="border-radius:15px;">
-            </div>
-            <div class="col-sm-12" style="padding-top:35px;">
-                <input type="text" class="form-control" id="confirmpassword" placeholder="Confirm Password" name="confirmpassword" style="border-radius:15px;">
+                <input type="password" autocomplete="off" class="form-control" minlength="6" maxlength="15" id="confirmpassword" placeholder="Confirm Password" name="confirmpassword" style="border-radius:15px;">
             </div>
             
             
-            <button class="col-md-4 col-md-offset-4 btn" style="background-color:#4e3f91; color:#f5eaea; font-size:20px; margin-top:35px;" type="submit"> Submit
+            <button class="col-md-4 col-md-offset-4 btn"  style="outline: none; background-color:#4e3f91; color:#f5eaea; font-size:20px; margin-top:35px;" type="submit"> Submit
             </button>
         </form>
 
@@ -119,7 +123,7 @@
     
               $("body").empty();
               var newspan = document.createElement('SPAN');
-              var newtext = document.createTextNode("OTP : ");
+              var newtext = document.createTextNode("ENTER OTP : ");
               newspan.appendChild(newtext);
               newspan.style.color="white";
               var newinput = document.createElement('input');
@@ -132,6 +136,7 @@
              newbtn.id="check_otp";
           //   newbtn.addEventListener(onclick,check_otp());
              $("body").append(newbtn);
+
     
             }
             else
@@ -163,9 +168,13 @@
             if(ty==1){
               alert(x);
               window.location.href="/home/index/";
+              
             }
             else if(ty==2){
               alert(x);
+            }
+            else if(ty==4){
+              window.location.href="/home/index/";
             }
             else{
               alert(x);
@@ -175,7 +184,88 @@
       });
       }
     
-    
-    
+      
     </script>
+
+
+<script>
+  var typingTimer;                //timer identifier
+var doneTypingInterval = 200;  //time in ms, 5 second for example
+var $input = $('#username');
+
+//on keyup, start the countdown
+$input.on('keyup', function () {
+  clearTimeout(typingTimer);
+  typingTimer = setTimeout(doneTyping, doneTypingInterval);
+});
+
+//on keydown, clear the countdown 
+$input.on('keydown', function () {
+  clearTimeout(typingTimer);
+});
+
+//user is "finished typing," do something
+function doneTyping () {
+  var username = $("#username").val();
+  var x=1;
+  $.ajax({
+    url : "{% url 'checkUsername' %}",
+    data : {'curr_username':username ,'type':"uname"},
+    success:function(response){
+      var unique = response.yes;
+      console.log(unique);
+      if(!unique){
+        document.getElementById("unique_username").innerHTML="This Username is Already Taken";
+        $("button").attr('disabled',true);
+      }
+      else{
+        document.getElementById("unique_username").innerHTML="";
+
+      }
+    }
+  });
+}
+</script>
+
+
+<script>
+//   var typingTimer1;                //timer identifier
+// var doneTypingInterval1 = 200;  //time in ms, 5 second for example
+var $input1 = $('#email');
+
+//on keyup, start the countdown
+$input1.on('keyup', function () {
+  clearTimeout(typingTimer);
+  typingTimer = setTimeout(doneTyping2, doneTypingInterval);
+});
+
+//on keydown, clear the countdown 
+$input.on('keydown', function () {
+  clearTimeout(typingTimer);
+});
+
+//user is "finished typing," do something
+function doneTyping2 () {
+  var username1 = $("#email").val();
+  $.ajax({
+    url : "{% url 'checkUsername' %}",
+    data : {'curr_username':username1 , 'type':"email"},
+    success:function(response){
+      var unique = response.yes;
+      console.log(unique);
+      if(!unique){
+        document.getElementById("unique_email").innerHTML="This Email is Already Taken";
+        $("button").attr('disabled',true);
+      }
+      else{
+        document.getElementById("unique_email").innerHTML="";
+
+      }
+    }
+  });
+}
+
+
+</script>
+
 </html>

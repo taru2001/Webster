@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import User, Post, Following, Followers, Notification, Comments, Replies
+from .models import User, Post, Following, Followers, Notification, Comments, Replies, tempUser
 import json 
 from django.conf import settings 
 from django.core.mail import send_mail
@@ -10,8 +10,8 @@ from django.views.decorators.csrf import csrf_exempt
 import string,random
 
 s1=string.ascii_lowercase
-s2=string.ascii_uppercase
-s3=string.digits
+s2=string.digits
+s3=string.ascii_uppercase
 s=[]
 s.extend(list(s1))
 s.extend(list(s2))
@@ -25,19 +25,24 @@ def otp_generator():
 
 
 def index(request):
+    if "register" in request.session:
+        print("register")
+        del request.session["register"]
     #If user is logged in redirects to home page
     if "username" in request.session:
-
+       print("logedin")
        return redirect('login')
        # Home Page User enters here
     return render(request,'home/index.html')
 
 
-currData = []
-otpCount = 0
 
 @csrf_exempt
 def registerUser(request):
+
+    if "username" in request.session and request.is_ajax()==False:
+        return redirect('login')
+
     #Signup Here
     if request.method=='POST':
 
@@ -67,22 +72,22 @@ def registerUser(request):
             #     msg="Empty credentials"
 
             else:
-                currData.append(fname)
-                currData.append(fusername)
-                currData.append(phone)
-                currData.append(femail)
-                currData.append(passw)
                 
                 # Send Mail
                 subject = 'Thank u for registering'
                 myotp = otp_generator()
                 message = "Your Registration OTP is : "+ str(myotp)
+
+                new_tempUser = tempUser(email=femail,password=passw,mobile=phone,check_otp=myotp,name=fname,username=fusername)
+                tempUser.save(new_tempUser)
                 
-                currData.append(myotp)
 
                 email_from = settings.EMAIL_HOST_USER
                 recipient_list = [femail]
                 send_mail(subject,message,email_from,recipient_list)
+
+                request.session["register"] = fusername
+                print(request.session["register"])
 
                 resp = {
                 'msg':"check otp"
@@ -97,37 +102,50 @@ def registerUser(request):
 
             otp_msg = ""
             msgtype = None
-            global otpCount
-            otpCount+=1
 
-            if otp!=currData[5]:
-                if otpCount>2:
-                    msgtype=1
-                    otp_msg="Incorrect , OTP entering limit exceeded...!!"
-                    otpCount=0
-                else:
-                    msgtype=2
-                    otp_msg="Incorrect otp...Please try again"
-                    
+            currUsername = request.session["register"]
+
+            currtempuser = tempUser.objects.filter(username=currUsername)
+
+            if len(currtempuser)==0:
+                msgtype = 4
+                otp_msg="Kick out"
+
             else:
-                msgtype=3
-                otp_msg = "You have successfully registered"
-                otpCount=0
-                # All Checks Pass
-                total = len(User.objects.all())
-                newUser = User(name=currData[0],username=currData[1],mobile=currData[2],email=currData[3],
-                                password=currData[4],rank=total+1)
-                User.save(newUser)
+                currtempuser=currtempuser[0]
+                currtempuser.otp_count = int(currtempuser.otp_count)+1
+                currtempuser.save()
+                if otp!=currtempuser.check_otp:
+                    
+                    if currtempuser.otp_count>2:
+                        msgtype=1
+                        otp_msg="Incorrect , OTP entering limit exceeded...!!"
+                        currtempuser.delete()
+                        del request.session["register"]
+                    else:
+                        msgtype=2
+                        otp_msg="Incorrect OTP...Please try again"
+                        
+                else:
+                    msgtype=3
+                    otp_msg = "You have successfully registered"
+                    # All Checks Pass
+                    total = len(User.objects.all())
+                    newUser = User(name=currtempuser.name,username=currtempuser.username,mobile=currtempuser.mobile,email=currtempuser.email,
+                                    password=currtempuser.password,rank=total+1)
+                    User.save(newUser)
 
-                # Save in AUTH_USER
-                myuser = auth_User.objects.create_user(currData[1] , currData[3] , currData[4])
-                myuser.save()
-            resp = {
-                'msg':otp_msg,
-                'msgtype':msgtype
-            }
-            response = json.dumps(resp)
-            return HttpResponse(response, content_type="application/json")
+                    # Save in AUTH_USER
+                    myuser = auth_User.objects.create_user(newUser.username , newUser.email , newUser.password)
+                    myuser.save()
+                    currtempuser.delete()
+                    del request.session["register"]
+                resp = {
+                    'msg':otp_msg,
+                    'msgtype':msgtype
+                }
+                response = json.dumps(resp)
+                return HttpResponse(response, content_type="application/json")
 
 
     else:
@@ -135,8 +153,8 @@ def registerUser(request):
 
 
 
+
 def about(request):
-    # About Is empty
     return render(request,'home/about.html')
 
 
@@ -225,6 +243,8 @@ def userpage(request):
     if "username" in request.session:
         username = request.session["username"]
         currUser = User.objects.filter(username=username)
+        if not currUser:
+            return redirect('indexx')
         UserEmail = User.objects.filter(email=username)
         print(currUser)
 
@@ -1067,4 +1087,30 @@ def closeall(request):
 
 
     
+
+def check_unique(request,*args):
+    all_users = User.objects.all()
+    currUser = request.GET.get('curr_username')
+    currtype = request.GET.get('type')
+
+    yes=1
+
+    if currtype=="uname":
+        for user in all_users:
+            if user.username==currUser:
+                yes=0
+                break
+            
+    elif currtype=="email":
+        for user in all_users:
+            if user.email==currUser:
+                print("found")
+                yes=0
+                break
+
+    resp={
+        'yes':yes
+    }
+    response=json.dumps(resp)
+    return HttpResponse(response,content_type='application/json')
 

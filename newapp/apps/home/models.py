@@ -170,3 +170,16 @@ class stream(models.Model):
         return str(self.time)
 
 
+class tempUser(models.Model):
+    name = models.CharField(max_length=30,default="")
+    username = models.CharField(max_length=30)
+    email = models.CharField(max_length=50)
+    password = models.CharField(max_length=20,default="")
+    mobile = models.IntegerField()
+    check_otp = models.CharField(max_length=6,default="")
+    otp_count = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.username
+
+

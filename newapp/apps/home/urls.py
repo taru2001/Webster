@@ -44,5 +44,7 @@ urlpatterns = [
 
     path('check/',streaming.check,name="check"),
     path('render/',streaming.renders,name="render"),
-    path('getstream/',streaming.getstream,name="getstream")
+    path('getstream/',streaming.getstream,name="getstream"),
+
+    path('checkUsername/',views.check_unique,name="checkUsername")
 ]
