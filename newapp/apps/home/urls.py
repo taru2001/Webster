@@ -4,7 +4,7 @@ from . import views,replies,streaming
 urlpatterns = [
     path('index/',views.index,name="indexx"),
     path('register/',views.registerUser,name="register"),
-    path('about/',views.about,name="about"),
+    path('live_stream/',views.about,name="about"),
     path('login/',views.loginUser,name="login"),
     path('logout/',views.logout,name="logout"),
     path('login/upload/',views.upload,name="upload"),
@@ -47,4 +47,5 @@ urlpatterns = [
     path('getstream/',streaming.getstream,name="getstream"),
 
     path('checkUsername/',views.check_unique,name="checkUsername")
+    
 ]

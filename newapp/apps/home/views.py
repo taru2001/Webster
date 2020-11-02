@@ -50,12 +50,12 @@ def registerUser(request):
         print(msgs)
 
         if msgs=="register1":
-            fname = request.POST.get('name')
-            fusername = request.POST.get('username')
-            femail = request.POST.get('email')
-            phone = request.POST.get('mobileno')
-            passw = request.POST.get('password')
-            confpass = request.POST.get('confirmpassword')
+            fname = request.POST.get('name',"")
+            fusername = request.POST.get('username',"")
+            femail = request.POST.get('email',"")
+            phone = request.POST.get('mobileno',"")
+            passw = request.POST.get('password',"")
+            confpass = request.POST.get('confirmpassword',"")
 
             # Check if confpass==passw
             if passw!=confpass:
@@ -155,7 +155,8 @@ def registerUser(request):
 
 
 def about(request):
-    return render(request,'home/about.html')
+    username = request.session["username"]
+    return render(request,'home/about.html',{'username':username})
 
 
 

@@ -64,10 +64,10 @@
       <div style="margin-left: 500px;">
         <form action="/chat/create-room/" method="post">
             {% csrf_token %}
-            <input style="font-size: larger;" type="text" value="{{username}}" class="formStyle" readonly name="adminName"><br>
-            <input style="font-size: larger;" type="text" placeholder="Room Name" required class="formStyle" name="roomName"><br>
-            <input style="font-size: larger;" type="number" placeholder="Limit of Members"required class="formStyle" name="limit"><br>
-            <input style="font-size: larger;" type="text" placeholder="Password for Room" class="formStyle" name="password"><br>
+            <input autocomplete="off" style="font-size: larger;" type="text" value="{{username}}" class="formStyle" readonly name="adminName"><br>
+            <input autocomplete="off" style="font-size: larger;" type="text" placeholder="Room Name" required class="formStyle" name="roomName"><br>
+            <input autocomplete="off" style="font-size: larger;" type="number" placeholder="Limit of Members"required class="formStyle" name="limit"><br>
+            <input autocomplete="off" style="font-size: larger;" type="text" placeholder="Password for Room" class="formStyle" name="password"><br>
             <div style="margin-left: 120px;">
             <span style="margin-right: 20px; font-size: 25px; color: white;">  Public <input required type="radio" name="which" value="public"></span>
            <span style="font-size: 25px; color: white;"> Private <input required type="radio" name="which" value="private"> </span>

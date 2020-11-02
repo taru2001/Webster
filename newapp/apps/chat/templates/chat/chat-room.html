@@ -88,7 +88,7 @@
     <br>
 
 
-<span  id="chat-content" style="color:white;">
+<span  id="chat-content" style="color:white; font-size: 18px;">
 
     {% for i in room_chats %}
 
@@ -220,6 +220,8 @@ input.addEventListener("keyup", function(event) {
                    data:{'user':user , 'roomid':roomid},
                    success:function(response){
                         alert(user+" Kicked from the room...!!");
+                        window.location.reload();
+                        return true;
                    }
                })
             }
@@ -238,6 +240,8 @@ input.addEventListener("keyup", function(event) {
                    data:{'user':user , 'roomid':roomid},
                    success:function(response){
                         alert(user+" Banned from the room...!!");
+                        window.location.reload();
+                        return true;
                    }
                })
             }
