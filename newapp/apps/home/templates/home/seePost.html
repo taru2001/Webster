@@ -45,6 +45,7 @@
             <div class="dropdown-content link">
               <a href="/chat">Chat</a>
               <a href="{% url 'about' %}">Go Live</a>
+              <a href="{% url 'render' %}">See Live</a>
             </div>
         </div>
           <div style="width: 6rem;text-align: center;" class="dropdown">
@@ -174,7 +175,7 @@
                                 </span>   
                                 
                             {% else %}
-                                <h3>{{post.likes.count}} Likes</h3>
+                                <h3 style="color: black;margin-left: 3rem;">{{post.likes.count}} Likes</h3>
 
                             {% endif %}
 
@@ -206,7 +207,7 @@
                                     <span id="avg{{post.id}}">{{post.avgRating}}</span><br>                                               
                                 
                                 {% else %}
-                                Rating : {{post.avgRating}}
+                                <h3 style="color: black;margin-left: 3rem;"> Rating : {{post.avgRating}}</h3>
                                 {% endif %}
 
 
