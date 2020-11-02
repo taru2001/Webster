@@ -191,9 +191,9 @@
 <br><br>
 
 
-<div style="margin-left: 45rem;" class="fb-share-button" data-href="http://127.0.0.1:8000/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+<div style="margin-left: 2rem;" class="fb-share-button" data-href="http://127.0.0.1:8000/home/user/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
 
-<br>
+<br><br>
                                    
 
                    <div> <textarea id="cmnt{{post.id}}"  name="comment{{post.id}}" style="resize:none;width:400px; margin-left: 4rem;border-radius: 2rem;height: 4rem;outline: 0ch;padding: 1rem;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;font-size:large;"></textarea>
@@ -211,12 +211,12 @@
                             <br>
 
 
-                             <a id="re{{comment.id}}" style="cursor: pointer;"> <span id="{{comment.id}}" class="replies">reply</span></a>
+                             <a id="re{{comment.id}}" style="cursor: pointer;"> <span style="font-size: 18px; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;" id="{{comment.id}}" class="replies">reply</span></a>
                             
                     <div id="reply{{comment.id}}" style="display:none;">
 
                               <input type="name" name="replytext" id='replycmnt{{comment.id}}' >
-                              <button id='{{comment.id}}' class='replybtn' style="background:transparent">reply</button>
+                              <button id='{{comment.id}}' class='replybtn' style="font-size: 18px; background:transparent">Reply</button>
                               <br>
                             <div id="ajax{{comment.id}}">
                                     
@@ -235,7 +235,7 @@
                           
 
                             {% ifequal replie.user.username username%}
-                            <input type="button"  class="{{replie.id}} deletereply" value="Delete Reply">
+                            <input type="button" style="background-color: #FFA500;"  class="{{replie.id}} deletereply" value="Delete Reply">
                             
                             {% endifequal %}
                             
@@ -284,7 +284,7 @@
 
    if(divreply.style.display=="none"){
     divreply.style.display="block";
-    $(this).html("hide");
+    $(this).html("Hide");
    }else{ $(this).html("reply");
     divreply.style.display="none"
    }e.preventDefault();
@@ -328,6 +328,7 @@ $.ajax({
                   value:"Delete Reply",
                   class: rid,
                 });
+                newbt.css({"background-color":"#FFA500"});
 
               $("."+rid).append(newbt);
               $("."+rid).append("<br><br>" );
@@ -405,7 +406,7 @@ $.ajax({
            'postid':id},
     success:function(response){
 
-      var msg=response.username+" at "+response.time+" : "+response.comment+"<hr>";
+      var msg=response.username+" at "+response.time+" : "+response.comment+"<br><br><br>"+"Reply"+"<hr>";
 
 
     var newimg =  $('<img />')

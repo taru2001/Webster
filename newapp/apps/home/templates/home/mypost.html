@@ -182,7 +182,7 @@
                     <pre style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;font-size:large;">{% if comment.user.profileImage.url is not None %} <img height="35px" width="35px" src="{{comment.user.profileImage.url}}" alt="">  {{comment.user.username}} at {{comment.time}} :{{comment.comment}} {%else%}<img height="35px" width="35px" src="https://afribary.com/authors/anonymous-user/photo" alt=""> {{comment.user.username}} at {{comment.time}} :{{comment.comment}}  {% endif %} </pre>
                <br>
 
-               <a id="re{{comment.id}}" style="cursor: pointer;"> <span id="{{comment.id}}" class="replies">reply</span></a>
+               <a id="re{{comment.id}}" style="cursor: pointer;"> <span id="{{comment.id}}" class="replies">Reply</span></a>
                
 
                <div id="reply{{comment.id}}" style="display:none;">
@@ -292,6 +292,7 @@ $.ajax({
                   value:"Delete Reply",
                   class: rid,
                 });
+                newbt.css({"background-color":"#FFA500"});
 
               $("."+rid).append(newbt);
               $("."+rid).append("<br><br>" );
@@ -370,7 +371,7 @@ $.ajax({
            'postid':id},
     success:function(response){
 
-      var msg=response.username+" at "+response.time+" : "+response.comment+"<hr>";
+      var msg=response.username+" at "+response.time+" : "+response.comment+"<br><br><br>"+"reply"+"<hr>";
 
 
     var newimg =  $('<img />')

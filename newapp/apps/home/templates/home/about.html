@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +14,7 @@
 
     <style>
       body{
-        background-color:  rgb(16, 19, 44);
+        background-color:  rgb(23, 28, 66);;
       }
         .wrap {
   
@@ -31,52 +32,97 @@
 }
 
     </style>
+    <link rel="stylesheet" type="text/css" href="{% static 'home/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/userhome.css' %}">
+</head>
 </head>
 <body>
+
+  <div class="nav" style="padding: 0cm; margin: 0px;height: 3.85rem;" >
+    <span class="link">
+      <a href="/home/index/">Home</a>
+    </span>
+    <div class="link">
+      <a href="/home/profile/">Profile</a>
+    </div>
+    <div class="link">
+        <a href="/paytm/offers/">Shop</a>
+    </div>
+    <div style="width: 6rem;text-align: center;" class="dropdown">
+        <button class="dropbtn">About</button>
+        <div class="dropdown-content link">
+          <a href="/home/about/">About Us</a>
+          <a href="#">Contact</a>
+          <a href="/home/event/">Events</a>
+        </div>
+    </div>
+    <div style="width: 6rem;text-align: center;" class="dropdown">
+        <button class="dropbtn">Assemble</button>
+        <div class="dropdown-content link">
+          <a href="/chat">Chat</a>
+          <a href="{% url 'about' %}">Go Live</a>
+        </div>
+    </div>
+      <div style="width: 6rem;text-align: center;" class="dropdown">
+        <button class="dropbtn">Top Rated</button>
+        <div class="dropdown-content link">
+          <a href="/home/topPost/">Posts</a>
+          <a href="/home/topGamers/">Rankers</a>
+        </div>
+      </div>
+
+    <span style="margin-right: 22rem; "></span>
+    <span style="padding-top: 10px;"><form action="/home/search/"  method="get">
+     <input style="height: 1.7rem; width:14rem; outline: none; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
+        <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 30px; margin-left: 10px; background-color: #FFA500;" type="submit">Search</button>
+    </form>
+</span>
+<span style="margin-right: 3rem;"></span>
+
+    <div class="link">
+        <a href="/home/notify/">Notifications</a>
+    </div>
+
+    <div class="link">
+        <a href="/home/logout/">Logout</a>
+    </div>
+
+  </div>
+
     <div class="wrap" style="background-color: rgb(14, 17, 46);" >
         
-        <video id="video" width="400" crossorigin="anonymous" autoplay style="border-top: 0px; border-radius: 15px; border: solid 10px coral;">
-          <span style="color: aqua; font-size: 30px;">{{username}}</span>
+        <video id="video" width="800" crossorigin="anonymous" autoplay style="border-top: 0px; border-radius: 15px; border: solid 10px coral;">
+          
+         
           Your browser does not support HTML5 video tag. Please download FireFox 3.5 or higher.
         </video>
+        <button style="margin-left: 20px; height: 40px; width: 100px; background-color: #FFA500;" id="start">Start</button>
+        <button style="margin-left: 20px; height: 40px; width: 100px; background-color: #FFA500;" id="stop">Stop</button>
         <br>
         <span style="color: aqua; font-size: 30px;">{{username}}</span>
+        <button id="end" style="margin-left: 20px; height: 40px; width: 100px; background-color: #FFA500;">End Stream</button>
    
         <br/>
         <button id="cit" onclick="shoot()" class="button" style="display: none;">Capture</button>
         <br/>
-        <div id="output" style="outline: none;"></div>
+        
         <br>
-        <span style="color: coral; font-size: 30px;">Streamed Video</span>
+        
       </div><br>
       
       <!-- <img src="" id="kk" alt="no img" crossorigin="anonymous"> -->
       
       
-      <!-- <script>
-        $(document).ready(function() {
-          
-                  $.ajaxSetup({cache:false});
-                  shoot();
-                  console.log("yobro");
-              });
-      </script> -->
+        
 
-      <script>
-
-var video = document.querySelector("#video");
-
-if (navigator.mediaDevices.getUserMedia) {
-  navigator.mediaDevices.getUserMedia({ video: true })
-    .then(function (stream) {
-      video.srcObject = stream;
-    })
-    .catch(function (err0r) {
-      console.log("Something went wrong!");
-    });
-}
+       <script>
+        $("#end").click(
+          function(){
+            alert("Stream has ended");
+            window.location.href="/home/user/"
+          }
+        );
       </script>
-
       
 
       <script>
@@ -132,11 +178,11 @@ if (navigator.mediaDevices.getUserMedia) {
                     
         // };
         snapshots.unshift(canvas);
-        output.innerHTML = '';
-        for (var i = 0; i < 1; i++) {
-            output.appendChild(snapshots[i]);
-          //  console.log(snapshots[i].toDataURL("image/webp"));
-        }
+        // output.innerHTML = '';
+        // for (var i = 0; i < 1; i++) {
+        //     output.appendChild(snapshots[i]);
+        //   //  console.log(snapshots[i].toDataURL("image/webp"));
+        // }
 
         var href = "{% url 'check' %}";
         var picurl = snapshots[0].toDataURL("image/webp");
@@ -163,7 +209,56 @@ if (navigator.mediaDevices.getUserMedia) {
             $.ajaxSetup({cache:false});
            shoot();
         });
-      </script>
+       </script>
+ 
+
+
+<script>
+  
+  const videoElem = document.getElementById("video");
+  const startElem = document.getElementById("start");
+const stopElem = document.getElementById("stop");
+
+// Options for getDisplayMedia()
+
+var displayMediaOptions = {
+  video: {
+    cursor: "always"
+  },
+  audio: false
+};
+
+
+startElem.addEventListener("click", function(evt) {
+  startCapture();
+ // shoot();
+}, false);
+
+stopElem.addEventListener("click", function(evt) {
+  stopCapture();
+}, false);
+// Set event listeners for the start and stop buttons
+
+async function startCapture() {
+  
+
+  try {
+    videoElem.srcObject = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
+    dumpOptionsInfo();
+  } catch(err) {
+    console.error("Error: " + err);
+  }
+}
+
+function stopCapture(evt) {
+  let tracks = videoElem.srcObject.getTracks();
+
+  tracks.forEach(track => track.stop());
+  videoElem.srcObject = null;
+}
+</script>
+
+
 </body>
 </html>
 

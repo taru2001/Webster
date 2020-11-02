@@ -10,17 +10,21 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-
+<style>
+    body{
+        background-color: rgb(18, 18, 54);
+    }
+</style>
 </head>
-<body>
+<body >
     
-    <img src="" alt="nope" id="myimg" height="300px" width="300px"> 
+    <img src="" alt="nope" id="myimg" height="600px" width="1300px"> 
 
     <script>
         $(document).ready(function() {
             $.ajaxSetup({cache:false});
             setInterval(function(){getnewImg();} , 30);
-            setInterval(function(){newrel();} , 60000);
+            setInterval(function(){newrel();} , 300000);
         });
 
         function getnewImg(){

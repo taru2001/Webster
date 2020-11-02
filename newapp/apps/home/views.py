@@ -546,7 +546,7 @@ def searchuser(request):
     # list of matched users
     found_users = []
     # Query all usernames for checking if such related username exists or not
-    for user in all_users:
+    for user in all_users:   
         if isUserMatching(user.username , whichUser) or isUserMatching(whichUser , user.username):
             found_users.append(user.username)
     
