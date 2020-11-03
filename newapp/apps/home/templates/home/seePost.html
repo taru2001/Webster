@@ -158,6 +158,13 @@
                             
                                     Your browser does not support the video tag.
                                 </video>
+                                <button onclick="skipBackward(this)" id="backward">Backward</button>
+                                <button onclick="skipForward(this)" id="forward">Forward</button>
+                                <button onclick="playbackrate(this)" name="0.25">0.25</button>
+                                <button onclick="playbackrate(this)" name="0.5">0.5</button>
+                                <button onclick="playbackrate(this)" name="1">1</button>
+                                <button onclick="playbackrate(this)" name="1.5">1.5</button>
+                                <button onclick="playbackrate(this)" name="2">2</button>
                         
                         {% endifequal %}
                     </div>
@@ -307,6 +314,44 @@
             </div>
         </div>
     </div>
+
+
+
+
+    
+<script>
+
+  function playbackrate(thisBtn){
+    var parent = thisBtn.parentNode;
+    var curr_rate = thisBtn.name;
+    
+    var currVid = parent.getElementsByTagName("video");
+    currVid[0].playbackRate = curr_rate;
+  }
+
+function skipForward(thisBtn){
+  var parent = thisBtn.parentNode;
+  var currVid = parent.getElementsByTagName("video");
+  currVid=currVid[0]
+
+  var x = currVid.currentTime;
+  currVid.currentTime = x+10;
+}
+
+function skipBackward(thisBtn){
+  var parent = thisBtn.parentNode;
+  var currVid = parent.getElementsByTagName("video");
+  currVid=currVid[0]
+
+  var x = currVid.currentTime;
+  currVid.currentTime = x-10;
+}
+
+  
+</script>
+
+
+
     
     
     <script>

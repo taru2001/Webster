@@ -149,12 +149,12 @@ input.addEventListener("keyup", function(event) {
                 if(response.check=="no room")
                 {
                     alert("This room no longer exists...!!");
-                    setTimeout(function(){window.location.href="http://127.0.0.1:8000/chat/";},2000);
+                    setTimeout(function(){window.location.href="/chat/";},2000);
                 }
                 else if(response.check=="not member")
                 {
                     alert("You have been kicked out of the room...!!");
-                    setTimeout(function(){window.location.href="http://127.0.0.1:8000/chat/";},2000); 
+                    setTimeout(function(){window.location.href="/chat/";},2000); 
                 }
                 console.log(response.chats.length);
     
@@ -195,7 +195,7 @@ input.addEventListener("keyup", function(event) {
                     url:href,
                     data:{'roomid':roomid},
                     success:function(){
-                        window.location.href="http://127.0.0.1:8000/chat/";
+                        window.location.href="/chat/";
 
                     }
 
@@ -274,7 +274,7 @@ input.addEventListener("keyup", function(event) {
                           $("#chat-content").prepend(user+" : "+message+"<br><br>");
                           }
                           else{
-                            window.location.href="http://127.0.0.1:8000/chat/";
+                            window.location.href="/chat/";
                           }
     
                         }
